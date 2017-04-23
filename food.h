@@ -8,4 +8,8 @@ public:
     Food();
 };
 
+<<<<<<< HEAD
 #endif // FOOD_H
+=======
+#endif // FOOD_H
+>>>>>>> multi_dev

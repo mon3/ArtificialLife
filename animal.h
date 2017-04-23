@@ -5,7 +5,11 @@
 
 enum Activity {
     MATING,
+<<<<<<< HEAD
+    HUNTING, //for herbios ?
+=======
     HUNTING, //for herbivorous ?
+>>>>>>> multi_dev
     RESTING,
     SLEEPING,
     NURSING,
@@ -21,7 +25,11 @@ public:
 private:
     //subactions
     //set of subactions for every type of animal will be defined:
+<<<<<<< HEAD
+    virtual void hunt(Being&);
+=======
     virtual void hunt(Being& )=0;
+>>>>>>> multi_dev
 
 
 
@@ -35,8 +43,12 @@ private:
 
     int eveSight;
     int age;
+<<<<<<< HEAD
+    const int generation;
+=======
 //    const int generation;
     int generation;
+>>>>>>> multi_dev
     int speed;
     float exaustionLevel;
     float saturationRate;

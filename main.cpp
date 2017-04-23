@@ -1,8 +1,11 @@
 #include "mainwindow.h"
 #include <QApplication>
+<<<<<<< HEAD
+=======
 #include <QStyleFactory>
 #include <iostream>
 #include <QDebug>
+>>>>>>> multi_dev
 
 int main(int argc, char *argv[])
 {

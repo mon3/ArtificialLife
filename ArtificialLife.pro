@@ -1,6 +1,10 @@
 #-------------------------------------------------
 #
+<<<<<<< HEAD
+# Project created by QtCreator 2017-04-07T21:03:34
+=======
 # Project created by QtCreator 2017-04-23T18:10:35
+>>>>>>> multi_dev
 #
 #-------------------------------------------------
 
@@ -26,6 +30,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     creature.cpp \
+<<<<<<< HEAD
+    plant.cpp \
+    animal.cpp \
+    herbvorous.cpp \
+    predator.cpp \
+    grid.cpp \
+    parametersset.cpp \
+    food.cpp
+
+HEADERS  += mainwindow.h \
+    creature.h \
+    plant.h \
+    animal.h \
+    herbvorous.h \
+    predator.h \
+    grid.h \
+    parametersset.h \
+    food.h
+
+FORMS    += mainwindow.ui
+
+
+
+=======
     animal.cpp \
     food.cpp \
     grid.cpp \
@@ -80,3 +108,4 @@ FORMS    += mainwindow.ui
 
 LIBS += \
        -lboost_system\
+>>>>>>> multi_dev

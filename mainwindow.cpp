@@ -6,16 +6,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+<<<<<<< HEAD
     connect(ui->pushButton_4, SIGNAL(pressed()), this, SLOT(initGame()));
 }
 
 
 
 
+=======
+}
+
+>>>>>>> multi_dev
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+<<<<<<< HEAD
 
 void MainWindow::initGame()
 {
@@ -65,3 +71,5 @@ void MainWindow::paintGrid(Grid* scene)
 
 
 }
+=======
+>>>>>>> multi_dev

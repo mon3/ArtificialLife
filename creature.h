@@ -12,7 +12,11 @@ public:
     Being();
     int mapCoordinates(int, int);
     int getHitPoints() const;
+<<<<<<< HEAD
     void setHitPoints(int value);    
+=======
+    void setHitPoints(int value);
+>>>>>>> multi_dev
 
 private:
     int logX;

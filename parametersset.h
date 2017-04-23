@@ -8,6 +8,7 @@ enum DayTime {day, night};
 class ParametersSet
 {
 public:
+<<<<<<< HEAD
     ParametersSet(int _gridSize) : gridSize(_gridSize) { }
     int getGridSize() const;
 
@@ -23,16 +24,35 @@ private:
 
 
     //genetic algorithm params
+=======
+    ParametersSet();
+private:
+    float biologicalChildAge;
+    float biologicalAdultAge;
+    int gridSize;
+    Season season;
+    DayTime dayTime;
+>>>>>>> multi_dev
     float crossoverProbability;
     float mutationProbability;
     float mutationFactor;
 
+<<<<<<< HEAD
 
     //plants appearance params
+=======
+>>>>>>> multi_dev
     float plantAppearance;
     int minPlantSum;
     int maxPlantSum;
     float plantToSizeFactor;
+<<<<<<< HEAD
+=======
+    //evolution alg params
+
+    //plants appearance params
+
+>>>>>>> multi_dev
 };
 
 #endif // PARAMETERSSET_H

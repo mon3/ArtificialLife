@@ -1,6 +1,7 @@
 #include "parametersset.h"
 
-ParametersSet::ParametersSet()
-{
 
+int ParametersSet::getGridSize() const
+{
+    return gridSize;
 }

@@ -32,7 +32,7 @@ SOURCES += main.cpp\
     herbivorous.cpp \
     parametersset.cpp \
     plant.cpp \
-    predator.cpp
+    predator.cpp \
 
 
 HEADERS  += mainwindow.h \

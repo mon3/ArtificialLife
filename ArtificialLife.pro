@@ -48,15 +48,3 @@ FORMS    += mainwindow.ui
 
 
 
-win32:CONFIG(release, debug|release): LIBS += -LE:/boost_1_64_0/lib64-msvc-14.1/ -llibboost_unit_test_framework-vc141-mt-1_64
-else:win32:CONFIG(debug, debug|release): LIBS += -LE:/boost_1_64_0/lib64-msvc-14.1/ -llibboost_unit_test_framework-vc141-mt-1_64d
-else:unix:!macx: LIBS += -LE:/boost_1_64_0/lib64-msvc-14.1/ -llibboost_unit_test_framework-vc141-mt-1_64
-
-INCLUDEPATH += E:/boost_1_64_0/lib64-msvc-14.1
-DEPENDPATH += E:/boost_1_64_0/lib64-msvc-14.1
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += E:/boost_1_64_0/lib64-msvc-14.1/liblibboost_unit_test_framework-vc141-mt-1_64.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += E:/boost_1_64_0/lib64-msvc-14.1/liblibboost_unit_test_framework-vc141-mt-1_64d.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += E:/boost_1_64_0/lib64-msvc-14.1/libboost_unit_test_framework-vc141-mt-1_64.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += E:/boost_1_64_0/lib64-msvc-14.1/libboost_unit_test_framework-vc141-mt-1_64d.lib
-else:unix:!macx: PRE_TARGETDEPS += E:/boost_1_64_0/lib64-msvc-14.1/liblibboost_unit_test_framework-vc141-mt-1_64.a

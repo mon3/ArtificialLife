@@ -8,25 +8,31 @@ enum DayTime {day, night};
 class ParametersSet
 {
 public:
-    ParametersSet();
+    ParametersSet(int _gridSize) : gridSize(_gridSize) { }
+    int getGridSize() const;
+
 private:
-    float biologicalChildAge;
-    float biologicalAdultAge;
-    int gridSize;
+    //game board params
+    const int gridSize;
     Season season;
     DayTime dayTime;
+
+    //single creature params
+    float biologicalChildAge;
+    float biologicalAdultAge;
+
+
+    //genetic algorithm params
     float crossoverProbability;
     float mutationProbability;
     float mutationFactor;
 
+
+    //plants appearance params
     float plantAppearance;
     int minPlantSum;
     int maxPlantSum;
     float plantToSizeFactor;
-    //evolution alg params
-
-    //plants appearance params
-
 };
 
 #endif // PARAMETERSSET_H

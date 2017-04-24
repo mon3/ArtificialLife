@@ -1,6 +1,6 @@
 #ifndef PLANT_H
 #define PLANT_H
-#include "creature.h"
+#include "being.h"
 
 class Plant : public Being
 {

@@ -1,4 +1,4 @@
-#include "creature.h"
+#include "being.h"
 
 Being::Being()
 {

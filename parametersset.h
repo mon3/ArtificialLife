@@ -10,6 +10,8 @@ class ParametersSet
 public:
     ParametersSet(int _gridSize) : gridSize(_gridSize) { }
     int getGridSize() const;
+    Season getSeason();
+    void setSeason(Season);
 
 private:
     //game board params

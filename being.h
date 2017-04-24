@@ -1,5 +1,5 @@
-#ifndef CREATURE_H
-#define CREATURE_H
+#ifndef BEING_H
+#define BEING_H
 
 #include <QObject>
 #include <QGraphicsRectItem>
@@ -20,4 +20,4 @@ private:
     int hitPoints;
 };
 
-#endif // CREATURE_H
+#endif // BEING_H

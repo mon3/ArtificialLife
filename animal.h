@@ -1,7 +1,7 @@
 #ifndef ANIMAL_H
 #define ANIMAL_H
 
-#include "creature.h"
+#include "being.h"
 
 enum Activity {
     MATING,
@@ -21,7 +21,7 @@ public:
 private:
     //subactions
     //set of subactions for every type of animal will be defined:
-    virtual void hunt(Being& )=0;
+//    virtual void hunt(Being& )=0;
 
 
 

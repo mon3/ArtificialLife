@@ -3,3 +3,8 @@
 Animal::Animal () :Being (){
 
 }
+
+//Animal::hunt(Being & being)
+//{
+
+//}

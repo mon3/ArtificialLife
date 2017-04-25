@@ -33,6 +33,28 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 #FORMS    += ../mainwindow.ui
 
+#SOURCES += ../main.cpp\
+#        ../mainwindow.cpp \
+#   ../animal.cpp \
+#    ../food.cpp \
+#    ../grid.cpp \
+#    ../herbivorous.cpp \
+#    ../parametersset.cpp \
+#    ../plant.cpp \
+#    ../predator.cpp \
+#    ../being.cpp
+
+
+#HEADERS  += ../mainwindow.h \
+#    ../animal.h \
+#    ../food.h \
+#    ../grid.h \
+#    ../herbivorous.h \
+#    ../parametersset.h \
+#    ../plant.h \
+#    ../predator.h \
+#    ../being.h
+
 
 #unix|macx: QMAKE_CXXFLAGS += -fpermissive
 # Compiler options

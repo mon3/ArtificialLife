@@ -1,11 +1,16 @@
 #include <QString>
 #include <QtTest>
 #include <QCoreApplication>
+#include <QMainWindow>
+#include <QGraphicsScene>
 #include <../parametersset.cpp>
 #include <../grid.cpp>
+//#include <../mainwindow.cpp>
 //#include "../mainwindow.h"
-#include "../ui_mainwindow.h"
+//#include "../ui_mainwindow.h"
 //#include "../mainwindow.cpp"
+
+
 
 class ArtifiacialLifeTests : public QObject
 {
@@ -17,9 +22,16 @@ public:
 private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
+    void testParametersSetData();
     void testParametersSet();
+
+//    void testAnimalData();
     void testAnimal();
+
+//    void testGridData();
     void testGrid();
+
+//    void testMainWindowData();
     void testMainWindow();
 
 };
@@ -38,13 +50,41 @@ void ArtifiacialLifeTests::cleanupTestCase()
     qDebug("FINISHED unit tests...");
 }
 
-void ArtifiacialLifeTests::testParametersSet()
+void ArtifiacialLifeTests::testParametersSetData()
 {
+    QTest::addColumn<Season>("first");
+    QTest::addColumn<Season>("expected");
+
     ParametersSet paramsSet(200);
     paramsSet.setSeason(Season::winter);
-    // one or separate ?
-    QCOMPARE(paramsSet.getGridSize(), 200);
-    QCOMPARE(paramsSet.getSeason(), Season::winter);
+
+    QTest::newRow("compare01") << paramsSet.getSeason() << Season::winter;
+    paramsSet.setSeason(Season::spring);
+    QTest::newRow("compare02") << paramsSet.getSeason() << Season::spring;
+    paramsSet.setSeason(Season::summer);
+    QTest::newRow("compare03") << paramsSet.getSeason() << Season::summer;
+    paramsSet.setSeason(Season::autumn);
+    QTest::newRow("compare04") << paramsSet.getSeason() << Season::autumn;
+
+}
+
+
+
+
+
+void ArtifiacialLifeTests::testParametersSet()
+{
+      QFETCH(Season, first);
+      QFETCH(Season, expected);
+
+      Season actual = first;
+      QCOMPARE(actual, expected);
+
+//    ParametersSet paramsSet(200);
+//    paramsSet.setSeason(Season::winter);
+//    // one or separate ?
+//    QCOMPARE(paramsSet.getGridSize(), 200);
+//    QCOMPARE(paramsSet.getSeason(), Season::winter);
 }
 
 void ArtifiacialLifeTests::testGrid()
@@ -67,6 +107,8 @@ void ArtifiacialLifeTests::testMainWindow()
 
 }
 
-QTEST_MAIN(ArtifiacialLifeTests)
+//QTEST_MAIN(ArtifiacialLifeTests)
+QTEST_APPLESS_MAIN(ArtifiacialLifeTests)
+
 
 #include "tst_artifiaciallifetests.moc"

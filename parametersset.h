@@ -1,21 +1,26 @@
 #ifndef PARAMETERSSET_H
 #define PARAMETERSSET_H
 
+#include <QObject>
+
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
 
 
-class ParametersSet
+class ParametersSet:public QObject
 {
+    Q_OBJECT
+//    Q_ENUMS(Season);
 public:
-    ParametersSet(int _gridSize) : gridSize(_gridSize) { }
+    ParametersSet(int gridSize) : _gridSize(gridSize) {};
     int getGridSize() const;
     Season getSeason();
     void setSeason(Season);
+    ~ParametersSet() { };
 
 private:
     //game board params
-    const int gridSize;
+    const int _gridSize;
     Season season;
     DayTime dayTime;
 
@@ -37,4 +42,7 @@ private:
     float plantToSizeFactor;
 };
 
+Q_DECLARE_METATYPE(Season);
+
 #endif // PARAMETERSSET_H
+

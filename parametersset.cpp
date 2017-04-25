@@ -3,7 +3,7 @@
 
 int ParametersSet::getGridSize() const
 {
-    return gridSize;
+    return _gridSize;
 }
 
 void ParametersSet::setSeason(Season newSeason)
@@ -15,3 +15,5 @@ Season ParametersSet::getSeason()
 {
     return season;
 }
+
+

@@ -42,7 +42,7 @@ private:
     float plantToSizeFactor;
 };
 
-Q_DECLARE_METATYPE(Season);
+Q_DECLARE_METATYPE(Season)
 
 #endif // PARAMETERSSET_H
 

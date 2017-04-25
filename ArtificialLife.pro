@@ -62,6 +62,8 @@ FORMS    += mainwindow.ui
   QMAKE_CXXFLAGS += -Wextra
   QMAKE_CXXFLAGS += -Wpedantic
   QMAKE_CXXFLAGS += -Wno-type-limits
+  QMAKE_CXXFLAGS += -Wpedantic
+
 
   win32 {
     # Set debug options for MinGw in QtCreator
@@ -79,14 +81,6 @@ FORMS    += mainwindow.ui
   QMAKE_CXXFLAGS_WARN_ON = ""
   QMAKE_CXXFLAGS += /W4
 }
-
-
-#LIBS += \
-#       -lboost_system\
-
-## install
-#target.path = $$[QT_INSTALL_EXAMPLES]/qtestlib/tutorial3
-#INSTALLS += target
 
 SUBDIRS += \
     Tests

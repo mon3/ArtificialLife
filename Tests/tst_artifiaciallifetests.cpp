@@ -5,12 +5,8 @@
 #include <QGraphicsScene>
 #include <../parametersset.cpp>
 #include <../grid.cpp>
-#include <stdio.h>
+#include <iostream>
 //#include <../mainwindow.cpp>
-//#include "../mainwindow.h"
-//#include "../ui_mainwindow.h"
-//#include "../mainwindow.cpp"
-
 
 
 class ArtifiacialLifeTests : public QObject
@@ -22,18 +18,28 @@ public:
 
 private Q_SLOTS:
     void initTestCase();
-    void cleanupTestCase();
-    void testParametersSetData();
-    void testParametersSet();
+    // tests for ParametersSet::getGridSize()
+    void testParametersSetCase1_data();
+    void testParametersSetCase1();
 
-//    void testAnimalData();
+    // tests for ParametersSet::getSeason
+    void testParametersSetCase2_data();
+    void testParametersSetCase2();
+
+    // tests for Animal Class
+    void testAnimal_data();
     void testAnimal();
 
-//    void testGridData();
+    // tests for Grid data
+    void testGrid_data();
     void testGrid();
 
-//    void testMainWindowData();
+    // tests for MainWindow Class (gui)
+    void testMainWindow_data();
     void testMainWindow();
+
+    // final test case
+    void cleanupTestCase();
 
 };
 
@@ -51,41 +57,63 @@ void ArtifiacialLifeTests::cleanupTestCase()
     qDebug("FINISHED unit tests...");
 }
 
-void ArtifiacialLifeTests::testParametersSetData()
+void ArtifiacialLifeTests::testParametersSetCase2_data()
 {
     QTest::addColumn<Season>("first");
     QTest::addColumn<Season>("expected");
 
     ParametersSet paramsSet(200);
     paramsSet.setSeason(Season::winter);
-    std::cout<<paramsSet.getSeason();
     QTest::newRow("compare01") << paramsSet.getSeason() << Season::winter;
     paramsSet.setSeason(Season::spring);
     QTest::newRow("compare02") << paramsSet.getSeason() << Season::spring;
     paramsSet.setSeason(Season::summer);
-    QTest::newRow("compare03") << paramsSet.getSeason() << Season::summer;
+    // exemplary test with failure
+    QTest::newRow("compare03") << paramsSet.getSeason() << Season::spring;
     paramsSet.setSeason(Season::autumn);
     QTest::newRow("compare04") << paramsSet.getSeason() << Season::autumn;
 
 }
 
-
-
-
-
-void ArtifiacialLifeTests::testParametersSet()
+void ArtifiacialLifeTests::testParametersSetCase1_data()
 {
-      QFETCH(Season, first);
-      QFETCH(Season, expected);
+    QTest::addColumn<int>("first");
+    QTest::addColumn<int>("expected");
 
-      Season actual = first;
-      QCOMPARE(actual, expected);
+    ParametersSet paramsSet(200);
+    ParametersSet paramsSet1(300);
+    ParametersSet paramsSet2(400);
+    ParametersSet paramsSet3(500);
 
-//    ParametersSet paramsSet(200);
-//    paramsSet.setSeason(Season::winter);
-//    // one or separate ?
-//    QCOMPARE(paramsSet.getGridSize(), 200);
-//    QCOMPARE(paramsSet.getSeason(), Season::winter);
+    QTest::newRow("compare01") << paramsSet.getGridSize()<< 200;
+    // test with failure: values are not equal
+    QTest::newRow("compare02") << paramsSet1.getGridSize()<< 250;
+    QTest::newRow("compare03") << paramsSet2.getGridSize()<< 400;
+    QTest::newRow("compare04") << paramsSet3.getGridSize()<< 500;
+
+}
+
+
+void ArtifiacialLifeTests::testParametersSetCase1()
+{
+    QFETCH(int, first);
+    QFETCH(int, expected);
+    QCOMPARE(first, expected);
+
+}
+
+void ArtifiacialLifeTests::testParametersSetCase2()
+{
+    QFETCH(Season, first);
+    QFETCH(Season, expected);
+    QCOMPARE(first, expected);
+
+}
+
+void ArtifiacialLifeTests::testGrid_data()
+{
+    // TODO: prepare exemplary and expected data for Grid class tests
+
 }
 
 void ArtifiacialLifeTests::testGrid()
@@ -96,9 +124,19 @@ void ArtifiacialLifeTests::testGrid()
 
 }
 
+void ArtifiacialLifeTests::testAnimal_data()
+{
+  // TODO: prepare exemplary and expected data for Animal class tests
+}
+
 void ArtifiacialLifeTests::testAnimal()
 {
     // TODO: Animal class tests for different types of animal
+}
+
+void ArtifiacialLifeTests::testMainWindow_data()
+{
+   // TODO:: prepare exemplary and expected data for gui tests
 }
 
 void ArtifiacialLifeTests::testMainWindow()

@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <../parametersset.cpp>
 #include <../grid.cpp>
+#include <stdio.h>
 //#include <../mainwindow.cpp>
 //#include "../mainwindow.h"
 //#include "../ui_mainwindow.h"
@@ -57,7 +58,7 @@ void ArtifiacialLifeTests::testParametersSetData()
 
     ParametersSet paramsSet(200);
     paramsSet.setSeason(Season::winter);
-
+    std::cout<<paramsSet.getSeason();
     QTest::newRow("compare01") << paramsSet.getSeason() << Season::winter;
     paramsSet.setSeason(Season::spring);
     QTest::newRow("compare02") << paramsSet.getSeason() << Season::spring;

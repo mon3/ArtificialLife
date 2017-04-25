@@ -7,16 +7,16 @@ enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
 
 
-class ParametersSet:public QObject
+class ParametersSet
 {
-    Q_OBJECT
+//    Q_OBJECT
 //    Q_ENUMS(Season);
 public:
-    ParametersSet(int gridSize) : _gridSize(gridSize) {};
+    ParametersSet(int gridSize) : _gridSize(gridSize) {}
     int getGridSize() const;
     Season getSeason();
     void setSeason(Season);
-    ~ParametersSet() { };
+//    ~ParametersSet() { }
 
 private:
     //game board params

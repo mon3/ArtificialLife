@@ -3,10 +3,9 @@
 
 void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 {
-    const int gridNumber = 20;
+    Q_UNUSED(rect);
+    const int gridNumber = set->getGridSize();
     int x = 0, y = 0;
-    painter->drawLine(5, 5, 10, 10);
-    qDebug() << painter->viewport() << " sc: " <<this->itemsBoundingRect();
     const int distance = ParametersSet::SCENE_WIDTH / gridNumber;
     for (int i = -1; i < gridNumber; ++i ) {
         painter->setPen(Qt::red);
@@ -21,6 +20,7 @@ void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 void Grid::updateGrid()
 {
     QList<QGraphicsItem*> list = this->items();
+    // TODO: better mapping
     foreach (QGraphicsItem* item, list) {
         Being* var = static_cast<Being*>(item);
         var->setPos((var->getLogX() * ParametersSet::SCENE_WIDTH) / set->getGridSize(),

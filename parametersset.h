@@ -2,7 +2,7 @@
 #define PARAMETERSSET_H
 
 #include <QObject>
-
+#include <stdlib.h>
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
 enum Beings { PLANT, HERBIVOROUS, PREDATOR };
@@ -10,15 +10,16 @@ enum Beings { PLANT, HERBIVOROUS, PREDATOR };
 class ParametersSet
 {
 public:
-    ParametersSet(int gridSize) : _gridSize(gridSize) {}
+    ParametersSet(int gridSize);
     int getGridSize() const;
     Season getSeason();
     void setSeason(Season);
     static const int SCENE_WIDTH = 1000;
+    static int BEING_WIDTH;
     ~ParametersSet() { }
-
+    static int getRandomInt();
 private:
-    Beings board[][];
+    //Beings board[][];
     //game board params
     const int _gridSize;
     Season season;

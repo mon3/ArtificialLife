@@ -1,6 +1,7 @@
 #ifndef ANIMAL_H
 #define ANIMAL_H
 
+#include <QDebug>
 #include "being.h"
 
 enum Activity {
@@ -18,7 +19,9 @@ class Animal : public Being
 public:
     Animal(int _logX, int _logY) : Being(_logX, _logY) { }
     void action();
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*);
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *);
 private:
     //subactions
     //set of subactions for every type of animal will be defined:
@@ -26,7 +29,7 @@ private:
 
 
 
-    void mate(Animal& );
+    void mate(Animal&);
     void eat(Being&);
     void rest();
     void sleep();

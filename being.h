@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QPainter>
 #include <QGraphicsRectItem>
-
+#include "parametersset.h"
 class Being : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
@@ -15,7 +15,8 @@ public:
     int getHitPoints() const;
     static int sceneSize; // consider
     void setHitPoints(int value);
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+    //qt for static cast
     int type() const  { return 213; }
     int getLogX() const;
     void setLogX(int value);
@@ -27,7 +28,6 @@ private:
     int logX;
     int logY;
     int hitPoints;
-    static const int WIDTH = 40;
 };
 
 #endif // BEING_H

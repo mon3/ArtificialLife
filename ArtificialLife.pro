@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     parametersset.cpp \
     plant.cpp \
     predator.cpp \
-    being.cpp
+    being.cpp \
+    beingwindow.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -48,9 +49,11 @@ HEADERS  += mainwindow.h \
     parametersset.h \
     plant.h \
     predator.h \
-    being.h
+    being.h \
+    beingwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    beingwindow.ui
 #CONFIG   += c++11
 
 #unix|macx: QMAKE_CXXFLAGS += -fpermissive

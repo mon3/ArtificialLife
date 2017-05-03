@@ -24,7 +24,7 @@ public:
 private:
     void paintGrid(Grid*);
     Ui::MainWindow *ui;
-    const int SCENE_WIDTH = 1000;
+
 
 
 public slots:

@@ -16,8 +16,9 @@ enum Activity {
 class Animal : public Being
 {
 public:
-    Animal();
+    Animal(int _logX, int _logY) : Being(_logX, _logY) { }
     void action();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 private:
     //subactions
     //set of subactions for every type of animal will be defined:

@@ -12,7 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ArtificialLife
 TEMPLATE = app
-TEMPLATE = subdirs
+#TEMPLATE = subdirs
 
 
 # The following define makes your compiler emit warnings if you use

@@ -5,20 +5,20 @@
 
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
-
+enum Beings { PLANT, HERBIVOROUS, PREDATOR };
 
 class ParametersSet
 {
-//    Q_OBJECT
-//    Q_ENUMS(Season);
 public:
     ParametersSet(int gridSize) : _gridSize(gridSize) {}
     int getGridSize() const;
     Season getSeason();
     void setSeason(Season);
-//    ~ParametersSet() { }
+    static const int SCENE_WIDTH = 1000;
+    ~ParametersSet() { }
 
 private:
+    Beings board[][];
     //game board params
     const int _gridSize;
     Season season;

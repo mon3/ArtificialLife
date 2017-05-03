@@ -5,7 +5,7 @@
 class Predator : public Animal
 {
 public:
-    Predator();
+    Predator(int x, int y) : Animal(x, y) { }
 };
 
 #endif // PREDATOR_H

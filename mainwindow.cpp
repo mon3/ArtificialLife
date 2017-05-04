@@ -31,11 +31,14 @@ void MainWindow::initGame()
     Grid* scene = new Grid(new ParametersSet(gridSize));
     const QRect rec = QRect(0, 0, ParametersSet::SCENE_WIDTH, ParametersSet::SCENE_WIDTH);
     scene->setSceneRect(rec);
-    Animal* ex = new Animal(5, 5);
-    connect(ui->pushButton_5, SIGNAL(pressed()), scene, SLOT(updateGrid()));
+    //test subjects
+    Animal* ex = new Predator(5, 5);
     scene->addItem(ex);
+    ex = new Herbivorous(10, 10);
+    scene->addItem(ex);
+    connect(ui->pushButton_5, SIGNAL(pressed()), scene, SLOT(updateGrid()));
+
     ui->graphicsView->setScene(scene);
-    paintGrid(scene);
 
 }
 
@@ -50,13 +53,4 @@ void MainWindow::showEvent(QShowEvent *)
     ui->graphicsView->fitInView(ui->graphicsView->sceneRect(), Qt::KeepAspectRatio);
 }
 
-void MainWindow::paintGrid(Grid* scene)
-{
-    // Add the vertical lines first, paint them red
-    //todo set params
 
-
-
-
-
-}

@@ -22,7 +22,6 @@ public:
     void resizeEvent(QResizeEvent *event);
     void showEvent(QShowEvent* event);
 private:
-    void paintGrid(Grid*);
     Ui::MainWindow *ui;
 
 

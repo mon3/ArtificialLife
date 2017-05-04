@@ -24,7 +24,11 @@ public:
     int getLogY() const;
     void setLogY(int value);
 
+protected:
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
 private:
+    virtual int getPenColor() const = 0;
     int logX;
     int logY;
     int hitPoints;

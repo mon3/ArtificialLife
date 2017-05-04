@@ -5,7 +5,11 @@
 class Herbivorous : public Animal
 {
 public:
-    Herbivorous();
+    Herbivorous(int logX, int logY) : Animal(logX, logY) { }
+
+    // Being interface
+private:
+    virtual int getPenColor() const { return Qt::green; }
 };
 
 #endif // HERBIVOROUS_H

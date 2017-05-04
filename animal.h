@@ -19,7 +19,6 @@ class Animal : public Being
 public:
     Animal(int _logX, int _logY) : Being(_logX, _logY) { }
     void action();
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
 private:
@@ -45,6 +44,8 @@ private:
     float exaustionLevel;
     float saturationRate;
     Activity activity;
+
+    virtual int getPenColor() const = 0;
 };
 
 #endif // ANIMAL_H

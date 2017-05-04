@@ -4,8 +4,10 @@
 #include <QGraphicsScene>
 #include <QPainter>
 #include "parametersset.h"
-#include "being.h"
-#include "animal.h"
+#include "predator.h"
+#include "herbivorous.h"
+#include "plant.h"
+
 #include <QDebug>
 
 class Grid : public QGraphicsScene

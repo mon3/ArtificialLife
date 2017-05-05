@@ -18,7 +18,7 @@ BeingWindow::~BeingWindow()
 
 void BeingWindow::initWindow(Being* being)
 {
-    ui->lineEdit_7->setText(QString(being->getLogX()));
-    ui->lineEdit_8->setText(QString(being->getLogY()));
-    qDebug() << "called!";
+    ui->lineEdit_7->insert(std::string());
+    ui->lineEdit_8->insert(QString(being->getLogY()).constData());
+    qDebug() << "called!: x: " << being->getLogX() << " y: " << being->getLogY();
 }

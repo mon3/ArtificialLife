@@ -9,7 +9,7 @@ public:
 
     // Being interface
 private:
-    inline virtual int getPenColor() const { return Qt::red; }
+    inline virtual Qt::GlobalColor getPenColor() const { return Qt::red; }
 };
 
 #endif // PREDATOR_H

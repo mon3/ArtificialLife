@@ -9,15 +9,12 @@ class Being : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-
     Being(int _logX, int _logY);
     int mapCoordinates(int, int);
     int getHitPoints() const;
     static int sceneSize; // consider
     void setHitPoints(int value);
 
-    //qt for static cast
-    int type() const  { return 213; }
     int getLogX() const;
     void setLogX(int value);
 
@@ -28,7 +25,7 @@ protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    virtual int getPenColor() const = 0;
+    virtual Qt::GlobalColor getPenColor() const = 0;
     int logX;
     int logY;
     int hitPoints;

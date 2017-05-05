@@ -1,5 +1,15 @@
 #include "grid.h"
 
+Grid::Grid(ParametersSet *_set) : set(_set)
+{
+    //test subjects
+    Animal* ex = new Predator(5, 5);
+    addItem(ex);
+    connect(ex, SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+    ex = new Herbivorous(10, 10);
+    addItem(ex);
+    connect(ex, SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+}
 
 void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 {

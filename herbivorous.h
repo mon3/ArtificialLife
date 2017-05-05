@@ -9,7 +9,7 @@ public:
 
     // Being interface
 private:
-    virtual int getPenColor() const { return Qt::green; }
+    inline virtual Qt::GlobalColor getPenColor() const { return Qt::red; }
 };
 
 #endif // HERBIVOROUS_H

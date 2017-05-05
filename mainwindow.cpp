@@ -31,11 +31,7 @@ void MainWindow::initGame()
     Grid* scene = new Grid(new ParametersSet(gridSize));
     const QRect rec = QRect(0, 0, ParametersSet::SCENE_WIDTH, ParametersSet::SCENE_WIDTH);
     scene->setSceneRect(rec);
-    //test subjects
-    Animal* ex = new Predator(5, 5);
-    scene->addItem(ex);
-    ex = new Herbivorous(10, 10);
-    scene->addItem(ex);
+
     connect(ui->pushButton_5, SIGNAL(pressed()), scene, SLOT(updateGrid()));
 
     ui->graphicsView->setScene(scene);

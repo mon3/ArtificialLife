@@ -16,11 +16,15 @@ enum Activity {
 
 class Animal : public Being
 {
+    Q_OBJECT
 public:
+
     Animal(int _logX, int _logY) : Being(_logX, _logY) { }
     void action();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
+signals:
+    void callWindow(Being*);
 private:
     //subactions
     //set of subactions for every type of animal will be defined:
@@ -45,7 +49,8 @@ private:
     float saturationRate;
     Activity activity;
 
-    virtual int getPenColor() const = 0;
+    virtual Qt::GlobalColor getPenColor() const = 0;
+
 };
 
 #endif // ANIMAL_H

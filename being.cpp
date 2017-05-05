@@ -41,6 +41,5 @@ void Being::setLogY(int value)
 
 void Being::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    painter->setPen(getPenColor());
-    painter->drawRect(this->rect());
+    painter->fillRect(this->rect(), getPenColor());
 }

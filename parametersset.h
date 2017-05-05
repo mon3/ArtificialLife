@@ -7,9 +7,13 @@ enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
 enum Beings { PLANT, HERBIVOROUS, PREDATOR };
 
-class ParametersSet
+class Being;
+class BeingWindow;
+class ParametersSet : public QObject
 {
+    Q_OBJECT
 public:
+
     ParametersSet(int gridSize);
     int getGridSize() const;
     Season getSeason();
@@ -18,7 +22,12 @@ public:
     static int BEING_WIDTH;
     ~ParametersSet() { }
     static int getRandomInt();
+public slots:
+    void callWindow(Being* b);
 private:
+
+    BeingWindow* window;
+
     //Beings board[][];
     //game board params
     const int _gridSize;
@@ -43,7 +52,6 @@ private:
     float plantToSizeFactor;
 };
 
-Q_DECLARE_METATYPE(Season)
 
 #endif // PARAMETERSSET_H
 

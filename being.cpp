@@ -26,6 +26,8 @@ int Being::getLogX() const
 
 void Being::setLogX(int value)
 {
+    int grSize = ParametersSet::getInstance()->getGridSize();
+    if(value < grSize && value > 0)
     logX = value;
 }
 
@@ -36,6 +38,8 @@ int Being::getLogY() const
 
 void Being::setLogY(int value)
 {
+    int grSize = ParametersSet::getInstance()->getGridSize();
+    if(value < grSize && value > 0)
     logY = value;
 }
 

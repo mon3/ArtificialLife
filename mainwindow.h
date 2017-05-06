@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
-
+#include <QTimer>
+#include <QSharedPointer>
 #include "grid.h"
 
 
@@ -23,11 +24,16 @@ public:
     void showEvent(QShowEvent* event);
 private:
     Ui::MainWindow *ui;
+    QSharedPointer<QTimer> timer;
 
+    //change default name
+    const float TIMER_TICKS = 1000.0 / 15.0;
+    float timerDelimiter;
 
 
 public slots:
     void initGame();
+    void sliderValueChanged(int val);
 };
 
 #endif // MAINWINDOW_H

@@ -4,15 +4,7 @@
 #include <QDebug>
 #include "being.h"
 
-enum Activity {
-    MATING,
-    HUNTING, //for herbivorous ?
-    RESTING,
-    SLEEPING,
-    NURSING,
-    RUNNNING_AWAY,
-    DEAD
-};
+
 
 class Animal : public Being
 {
@@ -22,6 +14,17 @@ public:
     Animal(int _logX, int _logY) : Being(_logX, _logY) { }
     void action();
     virtual int type() const = 0;
+    enum Activity {
+        MATING,
+        HUNTING, //for herbivorous ?
+        RESTING,
+        SLEEPING,
+        NURSING,
+        RUNNNING_AWAY,
+        DEAD
+    };
+    Q_ENUM(Activity)
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
 signals:
@@ -32,12 +35,11 @@ private:
 //    virtual void hunt(Being& )=0;
 
 
-
+    void move();
     void mate(Animal&);
     void eat(Being&);
     void rest();
     void sleep();
-    // list of Beings checkingNeighbourhood();
     void run();
 
 

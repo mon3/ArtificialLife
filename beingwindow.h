@@ -4,7 +4,10 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QDebug>
+#include <QLineEdit>
 #include "animal.h"
+#include "predator.h"
+#include "herbivorous.h"
 namespace Ui {
 class BeingWindow;
 }
@@ -19,6 +22,7 @@ public:
     void initWindow(Being*); // initialize window information
 private:
     Ui::BeingWindow *ui;
+    void lineInfoChange(QLineEdit*, const QString&);
 };
 
 #endif // BEINGWINDOW_H

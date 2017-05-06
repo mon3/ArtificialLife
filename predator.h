@@ -4,6 +4,7 @@
 
 class Predator : public Animal
 {
+    Q_OBJECT
 public:
     Predator(int x, int y) : Animal(x, y) { }
     int type() const { return Beings::PREDATOR; }

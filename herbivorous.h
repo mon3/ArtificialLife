@@ -4,6 +4,7 @@
 
 class Herbivorous : public Animal
 {
+    Q_OBJECT
 public:
     Herbivorous(int logX, int logY) : Animal(logX, logY) { }
 

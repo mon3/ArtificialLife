@@ -14,14 +14,12 @@ class Grid : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    Grid(ParametersSet* _set);
+    Grid();
     ~Grid() { delete set; }
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
 private:
 
-    //todo smart pointers
-    ParametersSet* set;
 public slots:
     void updateGrid();
 };

@@ -9,6 +9,13 @@ ParametersSet::ParametersSet(int gridSize)
     window = new BeingWindow();
 }
 
+ParametersSet *ParametersSet::getInstance(int gridSize = 0)
+{
+    if(instance == nullptr)
+        instance = new ParametersSet(gridSize);
+    return instance;
+}
+
 int ParametersSet::getGridSize() const
 {
     return _gridSize;

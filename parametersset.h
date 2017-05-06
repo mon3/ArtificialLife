@@ -14,7 +14,8 @@ class ParametersSet : public QObject
     Q_OBJECT
 public:
 
-    ParametersSet(int gridSize);
+
+    static ParametersSet* getInstance(int);
     int getGridSize() const;
     Season getSeason();
     void setSeason(Season);
@@ -25,7 +26,13 @@ public:
 public slots:
     void callWindow(Being* b);
 private:
+    //to make singleton
+    ParametersSet(const ParametersSet&) = delete;
+    ParametersSet& operator=(const ParametersSet&) = delete;
+    ParametersSet(int gridSize);
 
+
+    static ParametersSet* instance;
     BeingWindow* window;
 
     //Beings board[][];

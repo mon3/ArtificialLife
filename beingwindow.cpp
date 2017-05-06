@@ -18,7 +18,10 @@ BeingWindow::~BeingWindow()
 
 void BeingWindow::initWindow(Being* being)
 {
-    ui->lineEdit_7->insert("std::string()");
+    //clear old inf
+    ui->lineEdit_7->clear();
+    ui->lineEdit_8->clear();
+
+    ui->lineEdit_7->insert(QString::number(being->getLogX()));
     ui->lineEdit_8->insert(QString::number(being->getLogY()));
-    qDebug() << "called!: x: " << being->getLogX() << " y: " << being->getLogY();
 }

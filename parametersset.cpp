@@ -2,14 +2,16 @@
 #include "beingwindow.h"
 int ParametersSet::BEING_WIDTH = 40;
 
+ParametersSet* ParametersSet::instance = nullptr;
+
 ParametersSet::ParametersSet(int gridSize)
     : _gridSize(gridSize)
 {
     BEING_WIDTH = (SCENE_WIDTH / gridSize) / 1.5;
-    window = new BeingWindow();
+    window = QSharedPointer<BeingWindow>(new BeingWindow);
 }
 
-ParametersSet *ParametersSet::getInstance(int gridSize = 0)
+ParametersSet *ParametersSet::getInstance(int gridSize)
 {
     if(instance == nullptr)
         instance = new ParametersSet(gridSize);

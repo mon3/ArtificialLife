@@ -28,6 +28,7 @@ void MainWindow::initGame()
 //    ui->graphicsView->setSceneRect(rec);
 
     int gridSize = ui->lineEdit->text().toInt();
+    ParametersSet::getInstance(gridSize);
     Grid* scene = new Grid();
     const QRect rec = QRect(0, 0, ParametersSet::SCENE_WIDTH, ParametersSet::SCENE_WIDTH);
     scene->setSceneRect(rec);

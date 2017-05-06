@@ -15,7 +15,7 @@ class Grid : public QGraphicsScene
     Q_OBJECT
 public:
     Grid();
-    ~Grid() { delete set; }
+    ~Grid() {}
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
 private:

@@ -2,6 +2,7 @@
 #define PARAMETERSSET_H
 
 #include <QObject>
+#include <QSharedPointer>
 #include <stdlib.h>
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
@@ -15,13 +16,13 @@ class ParametersSet : public QObject
 public:
 
 
-    static ParametersSet* getInstance(int);
+    static ParametersSet* getInstance(int gridSize = 0);
     int getGridSize() const;
     Season getSeason();
     void setSeason(Season);
     static const int SCENE_WIDTH = 1000;
     static int BEING_WIDTH;
-    ~ParametersSet() { }
+    ~ParametersSet() {  }
     static int getRandomInt();
 public slots:
     void callWindow(Being* b);
@@ -33,7 +34,7 @@ private:
 
 
     static ParametersSet* instance;
-    BeingWindow* window;
+    QSharedPointer<BeingWindow> window;
 
     //Beings board[][];
     //game board params

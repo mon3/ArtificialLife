@@ -5,6 +5,8 @@
 #include <QPainter>
 #include <QGraphicsRectItem>
 #include "parametersset.h"
+
+
 class Being : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
@@ -20,12 +22,13 @@ public:
 
     int getLogY() const;
     void setLogY(int value);
-
+     virtual  int type() const = 0 ;
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
     virtual Qt::GlobalColor getPenColor() const = 0;
+
     int logX;
     int logY;
     int hitPoints;

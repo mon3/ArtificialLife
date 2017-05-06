@@ -21,6 +21,7 @@ public:
 
     Animal(int _logX, int _logY) : Being(_logX, _logY) { }
     void action();
+    virtual int type() const = 0;
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
 signals:

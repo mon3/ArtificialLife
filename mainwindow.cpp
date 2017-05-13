@@ -44,16 +44,16 @@ void MainWindow::initGame()
     Grid* scene = new Grid();
     const QRect rec = QRect(0, 0, ParametersSet::SCENE_WIDTH, ParametersSet::SCENE_WIDTH);
     scene->setSceneRect(rec);
-    timer = QSharedPointer<QTimer>(new QTimer);
+//    timer = QSharedPointer<QTimer>(new QTimer);
 
-    connect(ui->startButton, SIGNAL(pressed()), timer.data(), SLOT(start()));
-    connect(ui->stopButton, SIGNAL(pressed()), timer.data(), SLOT(stop()));
-    connect(timer.data(), SIGNAL(timeout()), scene, SLOT(updateGrid()));
+//    connect(ui->startButton, SIGNAL(pressed()), timer.data(), SLOT(start()));
+//    connect(ui->stopButton, SIGNAL(pressed()), timer.data(), SLOT(stop()));
+//    connect(timer.data(), SIGNAL(timeout()), scene, SLOT(updateGrid()));
 
-    //test button
-    connect(ui->testPushBUtton, SIGNAL(pressed()), scene, SLOT(updateGrid()));
+//    //test button
+//    connect(ui->testPushBUtton, SIGNAL(pressed()), scene, SLOT(updateGrid()));
 
-    connect(ui->velocitySlider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
+//    connect(ui->velocitySlider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
     ui->graphicsView->setScene(scene);
     }
 

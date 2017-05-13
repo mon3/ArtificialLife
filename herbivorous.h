@@ -4,6 +4,7 @@
 #include <iterator>
 #include "animal.h"
 #include "plant.h"
+
 class Herbivorous : public Animal
 {
     Q_OBJECT

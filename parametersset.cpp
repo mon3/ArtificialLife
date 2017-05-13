@@ -31,6 +31,11 @@ ParametersSet::ParametersSet(int gridSize)
     };
 }
 
+int ParametersSet::getPlantGrowbackLevel() const
+{
+    return plantGrowbackLevel;
+}
+
 float ParametersSet::getStartHungerLevel() const
 {
     return startHungerLevel;

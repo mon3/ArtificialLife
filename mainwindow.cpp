@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->pushButton_4, SIGNAL(pressed()), this, SLOT(initGame()));
+    connect(ui->setParamsButton, SIGNAL(pressed()), this, SLOT(initGame()));
 }
 
 
@@ -27,22 +27,35 @@ void MainWindow::initGame()
 //    ui->graphicsView->setScene(_grid);
 //    ui->graphicsView->setSceneRect(rec);
 
-    int gridSize = ui->lineEdit->text().toInt();
+    if (ui->sceneSizeEdit->text().isEmpty())
+        {
+            qDebug("Please set correct grid parameters!");
+        }
+    else
+    {
+        int gridSize = ui->sceneSizeEdit->text().toInt();
+
+
     ParametersSet::getInstance(gridSize);
+//    if (ParametersSet::getGridSize() == 0)
+//        {
+//            qDebug("Please set correct grid parameters!");
+//        }
     Grid* scene = new Grid();
     const QRect rec = QRect(0, 0, ParametersSet::SCENE_WIDTH, ParametersSet::SCENE_WIDTH);
     scene->setSceneRect(rec);
     timer = QSharedPointer<QTimer>(new QTimer);
 
-    connect(ui->pushButton, SIGNAL(pressed()), timer.data(), SLOT(start()));
-    connect(ui->pushButton_2, SIGNAL(pressed()), timer.data(), SLOT(stop()));
+    connect(ui->startButton, SIGNAL(pressed()), timer.data(), SLOT(start()));
+    connect(ui->stopButton, SIGNAL(pressed()), timer.data(), SLOT(stop()));
     connect(timer.data(), SIGNAL(timeout()), scene, SLOT(updateGrid()));
 
     //test button
-    connect(ui->pushButton_5, SIGNAL(pressed()), scene, SLOT(updateGrid()));
+    connect(ui->testPushBUtton, SIGNAL(pressed()), scene, SLOT(updateGrid()));
 
-    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
+    connect(ui->velocitySlider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
     ui->graphicsView->setScene(scene);
+    }
 
 }
 

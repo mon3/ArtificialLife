@@ -14,8 +14,8 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="1">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -23,7 +23,7 @@
       <widget class="QGraphicsView" name="graphicsView"/>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_x">
         <attribute name="title">
@@ -35,19 +35,19 @@
            <x>20</x>
            <y>50</y>
            <width>181</width>
-           <height>22</height>
+           <height>27</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="beingLabel">
             <property name="text">
              <string>Param2:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_2"/>
+           <widget class="QLineEdit" name="beingEdit"/>
           </item>
          </layout>
         </widget>
@@ -57,23 +57,27 @@
            <x>20</x>
            <y>20</y>
            <width>181</width>
-           <height>22</height>
+           <height>27</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="sceneSizeLabel">
             <property name="text">
              <string>RozmiarSceny</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit"/>
+           <widget class="QLineEdit" name="sceneSizeEdit">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="setParamsButton">
          <property name="geometry">
           <rect>
            <x>210</x>
@@ -89,7 +93,7 @@
           <string>Zadaj parametry</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="testPushBUtton">
          <property name="geometry">
           <rect>
            <x>250</x>
@@ -113,26 +117,26 @@
            <x>71</x>
            <y>21</y>
            <width>138</width>
-           <height>113</height>
+           <height>114</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="startButton">
             <property name="text">
              <string>Start</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="stopButton">
             <property name="text">
              <string>Stop</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="resetButton">
             <property name="text">
              <string>Reset</string>
             </property>
@@ -141,14 +145,14 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="velocityLabel">
               <property name="text">
                <string>Szybkosc</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider">
+             <widget class="QSlider" name="velocitySlider">
               <property name="minimum">
                <number>1</number>
               </property>
@@ -193,7 +197,7 @@
      <x>0</x>
      <y>0</y>
      <width>594</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMenu">

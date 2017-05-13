@@ -11,6 +11,10 @@ public:
     // Being interface
 private:
     inline virtual Qt::GlobalColor getPenColor() const { return Qt::red; }
+
+    // Animal interface
+private:
+    void hunt();
 };
 
 #endif // PREDATOR_H

@@ -27,7 +27,7 @@ private:
     QSharedPointer<QTimer> timer;
 
     //change default name
-    const float TIMER_TICKS = 1000.0 / 15.0;
+    const float TIMER_TICKS = 1000.0f / 15.0f;
     float timerDelimiter;
 
 

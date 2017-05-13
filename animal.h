@@ -17,13 +17,15 @@ public:
     enum Activity {
         MATING,
         HUNTING, //for herbivorous ?
-        RESTING,
-        SLEEPING,
-        NURSING,
+//      RESTING,
+//      SLEEPING,
+//      NURSING, - for no need to nurse child
         RUNNNING_AWAY,
         DEAD
     };
     Q_ENUM(Activity)
+
+    int getEveSight() const;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
@@ -32,7 +34,7 @@ signals:
 private:
     //subactions
     //set of subactions for every type of animal will be defined:
-//    virtual void hunt(Being& )=0;
+    virtual void hunt()=0;
 
 
     void move();
@@ -48,10 +50,15 @@ private:
 //    const int generation;
     int generation;
     int speed;
+
+
+    int food_capacity;
+    float metabolism;
     float exaustionLevel;
     float saturationRate;
     Activity activity;
 
+//  for painter to define color
     virtual Qt::GlobalColor getPenColor() const = 0;
 
 };

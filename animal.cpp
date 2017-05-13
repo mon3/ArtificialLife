@@ -4,7 +4,23 @@
 
 void Animal::action()
 {
-    move();
+    if(activity == Activity::DEAD)
+        return;
+
+    //else, look for a site with bigger "sugar" value
+
+
+
+
+
+    //for simplicity, assume that no exaustion is involved
+    saturationRate -= metabolism;
+
+    //animal is dead
+    if(saturationRate < 0.0f) {
+        activity = Activity::DEAD;
+        return;
+    }
 }
 
 void Animal::mousePressEvent(QGraphicsSceneMouseEvent *)
@@ -23,5 +39,10 @@ void Animal::move()
     addVal = (ParametersSet::getRandomInt() % 3) - 1;
     this->setLogY(this->getLogY() + addVal);
     qDebug() << "isSet: " << this->getLogX() << " y: " << this->getLogY() << endl;
+}
+
+int Animal::getEveSight() const
+{
+    return eveSight;
 }
 

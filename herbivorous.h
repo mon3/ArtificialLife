@@ -1,7 +1,9 @@
 #ifndef HERBIVOROUS_H
 #define HERBIVOROUS_H
+#include <limits>
+#include <iterator>
 #include "animal.h"
-
+#include "plant.h"
 class Herbivorous : public Animal
 {
     Q_OBJECT
@@ -11,7 +13,11 @@ public:
     int type() const { return Beings::HERBIVOROUS; }
     // Being interface
 private:
-    inline virtual Qt::GlobalColor getPenColor() const { return Qt::red; }
+    inline virtual Qt::GlobalColor getPenColor() const { return Qt::green; }
+
+    // Animal interface
+private:
+    void hunt();
 };
 
 #endif // HERBIVOROUS_H

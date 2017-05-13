@@ -3,12 +3,20 @@
 
 #include <QObject>
 #include <QSharedPointer>
+#include <memory>
 #include <stdlib.h>
+#include <vector>
+#include <functional>
+#include <algorithm>
+#include <iterator>
+using namespace std;
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
 enum Beings { PLANT, HERBIVOROUS, PREDATOR };
 
 class Being;
+class Animal;
+class Plant;
 class BeingWindow;
 class ParametersSet : public QObject
 {
@@ -24,6 +32,12 @@ public:
     static int BEING_WIDTH;
     ~ParametersSet() {  }
     static int getRandomInt();
+    float getStartHungerLevel() const;
+
+
+    //TODO : use some template?
+    vector<Being *> getAdjacentHuntSubjects(Animal*) const;
+
 public slots:
     void callWindow(Being* b);
 private:
@@ -36,16 +50,20 @@ private:
     static ParametersSet* instance;
     QSharedPointer<BeingWindow> window;
 
-    //Beings board[][];
+
+    vector<vector <Plant* > > plantsOnBoard;
+    vector<vector <Animal* > > animalsOnBoard;
     //game board params
     const int _gridSize;
     Season season;
     DayTime dayTime;
 
+
+
     //single creature params
     float biologicalChildAge;
     float biologicalAdultAge;
-
+    float startHungerLevel;
 
     //genetic algorithm params
     float crossoverProbability;
@@ -58,6 +76,11 @@ private:
     int minPlantSum;
     int maxPlantSum;
     float plantToSizeFactor;
+
+    //helper lambda functions
+    function<bool(int, int)> checkCoordinate;
+    function<int(int)> getRowMod;
+    function<int(int)> getColMod;
 };
 
 

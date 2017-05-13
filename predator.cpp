@@ -2,3 +2,8 @@
 
 
 
+
+
+void Predator::hunt()
+{
+}

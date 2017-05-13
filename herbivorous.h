@@ -11,7 +11,7 @@ public:
     int type() const { return Beings::HERBIVOROUS; }
     // Being interface
 private:
-    inline virtual Qt::GlobalColor getPenColor() const { return Qt::red; }
+    inline virtual Qt::GlobalColor getPenColor() const { return Qt::green; }
 };
 
 #endif // HERBIVOROUS_H

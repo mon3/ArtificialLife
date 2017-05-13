@@ -22,6 +22,6 @@ void Animal::move()
     this->setLogX(this->getLogX() + addVal);
     addVal = (ParametersSet::getRandomInt() % 3) - 1;
     this->setLogY(this->getLogY() + addVal);
-    qDebug() << "isSet: " << this->getLogX() << " y: " << this->getLogY() << endl;
+//    qDebug() << "isSet: " << this->getLogX() << " y: " << this->getLogY() << endl;
 }
 

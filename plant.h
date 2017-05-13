@@ -7,6 +7,8 @@ class Plant : public Being
     Q_OBJECT
 public:
     Plant();
+
+    void action();
     int type() const { return Beings::PLANT; }
 };
 

@@ -8,11 +8,15 @@ void Animal::action()
         return;
 
     //else, look for a site with bigger "sugar" value
+    Being* prey = hunt();
 
-
-
-
-
+    //if there is a prey to hunt, go there and collect resources from site,
+    if(prey != nullptr) {
+        move(prey->getLogX(), prey->getLogY());
+        eat(prey);
+    }
+    else // if no food, go to random adjacent place
+        move();
     //for simplicity, assume that no exaustion is involved
     saturationRate -= metabolism;
 
@@ -30,15 +34,23 @@ void Animal::mousePressEvent(QGraphicsSceneMouseEvent *)
 
 }
 
-void Animal::move()
+void Animal::move(int x, int y )
 {
-    //todo: check neighbours
-    const int gridSize = ParametersSet::getInstance()->getGridSize();
-    int addVal = (ParametersSet::getRandomInt() % 3) - 1;
-    this->setLogX(this->getLogX() + addVal);
-    addVal = (ParametersSet::getRandomInt() % 3) - 1;
-    this->setLogY(this->getLogY() + addVal);
-    qDebug() << "isSet: " << this->getLogX() << " y: " << this->getLogY() << endl;
+    if(x == UNKNOWN_LOCATION || y == UNKNOWN_LOCATION)
+    {
+        //todo: check neighbours
+        const int gridSize = ParametersSet::getInstance()->getGridSize();
+        int addVal = (ParametersSet::getRandomInt() % 3) - 1;
+        this->setLogX(this->getLogX() + addVal);
+        addVal = (ParametersSet::getRandomInt() % 3) - 1;
+        this->setLogY(this->getLogY() + addVal);
+        qDebug() << "isSet: " << this->getLogX() << " y: " << this->getLogY() << endl;
+    } else
+    {
+        this->setLogX(x);
+        this->setLogY(y);
+    }
+
 }
 
 int Animal::getEveSight() const

@@ -3,7 +3,7 @@
 Grid::Grid()
 {
     //test subjects
-    Animal* ex = new Predator(5, 5);
+    Animal* ex = new Herbivorous(5, 5);
     addItem(ex);
     ParametersSet* set = ParametersSet::getInstance();
     connect(ex, SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
@@ -37,7 +37,7 @@ void Grid::updateGrid()
         Being* var = static_cast<Being*>(item);
 
         //not safe! do qcast later
-        Animal* a = static_cast<Animal*>(var);
+        Animal* a = qobject_cast<Animal*>(var);
         a->action();
         var->setPos((var->getLogX() * ParametersSet::SCENE_WIDTH) / set->getGridSize(),
                     (var->getLogY() * ParametersSet::SCENE_WIDTH) / set->getGridSize());

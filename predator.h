@@ -14,7 +14,7 @@ private:
 
     // Animal interface
 private:
-    void hunt();
+    Being* hunt();
 };
 
 #endif // PREDATOR_H

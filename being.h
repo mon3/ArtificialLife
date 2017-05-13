@@ -22,7 +22,9 @@ public:
 
     int getLogY() const;
     void setLogY(int value);
-     virtual  int type() const = 0 ;
+
+    virtual void action() = 0;
+    virtual  int type() const = 0 ;
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 

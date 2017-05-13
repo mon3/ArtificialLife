@@ -15,9 +15,13 @@ public:
 private:
     inline virtual Qt::GlobalColor getPenColor() const { return Qt::green; }
 
+
+
     // Animal interface
 private:
-    void hunt();
+
+    Being* hunt() override;
+    void eat(Being*) override;
 };
 
 #endif // HERBIVOROUS_H

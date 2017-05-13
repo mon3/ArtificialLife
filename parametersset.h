@@ -16,6 +16,7 @@ enum Beings { PLANT, HERBIVOROUS, PREDATOR };
 
 class Being;
 class Animal;
+class Herbivorous;
 class Plant;
 class BeingWindow;
 class ParametersSet : public QObject
@@ -35,8 +36,12 @@ public:
     float getStartHungerLevel() const;
 
 
-    //TODO : use some template?
-    vector<Being *> getAdjacentHuntSubjects(Animal*) const;
+    //TODO : use a template?
+    vector<Plant *> getAdjacentPlants(Animal*) const;
+    vector<Herbivorous*> getAdjacentHerbivorous(Animal*) const;
+
+
+    int getPlantGrowbackLevel() const;
 
 public slots:
     void callWindow(Being* b);
@@ -45,6 +50,7 @@ private:
     ParametersSet(const ParametersSet&) = delete;
     ParametersSet& operator=(const ParametersSet&) = delete;
     ParametersSet(int gridSize);
+
 
 
     static ParametersSet* instance;
@@ -76,6 +82,9 @@ private:
     int minPlantSum;
     int maxPlantSum;
     float plantToSizeFactor;
+    int plantGrowbackLevel;
+    const int MAX_PLANT_HP_LEVEL = 100;
+
 
     //helper lambda functions
     function<bool(int, int)> checkCoordinate;

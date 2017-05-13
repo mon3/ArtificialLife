@@ -31,18 +31,22 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
 signals:
     void callWindow(Being*);
+
+protected:
+    void move(int x = UNKNOWN_LOCATION, int y = UNKNOWN_LOCATION);
+
 private:
     //subactions
     //set of subactions for every type of animal will be defined:
-    virtual void hunt()=0;
+    virtual Being* hunt() = 0;
+    virtual void eat(Being*) = 0;
 
-
-    void move();
     void mate(Animal&);
-    void eat(Being&);
     void rest();
     void sleep();
     void run();
+
+
 
 
     int eveSight;
@@ -61,6 +65,8 @@ private:
 //  for painter to define color
     virtual Qt::GlobalColor getPenColor() const = 0;
 
+//  undefined grid location
+    static const int UNKNOWN_LOCATION = -1;
 };
 
 #endif // ANIMAL_H

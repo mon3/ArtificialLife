@@ -37,9 +37,9 @@ float ParametersSet::getStartHungerLevel() const
 }
 
 
-vector<Being *> ParametersSet::getAdjacentHuntSubjects(Animal * a) const
+vector<Plant *> ParametersSet::getAdjacentPlants(Animal * a) const
 {
-    vector<Being*> result;
+    vector<Plant*> result;
     int logX = a->getLogX(), logY = a->getLogY()
        ,eveSight = a->getEveSight();
     int checkX, checkY;
@@ -51,10 +51,33 @@ vector<Being *> ParametersSet::getAdjacentHuntSubjects(Animal * a) const
             checkX = logX + i * getRowMod(j);
             checkY = logY + i * getRowMod(j);
             if(checkCoordinate(checkX, checkY)
-                && animalsOnBoard[checkX][checkY] != nullptr)
-                result.push_back(animalsOnBoard[checkX][checkY]);
+                && plantsOnBoard[checkX][checkY] != nullptr
+                && animalsOnBoard[checkX][checkY] == nullptr)
+                result.push_back(plantsOnBoard[checkX][checkY]);
         }
     }
+
+    if(plantsOnBoard[logX][logY] != nullptr)
+        result.push_back(plantsOnBoard[logX][logY]);
+    return result;
+}
+
+vector<Herbivorous *> ParametersSet::getAdjacentHerbivorous(Animal * a) const
+{
+    vector<Herbivorous*> result;
+    int logX = a->getLogX(), logY = a->getLogY()
+       ,eveSight = a->getEveSight();
+    int checkX, checkY;
+    for(int i = 1; i <= eveSight; ++i)
+        for(int j = 0; j < 3; ++j) {
+            checkX = logX + i * getRowMod(j);
+            checkY = logY + i * getRowMod(j);
+            if(checkCoordinate(checkX, checkY)) {
+                Herbivorous* h =  qobject_cast<Herbivorous*>(animalsOnBoard[checkX][checkY]);
+                if(h != 0)
+                    result.push_back(h);
+            }
+        }
 
 
     return result;

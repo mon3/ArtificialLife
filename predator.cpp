@@ -4,6 +4,7 @@
 
 
 
-void Predator::hunt()
+Being* Predator::hunt()
 {
+    return nullptr;
 }

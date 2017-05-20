@@ -9,6 +9,8 @@ ParametersSet::ParametersSet(int gridSize)
     : _gridSize(gridSize)
 {
     BEING_WIDTH = (SCENE_WIDTH / gridSize) / 1.5;
+    qDebug() << "grid size = " << gridSize ;
+    qDebug() << "being_width = " << BEING_WIDTH;
     window = QSharedPointer<BeingWindow>(new BeingWindow);
 
     //instatiation of board
@@ -20,11 +22,13 @@ ParametersSet::ParametersSet(int gridSize)
         return (x >= 0 && y <= 0 && x < _gridSize && y < _gridSize);
     };
 
+    // TODO: ask to explain
     getRowMod = [](int x) -> int
     {
         return (x & 1) > 0 ? 0 : x - 1;
     };
 
+    // TODO: ask to explaint
     getColMod = [](int x) -> int
     {
         return (x & 1) == 0 ? 0 : 2 - x;
@@ -46,12 +50,12 @@ vector<Plant *> ParametersSet::getAdjacentPlants(Animal * a) const
 {
     vector<Plant*> result;
     int logX = a->getLogX(), logY = a->getLogY()
-       ,eveSight = a->getEveSight();
+       ,eyeSight = a->getEyeSight();
     int checkX, checkY;
 
     //pushing to vector every being within animal evesight
     //TODO: add comment to lookup section
-    for(int i = 1; i <= eveSight; ++i) {
+    for(int i = 1; i <= eyeSight; ++i) {
         for(int j = 0; j < 3; ++j) {
             checkX = logX + i * getRowMod(j);
             checkY = logY + i * getRowMod(j);
@@ -71,7 +75,7 @@ vector<Herbivorous *> ParametersSet::getAdjacentHerbivorous(Animal * a) const
 {
     vector<Herbivorous*> result;
     int logX = a->getLogX(), logY = a->getLogY()
-       ,eveSight = a->getEveSight();
+       ,eveSight = a->getEyeSight();
     int checkX, checkY;
     for(int i = 1; i <= eveSight; ++i)
         for(int j = 0; j < 3; ++j) {

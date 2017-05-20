@@ -5,6 +5,7 @@ Being::Being(int _logX, int _logY)
   : QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH), logX(_logX), logY(_logY)
 {
 
+//    this->setRect(logX, logY, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH);
 }
 
 int Being::getHitPoints() const
@@ -43,7 +44,13 @@ void Being::setLogY(int value)
     logY = value;
 }
 
-void Being::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+
+
+
+
+void Being::paint(QPainter *painter)
+
+//void Being::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->fillRect(this->rect(), getPenColor());
 }

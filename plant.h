@@ -1,7 +1,7 @@
 #ifndef PLANT_H
 #define PLANT_H
 #include "being.h"
-
+#include <QDebug>
 class Plant : public Being
 {
     Q_OBJECT
@@ -14,6 +14,10 @@ public:
     // Being interface
 private:
     Qt::GlobalColor getPenColor() const override;
+
+    // QGraphicsItem interface
+public:
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 };
 
 #endif // PLANT_H

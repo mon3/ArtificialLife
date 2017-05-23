@@ -1,14 +1,12 @@
 #include "parametersset.h"
 #include "beingwindow.h"
-int ParametersSet::BEING_WIDTH = 40;
 
 ParametersSet* ParametersSet::instance = nullptr;
 
 
 ParametersSet::ParametersSet(int gridSize)
-    : _gridSize(gridSize)
+    :  _gridSize(gridSize)
 {
-    BEING_WIDTH = (SCENE_WIDTH / gridSize) / 1.5;
     window = QSharedPointer<BeingWindow>(new BeingWindow);
 
     //instatiation of board
@@ -25,9 +23,11 @@ ParametersSet::ParametersSet(int gridSize)
     {
         vec.resize(gridSize);
         vec = vector<Plant*>(gridSize, nullptr);
-
     }
 
+    maxFoodCapacity = 20.0f;
+
+    // instatiate lambda's
     checkCoordinate = [&] (int x, int y) -> bool
     {
         return (x >= 0 && y >= 0 && x < _gridSize && y < _gridSize);
@@ -44,10 +44,13 @@ ParametersSet::ParametersSet(int gridSize)
     };
 }
 
+float ParametersSet::getMaxFoodCapacity() const
+{
+    return maxFoodCapacity;
+}
+
 int ParametersSet::getPlantGrowbackLevel() const
 {
-    
-    
     return plantGrowbackLevel;
 }
 
@@ -108,15 +111,21 @@ vector<Plant*> ParametersSet::getAdjacentBeings(const Animal * a) const
 // don't like it, refactor
 void ParametersSet::addBeing(Animal *a)
 {
-    int x = a->getLogX(),
-        y = a->getLogY();
-    animalsOnBoard[x][y] = a;
-
+    //throw an exception?
+    animalsOnBoard[a->getLogX()][a->getLogY()] = a;
+    mapPosition(a);
 }
 
 void ParametersSet::addBeing(Plant *p)
 {
     plantsOnBoard[p->getLogX()][p->getLogY()] = p;
+    mapPosition(p);
+}
+
+void ParametersSet::mapPosition(Being *b)
+{
+    b->setPos((b->getLogX() * SCENE_WIDTH) / _gridSize + magic_offset,
+              (b->getLogY() * SCENE_WIDTH) / _gridSize + magic_offset);
 }
 
 ParametersSet *ParametersSet::getInstance(int gridSize)
@@ -124,9 +133,7 @@ ParametersSet *ParametersSet::getInstance(int gridSize)
     if(instance == nullptr)
         instance = new ParametersSet(gridSize);
 
-
     return instance;
-
 }
 
 int ParametersSet::getGridSize() const

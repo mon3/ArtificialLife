@@ -14,7 +14,7 @@ Being* Herbivorous::hunt()
     }
 
     //find most valuable plant
-    Plant* p;
+    Plant* p = nullptr;
     int maxSugar = numeric_limits<int>::min();
 
 
@@ -35,22 +35,54 @@ Being* Herbivorous::hunt()
     });
 
     maxValuedPlants.shrink_to_fit();
-    size_t size = maxValuedPlants.size();
 
     //if there is several max positions, select one randomly
+    size_t size = maxValuedPlants.size();
     if(size > 1)
         return maxValuedPlants[ParametersSet::getRandomInt() % size];
 
     return p;
 }
 
-
+// ask if correct
 void Herbivorous::eat(Being* b)
 {
     Plant* p = qobject_cast<Plant*>(b);
-    //eat a plant
-    this->setSaturationRate(100.0f);
-    p->setHitPoints(0);
+    ParametersSet* set = ParametersSet::getInstance();
+    float currentSaturationRate = this->getSaturationRate();
+    int plantWealth = p->getHitPoints();
+    // TODO: set max saturation value
+    if(currentSaturationRate + plantWealth < 100.0f)
+    {
+        // if a whole plant is not enough to satisfy hunger, just eat it all
+        this->setSaturationRate(currentSaturationRate + plantWealth);
+        plantWealth = 0;
+    }
+    else
+    {
+        int delta = 100.0f - currentSaturationRate;
+        this->setSaturationRate(100.0f);
+        plantWealth -= delta;
+
+        int currentFoodCapacity = this->getFoodCapacity();
+
+        // try to take as many plants as you can
+        const int maxFoodCapacity = set->getMaxFoodCapacity();
+        if(currentFoodCapacity + plantWealth < maxFoodCapacity)
+        {
+            this->setFoodCapacity(currentFoodCapacity + plantWealth);
+            plantWealth = 0;
+        }
+        else
+        {
+            // if not, fill up your food cap
+            plantWealth -= set->getMaxFoodCapacity() - currentFoodCapacity;
+            this->setFoodCapacity(maxFoodCapacity);
+        }
+
+    }
+    p->setHitPoints(plantWealth);
+
 }
 
 

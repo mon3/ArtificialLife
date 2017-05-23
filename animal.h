@@ -11,12 +11,13 @@ class Animal : public Being
     Q_OBJECT
 public:
 
-    Animal(int _logX, int _logY) : Being(_logX, _logY) { }
+    Animal(int _logX, int _logY) : Being(_logX, _logY) { activity = IDLE; }
     void action();
     virtual int type() const = 0;
     enum Activity {
         MATING,
         HUNTING, //for herbivorous ?
+        IDLE,
 //      RESTING,
 //      SLEEPING,
 //      NURSING, - for no need to nurse child
@@ -30,8 +31,8 @@ public:
     float getSaturationRate() const;
     void setSaturationRate(float value);
 
-    int getFood_capacity() const;
-    void setFood_capacity(int value);
+    int getFoodCapacity() const;
+    void setFoodCapacity(int value);
 
     float getMetabolism() const;
 
@@ -57,13 +58,13 @@ private:
 
 
 
-    int eveSight = 20;
+    int eveSight = 5;
     int age;
 //  const int generation;
     int generation;
-    int speed = 20;
+    int speed = 5;
 
-    int food_capacity;
+    int foodCapacity;
     float metabolism;
     float exaustionLevel;
     float saturationRate;

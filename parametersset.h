@@ -30,7 +30,7 @@ public:
     Season getSeason();
     void setSeason(Season);
     static const int SCENE_WIDTH = 1000;
-    static int BEING_WIDTH;
+    static const int BEING_WIDTH = 40;
     ~ParametersSet() {  }
     static int getRandomInt();
     float getStartHungerLevel() const;
@@ -46,6 +46,9 @@ public:
     void addBeing(Animal*);
     void addBeing(Plant*);
 
+    //consider making position/location making class
+    void mapPosition(Being* b);
+
     int getPlantGrowbackLevel() const;
 
     // use polymorfism
@@ -53,10 +56,13 @@ public:
     void removeBeing(Animal*);
     int getMaxPlantHp() const;
 
+    float getMaxFoodCapacity() const;
+
 public slots:
     void callWindow(Being* b);
 private:
 
+    const int magic_offset = BEING_WIDTH >> 2;
 
 
     //to make singleton
@@ -83,6 +89,8 @@ private:
     float biologicalChildAge;
     float biologicalAdultAge;
     float startHungerLevel;
+    float maxFoodCapacity;
+
 
     //genetic algorithm params
     float crossoverProbability;

@@ -45,14 +45,14 @@ void Being::setLogY(int value)
 
 void Being::updateBeing()
 {
-    int gridSize = ParametersSet::getInstance()->getGridSize();
+    ParametersSet* set = ParametersSet::getInstance();
     int oldX = logX,
         oldY = logY;
+
     this->action();
-    //move to set?
+
     if(oldX != logX || oldY != logY)
-        this->setPos((logX * ParametersSet::SCENE_WIDTH) / gridSize,
-                            (logY * ParametersSet::SCENE_WIDTH) / gridSize);
+        set->mapPosition(this);
 }
 
 void Being::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)

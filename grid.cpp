@@ -87,38 +87,6 @@ void initializePopulations(int N, std::vector<Animal*>& predatorIniPop, std::vec
 Grid::Grid()
 {
 
-//    std::vector<Animal*> predatorIniPop;
-//    std::vector<Animal*> herbivorousIniPop;
-//    ParametersSet* set = ParametersSet::getInstance();
-//    initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
-//    qDebug() << "TEST: " << static_cast<Being*>(predatorIniPop[20])->getLogX()<< " " <<static_cast<Being*>(predatorIniPop[20])->getLogY();
-//    int initialPopSize = int(set->getGridSize() * set->getGridSize() * 0.2);
-
-
-//    for (int i=0; i< predatorIniPop.size(); ++i)
-//    {
-//        addItem(predatorIniPop[i]);
-//        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-//        // TODO:: add paint functions to visualize initial populations
-//        addItem(herbivorousIniPop[i]);
-//        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-
-//    }
-
-
-
-//    int initialPopSize = int((ParametersSet::getInstance()->getGridSize())*(ParametersSet::getInstance()->getGridSize())*0.2);
-//    qDebug() << "Initial pop size: " << initialPopSize << endl;
-
-//    for (int i=0; i<= initialPopSize; ++i)
-//    {
-//        predatorIniPop.push_back(new Predator(random(1, ParametersSet::getInstance()->getGridSize()),random(1, ParametersSet::getInstance()->getGridSize())));
-//        herbivorousIniPop.push_back(new Herbivorous(random(1, ParametersSet::getInstance()->getGridSize()),random(1, ParametersSet::getInstance()->getGridSize())));
-
-//    }
-
-//    addItem();
-
 }
 
 void Grid::drawBackground(QPainter *painter, const QRectF &rect)

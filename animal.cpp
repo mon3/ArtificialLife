@@ -7,26 +7,39 @@ void Animal::action()
     if(activity == Activity::DEAD)
         return;
 
+    // first, check for enemies
+
+    //if there any, run to safe(seems to) place
+
+    //if there not, hunt
+
+
     //else, look for a site with bigger "sugar" value
     Being* prey = hunt();
 
     //if there is a prey to hunt, go there and collect resources from site,
     if(prey != nullptr) {
+        Activity = HUNTING;
         int goalX = prey->getLogX(),
             goalY = prey->getLogY();
+
         //unless you can reach prey in one turn, get as close as you could
         if(speed < eveSight) {
-            // fix bug
+            // how far we can reach
+            int delta = speed - eveSight;
             goalX = goalX + (speed - eveSight);
             goalY = goalY + (speed - eveSight);
 
+        } else {
+            move(goalX, goalY);
+            eat(prey);
         }
-        move(goalX, goalY);
-
-        eat(prey);
-    }
-    else // if no food, go to random adjacent place
+    } else {
+        // if no food, go to random adjacent place,
+        // we assume, that this place should be as far, as being could reach, to increase chance of finding food
         move();
+    }
+
     //for simplicity, assume that no exaustion is involved
     saturationRate -= metabolism;
 
@@ -48,11 +61,17 @@ void Animal::move(int x, int y )
 {
     auto set = ParametersSet::getInstance();
     //move to random free location, within being reach
+
+
     if(x == UNKNOWN_LOCATION || y == UNKNOWN_LOCATION)
     {
+        // first, check being activity, if hungry - go as far
+        // as you could, else do not go far away
         //todo: check neighbours
         const int gridSize = set->getGridSize();
-        //set->getAdjacentBeings(this);
+        vector<Animal*> occupiedPlaces = set->getAdjacentBeings<Animal>(this);
+
+
         int addVal = (ParametersSet::getRandomInt() % 3) - 1;
         this->setLogX(this->getLogX() + addVal);
         addVal = (ParametersSet::getRandomInt() % 3) - 1;
@@ -71,14 +90,14 @@ float Animal::getMetabolism() const
     return metabolism;
 }
 
-int Animal::getFood_capacity() const
+int Animal::getFoodCapacity() const
 {
-    return food_capacity;
+    return foodCapacity;
 }
 
-void Animal::setFood_capacity(int value)
+void Animal::setFoodCapacity(int value)
 {
-    food_capacity = value;
+    foodCapacity = value;
 }
 
 float Animal::getSaturationRate() const

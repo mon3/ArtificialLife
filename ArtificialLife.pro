@@ -38,8 +38,10 @@ SOURCES += main.cpp\
     plant.cpp \
     predator.cpp \
     being.cpp \
-    beingwindow.cpp
-
+    beingwindow.cpp \
+    # constrainedvalue.cpp \
+    evolutionaryalg.cpp \
+    parametersset.tpp
 
 HEADERS  += mainwindow.h \
     animal.h \
@@ -50,7 +52,9 @@ HEADERS  += mainwindow.h \
     plant.h \
     predator.h \
     being.h \
-    beingwindow.h
+    beingwindow.h \
+    evolutionaryalg.h \
+    # constrainedvalue.h
 
 FORMS    += mainwindow.ui \
     beingwindow.ui
@@ -87,3 +91,5 @@ FORMS    += mainwindow.ui \
 
 SUBDIRS += \
     Tests
+
+INCLUDEPATH += E:/boost_1_64_0

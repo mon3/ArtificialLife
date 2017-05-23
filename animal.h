@@ -27,6 +27,14 @@ public:
 
     int getEveSight() const;
 
+    float getSaturationRate() const;
+    void setSaturationRate(float value);
+
+    int getFood_capacity() const;
+    void setFood_capacity(int value);
+
+    float getMetabolism() const;
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
 signals:
@@ -49,12 +57,11 @@ private:
 
 
 
-    int eveSight;
+    int eveSight = 20;
     int age;
-//    const int generation;
+//  const int generation;
     int generation;
-    int speed;
-
+    int speed = 20;
 
     int food_capacity;
     float metabolism;

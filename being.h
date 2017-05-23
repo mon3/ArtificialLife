@@ -25,8 +25,10 @@ public:
 
     virtual void action() = 0;
     virtual  int type() const = 0 ;
+public slots:
+    void updateBeing();
 protected:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
     virtual Qt::GlobalColor getPenColor() const = 0;

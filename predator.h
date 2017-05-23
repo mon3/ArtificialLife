@@ -1,7 +1,7 @@
 #ifndef PREDATOR_H
 #define PREDATOR_H
 #include "animal.h"
-
+#include "herbivorous.h"
 class Predator : public Animal
 {
     Q_OBJECT
@@ -15,6 +15,10 @@ private:
     // Animal interface
 private:
     Being* hunt();
+
+    // Animal interface
+private:
+    void eat(Being *) override;
 };
 
 #endif // PREDATOR_H

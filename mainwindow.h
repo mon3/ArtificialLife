@@ -30,6 +30,7 @@ private:
     const float TIMER_TICKS = 1000.0f / 15.0f;
     float timerDelimiter;
 
+    void connectBeing(Being*);
 
 public slots:
     void initGame();

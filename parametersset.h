@@ -36,16 +36,29 @@ public:
     float getStartHungerLevel() const;
 
 
-    //TODO : use a template?
-    vector<Plant *> getAdjacentPlants(Animal*) const;
-    vector<Herbivorous*> getAdjacentHerbivorous(Animal*) const;
 
+
+    template<typename T>
+    vector<T*> getAdjacentBeings(const Animal* a) const;
+
+    vector<Plant*> getAdjacentBeings(const Animal* a) const;
+
+    void addBeing(Animal*);
+    void addBeing(Plant*);
 
     int getPlantGrowbackLevel() const;
+
+    // use polymorfism
+    void removeBeing(Plant*);
+    void removeBeing(Animal*);
+    int getMaxPlantHp() const;
 
 public slots:
     void callWindow(Being* b);
 private:
+
+
+
     //to make singleton
     ParametersSet(const ParametersSet&) = delete;
     ParametersSet& operator=(const ParametersSet&) = delete;
@@ -92,6 +105,7 @@ private:
     function<int(int)> getColMod;
 };
 
+#include "parametersset.tpp"
 
 #endif // PARAMETERSSET_H
 

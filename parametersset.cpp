@@ -15,9 +15,22 @@ ParametersSet::ParametersSet(int gridSize)
     animalsOnBoard = vector< vector<Animal* > >(gridSize, vector<Animal*>(gridSize));
     plantsOnBoard  = vector< vector<Plant* > >(gridSize, vector<Plant*>(gridSize));
 
+    //very ugly; refactor later; use  c table instead?
+    for(vector<Animal* >& vec : animalsOnBoard) {
+        vec.resize(gridSize);
+        vec = vector<Animal*>(gridSize, nullptr);
+    }
+
+    for(vector<Plant* >& vec : plantsOnBoard)
+    {
+        vec.resize(gridSize);
+        vec = vector<Plant*>(gridSize, nullptr);
+
+    }
+
     checkCoordinate = [&] (int x, int y) -> bool
     {
-        return (x >= 0 && y <= 0 && x < _gridSize && y < _gridSize);
+        return (x >= 0 && y >= 0 && x < _gridSize && y < _gridSize);
     };
 
     getRowMod = [](int x) -> int
@@ -33,7 +46,27 @@ ParametersSet::ParametersSet(int gridSize)
 
 int ParametersSet::getPlantGrowbackLevel() const
 {
+    
+    
     return plantGrowbackLevel;
+}
+
+void ParametersSet::removeBeing(Plant *)
+{
+    //nothing happens?
+}
+
+void ParametersSet::removeBeing(Animal * a)
+{
+    // remove from game board
+    animalsOnBoard[a->getLogX()][a->getLogY()] = nullptr;
+    a->scene()->removeItem(a);
+    delete a;
+}
+
+int ParametersSet::getMaxPlantHp() const
+{
+    return MAX_PLANT_HP_LEVEL;
 }
 
 float ParametersSet::getStartHungerLevel() const
@@ -42,7 +75,9 @@ float ParametersSet::getStartHungerLevel() const
 }
 
 
-vector<Plant *> ParametersSet::getAdjacentPlants(Animal * a) const
+
+
+vector<Plant*> ParametersSet::getAdjacentBeings(const Animal * a) const
 {
     vector<Plant*> result;
     int logX = a->getLogX(), logY = a->getLogY()
@@ -52,9 +87,11 @@ vector<Plant *> ParametersSet::getAdjacentPlants(Animal * a) const
     //pushing to vector every being within animal evesight
     //TODO: add comment to lookup section
     for(int i = 1; i <= eveSight; ++i) {
-        for(int j = 0; j < 3; ++j) {
-            checkX = logX + i * getRowMod(j);
+        if(i > _gridSize) break;
+        for(int j = 0; j < 4; ++j) {
+            checkX = logX + i * getColMod(j);
             checkY = logY + i * getRowMod(j);
+            //add optimalization, for ev > grsize
             if(checkCoordinate(checkX, checkY)
                 && plantsOnBoard[checkX][checkY] != nullptr
                 && animalsOnBoard[checkX][checkY] == nullptr)
@@ -67,25 +104,19 @@ vector<Plant *> ParametersSet::getAdjacentPlants(Animal * a) const
     return result;
 }
 
-vector<Herbivorous *> ParametersSet::getAdjacentHerbivorous(Animal * a) const
+
+// don't like it, refactor
+void ParametersSet::addBeing(Animal *a)
 {
-    vector<Herbivorous*> result;
-    int logX = a->getLogX(), logY = a->getLogY()
-       ,eveSight = a->getEveSight();
-    int checkX, checkY;
-    for(int i = 1; i <= eveSight; ++i)
-        for(int j = 0; j < 3; ++j) {
-            checkX = logX + i * getRowMod(j);
-            checkY = logY + i * getRowMod(j);
-            if(checkCoordinate(checkX, checkY)) {
-                Herbivorous* h =  qobject_cast<Herbivorous*>(animalsOnBoard[checkX][checkY]);
-                if(h != 0)
-                    result.push_back(h);
-            }
-        }
+    int x = a->getLogX(),
+        y = a->getLogY();
+    animalsOnBoard[x][y] = a;
 
+}
 
-    return result;
+void ParametersSet::addBeing(Plant *p)
+{
+    plantsOnBoard[p->getLogX()][p->getLogY()] = p;
 }
 
 ParametersSet *ParametersSet::getInstance(int gridSize)

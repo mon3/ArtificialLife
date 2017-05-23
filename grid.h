@@ -3,6 +3,8 @@
 
 #include <QGraphicsScene>
 #include <QPainter>
+
+#include <QObject>
 #include "parametersset.h"
 #include "predator.h"
 #include "herbivorous.h"

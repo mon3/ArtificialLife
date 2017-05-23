@@ -12,17 +12,7 @@ void Animal::action()
 
     //if there is a prey to hunt, go there and collect resources from site,
     if(prey != nullptr) {
-        int goalX = prey->getLogX(),
-            goalY = prey->getLogY();
-        //unless you can reach prey in one turn, get as close as you could
-        if(speed < eveSight) {
-            // fix bug
-            goalX = goalX + (speed - eveSight);
-            goalY = goalY + (speed - eveSight);
-
-        }
-        move(goalX, goalY);
-
+        move(prey->getLogX(), prey->getLogY());
         eat(prey);
     }
     else // if no food, go to random adjacent place
@@ -46,13 +36,10 @@ void Animal::mousePressEvent(QGraphicsSceneMouseEvent *)
 
 void Animal::move(int x, int y )
 {
-    auto set = ParametersSet::getInstance();
-    //move to random free location, within being reach
     if(x == UNKNOWN_LOCATION || y == UNKNOWN_LOCATION)
     {
         //todo: check neighbours
-        const int gridSize = set->getGridSize();
-        //set->getAdjacentBeings(this);
+        const int gridSize = ParametersSet::getInstance()->getGridSize();
         int addVal = (ParametersSet::getRandomInt() % 3) - 1;
         this->setLogX(this->getLogX() + addVal);
         addVal = (ParametersSet::getRandomInt() % 3) - 1;
@@ -66,33 +53,9 @@ void Animal::move(int x, int y )
 
 }
 
-float Animal::getMetabolism() const
-{
-    return metabolism;
-}
-
-int Animal::getFood_capacity() const
-{
-    return food_capacity;
-}
-
-void Animal::setFood_capacity(int value)
-{
-    food_capacity = value;
-}
-
-float Animal::getSaturationRate() const
-{
-    return saturationRate;
-}
-
-void Animal::setSaturationRate(float value)
-{
-    saturationRate = value;
-}
-
 int Animal::getEveSight() const
 {
     return eveSight;
+
 }
 

@@ -1,15 +1,15 @@
 #include "grid.h"
 #include <vector>
+
 #include <boost/range/algorithm_ext/push_back.hpp>
 #include <boost/range/irange.hpp>
-
-
+#include <QGraphicsItem>
 int random(int min, int max) //range : [min, max)
 {
    static bool first = true;
    if ( first )
    {
-      srand(time(NULL)); //seeding for the first time only!
+      //srand(time(NULL)); //seeding for the first time only!
       first = false;
    }
    return min + rand() % (max - min);
@@ -86,23 +86,24 @@ void initializePopulations(int N, std::vector<Animal*>& predatorIniPop, std::vec
 
 Grid::Grid()
 {
-    std::vector<Animal*> predatorIniPop;
-    std::vector<Animal*> herbivorousIniPop;
-    ParametersSet* set = ParametersSet::getInstance();
-    initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
+
+//    std::vector<Animal*> predatorIniPop;
+//    std::vector<Animal*> herbivorousIniPop;
+//    ParametersSet* set = ParametersSet::getInstance();
+//    initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
 //    qDebug() << "TEST: " << static_cast<Being*>(predatorIniPop[20])->getLogX()<< " " <<static_cast<Being*>(predatorIniPop[20])->getLogY();
 //    int initialPopSize = int(set->getGridSize() * set->getGridSize() * 0.2);
 
 
-    for (int i=0; i< predatorIniPop.size(); ++i)
-    {
-        addItem(predatorIniPop[i]);
-        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-        // TODO:: add paint functions to visualize initial populations
-        addItem(herbivorousIniPop[i]);
-        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+//    for (int i=0; i< predatorIniPop.size(); ++i)
+//    {
+//        addItem(predatorIniPop[i]);
+//        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+//        // TODO:: add paint functions to visualize initial populations
+//        addItem(herbivorousIniPop[i]);
+//        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
 
-    }
+//    }
 
 
 
@@ -118,13 +119,6 @@ Grid::Grid()
 
 //    addItem();
 
-   //test subjects
-//    Animal* ex = new Predator(5, 5);
-//    addItem(ex);
-//    connect(ex, SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-//    ex = new Herbivorous(10, 10);
-//    addItem(ex);
-//    connect(ex, SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
 }
 
 void Grid::drawBackground(QPainter *painter, const QRectF &rect)
@@ -146,17 +140,20 @@ void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 void Grid::updateGrid()
 {
     QList<QGraphicsItem*> list = this->items();
+
     // TODO: better mapping
     ParametersSet* set = ParametersSet::getInstance();
-    foreach (QGraphicsItem* item, list) {
-        qDebug() << ++i;
-        Being* var = static_cast<Being*>(item);
+    //not rightt!
+//    foreach (QGraphicsItem* item, list) {
 
-        //not safe! do qcast later
-        Animal* a = qobject_cast<Animal*>(var);
-        a->action();
-        var->setPos((var->getLogX() * ParametersSet::SCENE_WIDTH) / set->getGridSize(),
-                    (var->getLogY() * ParametersSet::SCENE_WIDTH) / set->getGridSize());
-    }
+//        Being* b = static_cast< Being* >(item);
+//        if(b == nullptr) {
+//            qDebug() << "line";
+//            continue;
+//        }
+//        b->action();
+//        b->setPos((b->getLogX() * ParametersSet::SCENE_WIDTH) / set->getGridSize(),
+//                    (b->getLogY() * ParametersSet::SCENE_WIDTH) / set->getGridSize());
+//    }
 
 }

@@ -185,6 +185,12 @@ void Animal::setFeaturesEA(QVector<int>& vals, Beings beingType)
     }
 
     featuresEA = vals;
+    setEyeSight(vals[0]);
+    setSpeed(vals[1]);
+    setHitPoints(vals[2]);
+    setMetabolism(vals[3]);
+    setFoodCapacity(vals[4]);
+    setExhaustionLevel(vals[5]);
 }
 
 void Animal::setFeaturesEA(QVector<int> vals)

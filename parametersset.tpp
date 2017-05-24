@@ -2,14 +2,12 @@
 #define PARAMETERSSET_TPP
 
 template<typename T>
-vector<T*> ParametersSet::getAdjacentBeings(const Animal * a) const
+vector<T*> ParametersSet::getAdjacentBeings(const Animal * a, const int reach) const
 {
-    qDebug() << "here, in temp funk!";
     vector<T*> result;
-    int logX = a->getLogX(), logY = a->getLogY()
-       ,eveSight = a->getEveSight();
+    int logX = a->getLogX(), logY = a->getLogY();
     int checkX, checkY;
-    for(int i = 1; i <= eveSight; ++i)
+    for(int i = 1; i <= reach; ++i)
         for(int j = 0; j < 4; ++j) {
             checkX = logX + i * getRowMod(j);
             checkY = logY + i * getColMod(j);
@@ -19,8 +17,6 @@ vector<T*> ParametersSet::getAdjacentBeings(const Animal * a) const
                     result.push_back(being);
             }
         }
-
-    qDebug() << "outta temp!";
     return result;
 }
 

@@ -2,11 +2,13 @@
 #include "beingwindow.h"
 
 ParametersSet* ParametersSet::instance = nullptr;
-
+int ParametersSet::BEING_WIDTH  = 25;
 
 ParametersSet::ParametersSet(int gridSize)
     :  _gridSize(gridSize)
 {
+    BEING_WIDTH = (SCENE_WIDTH / _gridSize) >> 1;
+    magic_offset = BEING_WIDTH >> 1;
     window = QSharedPointer<BeingWindow>(new BeingWindow);
 
     //instatiation of board
@@ -42,6 +44,11 @@ ParametersSet::ParametersSet(int gridSize)
     {
         return (x & 1) == 0 ? 0 : 2 - x;
     };
+}
+
+float ParametersSet::getFoodConsumptionUnits() const
+{
+    return foodConsumptionUnits;
 }
 
 float ParametersSet::getMaxFoodCapacity() const
@@ -80,21 +87,19 @@ float ParametersSet::getStartHungerLevel() const
 
 
 
-vector<Plant*> ParametersSet::getAdjacentBeings(const Animal * a) const
+vector<Plant*> ParametersSet::getAdjacentBeings(const Animal * a, const int reach) const
 {
     vector<Plant*> result;
-    int logX = a->getLogX(), logY = a->getLogY()
-       ,eveSight = a->getEveSight();
+    int logX = a->getLogX(), logY = a->getLogY();
     int checkX, checkY;
 
-    //pushing to vector every being within animal evesight
+    //pushing to vector every being within animal reach
     //TODO: add comment to lookup section
-    for(int i = 1; i <= eveSight; ++i) {
+    for(int i = 1; i <= reach; ++i) {
         if(i > _gridSize) break;
         for(int j = 0; j < 4; ++j) {
             checkX = logX + i * getColMod(j);
             checkY = logY + i * getRowMod(j);
-            //add optimalization, for ev > grsize
             if(checkCoordinate(checkX, checkY)
                 && plantsOnBoard[checkX][checkY] != nullptr
                 && animalsOnBoard[checkX][checkY] == nullptr)
@@ -126,6 +131,15 @@ void ParametersSet::mapPosition(Being *b)
 {
     b->setPos((b->getLogX() * SCENE_WIDTH) / _gridSize + magic_offset,
               (b->getLogY() * SCENE_WIDTH) / _gridSize + magic_offset);
+}
+
+bool ParametersSet::isFreeCell(int x, int y)
+{
+    // TODO: throw exception instead
+    if(!checkCoordinate(x, y))
+        return false;
+
+    return animalsOnBoard[x][y] == nullptr;
 }
 
 ParametersSet *ParametersSet::getInstance(int gridSize)

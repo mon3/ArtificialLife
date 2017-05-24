@@ -7,7 +7,7 @@
 Being* Herbivorous::hunt()
 {
 
-    vector<Plant*> vec = ParametersSet::getInstance()->getAdjacentBeings(this);
+    vector<Plant*> vec = ParametersSet::getInstance()->getAdjacentBeings(this, getSpeed());
     //no available plant at neighbourhood
     if(vec.empty()) {
         return nullptr;

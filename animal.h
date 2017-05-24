@@ -2,6 +2,7 @@
 #define ANIMAL_H
 
 #include <QDebug>
+#include <functional>
 #include "being.h"
 
 
@@ -36,26 +37,33 @@ public:
 
     float getMetabolism() const;
 
+    int getSpeed() const;
+    void setSpeed(int value);
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
 signals:
     void callWindow(Being*);
 
 protected:
-    void move(int x = UNKNOWN_LOCATION, int y = UNKNOWN_LOCATION);
 
-private:
     //subactions
     //set of subactions for every type of animal will be defined:
     virtual Being* hunt() = 0;
     virtual void eat(Being*) = 0;
+    virtual vector<Animal>& findEnemies() = 0;
 
-    void mate(Animal&);
+private:
+    void move(int x = UNKNOWN_LOCATION, int y = UNKNOWN_LOCATION);
+    void mate(Animal*);
+
     void rest();
     void sleep();
-    void run();
+    void runFrom(Animal*);
 
-
+    //routine functions, to simplify action()
+    void huntRoutine(ParametersSet*);
+    void enemiesHandlingRoutine();
 
 
     int eveSight = 5;
@@ -75,6 +83,8 @@ private:
 
 //  undefined grid location
     static const int UNKNOWN_LOCATION = -1;
+
+    const static function<int(int)> direction;
 };
 
 #endif // ANIMAL_H

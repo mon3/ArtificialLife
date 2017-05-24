@@ -30,39 +30,48 @@ public:
     Season getSeason();
     void setSeason(Season);
     static const int SCENE_WIDTH = 1000;
-    static const int BEING_WIDTH = 40;
+    static int BEING_WIDTH;
     ~ParametersSet() {  }
-    static int getRandomInt();
-    float getStartHungerLevel() const;
 
 
 
 
-    template<typename T>
-    vector<T*> getAdjacentBeings(const Animal* a) const;
 
-    vector<Plant*> getAdjacentBeings(const Animal* a) const;
+
 
     void addBeing(Animal*);
     void addBeing(Plant*);
 
     //consider making position/location making class
     void mapPosition(Being* b);
+    bool isFreeCell(int x, int y);
 
-    int getPlantGrowbackLevel() const;
 
     // use polymorfism
     void removeBeing(Plant*);
     void removeBeing(Animal*);
-    int getMaxPlantHp() const;
 
+    //getters
+    int getMaxPlantHp() const;
+    int getPlantGrowbackLevel() const;
     float getMaxFoodCapacity() const;
+    static int getRandomInt();
+    float getStartHungerLevel() const;
+
+
+    // getters, more advanced for sugarscape
+    template<typename T>
+    vector<T*> getAdjacentBeings(const Animal* a, const int) const;
+
+    vector<Plant*> getAdjacentBeings(const Animal* a, const int) const;
+
+    float getFoodConsumptionUnits() const;
 
 public slots:
     void callWindow(Being* b);
 private:
 
-    const int magic_offset = BEING_WIDTH >> 2;
+    int magic_offset;
 
 
     //to make singleton
@@ -75,7 +84,7 @@ private:
     static ParametersSet* instance;
     QSharedPointer<BeingWindow> window;
 
-
+    // TODO: use smart pointers
     vector<vector <Plant* > > plantsOnBoard;
     vector<vector <Animal* > > animalsOnBoard;
     //game board params
@@ -90,7 +99,7 @@ private:
     float biologicalAdultAge;
     float startHungerLevel;
     float maxFoodCapacity;
-
+    float foodConsumptionUnits;
 
     //genetic algorithm params
     float crossoverProbability;

@@ -7,7 +7,7 @@
 Being* Predator::hunt()
 {
     ParametersSet* set = ParametersSet::getInstance();
-    vector<Herbivorous*> prey = set->getAdjacentBeings<Herbivorous>(this);
+    vector<Herbivorous*> prey = set->getAdjacentBeings<Herbivorous>(this, getSpeed());
     qDebug() << "in adj func";
     //TODO: add logic
 
@@ -17,4 +17,5 @@ Being* Predator::hunt()
 
 void Predator::eat(Being *)
 {
+
 }

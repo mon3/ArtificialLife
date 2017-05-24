@@ -71,7 +71,7 @@ vector<Plant *> ParametersSet::getAdjacentPlants(Animal * a) const
     return result;
 }
 
-vector<Herbivorous *> ParametersSet::getAdjacentHerbivorous(Animal * a) const
+vector<Herbivorous *> ParametersSet::getAdjacentHerbivorous(Animal* a) const
 {
     vector<Herbivorous*> result;
     int logX = a->getLogX(), logY = a->getLogY()

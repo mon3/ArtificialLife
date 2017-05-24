@@ -9,6 +9,7 @@
 #include <functional>
 #include <algorithm>
 #include <iterator>
+
 using namespace std;
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
@@ -57,10 +58,10 @@ public:
     static const int minHerbivorousSpeed = 1;
     static const int maxHerbivorousSpeed = 3;
 
-    static const int minPredatorFoodCapacity= 10;
-    static const int maxPredatorFoodCapacity = 7000;
+    static const int minPredatorFoodCapacity= 1600;// 2*SaturaionRate
+    static const int maxPredatorFoodCapacity = 8000;
 
-    static const int minHerbivorousFoodCapacity= 5;
+    static const int minHerbivorousFoodCapacity= 1000;
     static const int maxHerbivorousFoodCapacity = 3000;
 
     static const int minHerbivorousMetabolism = 15;
@@ -75,9 +76,16 @@ public:
     static const int minPredatorSaturationRate = 800;
     static const int maxPredatorSaturationRate = 4000;
 
+    // features coefficients for fitness function calculation
+    static constexpr double eyeSightCoeff = 15.0 ;
+    static constexpr double speedCoeff = 14.0 ;
+    static constexpr double hitPointsCoeff = 10.0 ;
+    static constexpr double metabolismCoeff = 2.0 ;
+    static constexpr double foodCapacityCoeff = 10.0 ;
+    static constexpr double exhLevelCoeff = -1.0; // the less value of exhLevel, the better
+
     //TODO : use a template?
     vector<Plant *> getAdjacentPlants(Animal*) const;
-
     vector<Herbivorous*> getAdjacentHerbivorous(Animal*) const;
 
 

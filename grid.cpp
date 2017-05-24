@@ -206,22 +206,35 @@ Grid::Grid()
 
 //    qDebug() << "PREDATOR TEMP POP FEATURES SIZE = " << predatorTempPop.at(0)->getFeaturesEA().size();
 
-    EA->reproducePopulation(predatorTempPop, 2);
+    EA->reproducePopulation(predatorTempPop, 1);
     EA->mutation(predatorTempPop);
 
-    qDebug() << "Temp size: " << (predatorTempPop.at(0)->getStdDevs()).size();
-    qDebug() << "Temp size: " << (predatorTempPop.at(1)->getStdDevs()).size();
-    qDebug() << "Temp size: " << (predatorTempPop.at(2)->getStdDevs()).size();
+    EA->reproducePopulation(herbivorousTempPop, 1);
+    EA->mutation(herbivorousTempPop);
 
-    qDebug() << "Temp size: " << predatorTempPop.size();
+//    qDebug() << "Temp size: " << (predatorTempPop.at(0)->getStdDevs()).size();
+//    qDebug() << "Temp size: " << (predatorTempPop.at(1)->getStdDevs()).size();
+//    qDebug() << "Temp size: " << (predatorTempPop.at(2)->getStdDevs()).size();
 
-    for (int i=0; i< predatorIniPop.size(); ++i)
+//    qDebug() << "Temp size: " << predatorTempPop.size();
+
+    QVector<Animal*> predParentsChildrenPop = predatorIniPop+predatorTempPop;
+    QVector<Animal*> herbParentsChildrenPop = herbivorousIniPop+herbivorousTempPop;
+    int mi = 20;
+    EA->selectMiBest(mi, predParentsChildrenPop);
+
+
+    qDebug()<<"GRID ... ";
+    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
+    EA->printPopulation(predParentsChildrenPop);
+
+    for (int i=0; i< predParentsChildrenPop.size(); ++i)
     {
-        addItem(predatorIniPop[i]);
-        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+        addItem(predParentsChildrenPop[i]);
+        connect(predParentsChildrenPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
         // TODO:: add paint functions to visualize initial populations
-        addItem(herbivorousIniPop[i]);
-        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+        addItem(herbParentsChildrenPop[i]);
+        connect(herbParentsChildrenPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
 
     }
 
@@ -322,6 +335,7 @@ void Grid::updateGrid()
         //not safe! do qcast later
         Animal* a = qobject_cast<Animal*>(var);
         QVector<int> res = EA->featuresToChromosome(a);
+        double fitness =  EA->fitnessFunction(res);
 
 //        qDebug() <<"Type: " <<a->type();
 //        qDebug() << "Size: " << res.size();

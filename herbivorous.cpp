@@ -86,3 +86,9 @@ void Herbivorous::eat(Being* b)
 }
 
 
+
+
+vector<Animal*> Herbivorous::findEnemies()
+{
+    return vector<Animal*>();
+}

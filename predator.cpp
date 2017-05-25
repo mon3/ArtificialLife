@@ -19,3 +19,10 @@ void Predator::eat(Being *)
 {
 
 }
+
+
+vector<Animal*> Predator::findEnemies()
+{
+    //does nothing
+    return vector<Animal*>();
+}

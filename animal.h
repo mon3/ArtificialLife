@@ -12,7 +12,7 @@ class Animal : public Being
     Q_OBJECT
 public:
 
-    Animal(int _logX, int _logY) : Being(_logX, _logY) { activity = IDLE; }
+    Animal(int _logX, int _logY) : Being(_logX, _logY) { activity = IDLE; setHitPoints(100); }
     void action();
     virtual int type() const = 0;
     enum Activity {
@@ -29,16 +29,18 @@ public:
 
     int getEveSight() const;
 
-    float getSaturationRate() const;
-    void setSaturationRate(float value);
+    int getSaturationRate() const;
+    void setSaturationRate(int value);
 
     int getFoodCapacity() const;
     void setFoodCapacity(int value);
 
-    float getMetabolism() const;
+    int getMetabolism() const;
 
     int getSpeed() const;
     void setSpeed(int value);
+
+    Activity getActivity() const;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
@@ -51,7 +53,7 @@ protected:
     //set of subactions for every type of animal will be defined:
     virtual Being* hunt() = 0;
     virtual void eat(Being*) = 0;
-    virtual vector<Animal>& findEnemies() = 0;
+    virtual vector<Animal*> findEnemies() = 0;
 
 private:
     void move(int x = UNKNOWN_LOCATION, int y = UNKNOWN_LOCATION);
@@ -59,11 +61,13 @@ private:
 
     void rest();
     void sleep();
-    void runFrom(Animal*);
+    void runFrom(const vector<Animal*>& enemies);
 
     //routine functions, to simplify action()
     void huntRoutine(ParametersSet*);
     void enemiesHandlingRoutine();
+    void foodConsumptionRoutine(ParametersSet*);
+    void exaustionLevelHandlingRoutine(ParametersSet* set);
 
 
     int eveSight = 5;
@@ -73,9 +77,9 @@ private:
     int speed = 5;
 
     int foodCapacity;
-    float metabolism;
-    float exaustionLevel;
-    float saturationRate;
+    int metabolism = 3;
+    int exaustionLevel;
+    int saturationRate = 100;
     Activity activity;
 
 //  for painter to define color

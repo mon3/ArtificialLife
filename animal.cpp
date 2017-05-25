@@ -18,31 +18,32 @@ void Animal::action()
 
     ParametersSet* set = ParametersSet::getInstance();
 
-    huntRoutine(set);
+    enemiesHandlingRoutine();
 
     //hunting process, if hungry
     const float hungerLevel = set->getStartHungerLevel();
-    if(saturationRate < hungerLevel && activity != RUNNNING_AWAY) {
+    if(activity != RUNNNING_AWAY && saturationRate < hungerLevel) {
         activity = HUNTING;
         huntRoutine(set);
     }
 
     //after hunting, unless animal is satisfied, consume inner reserve
-    if(saturationRate < hungerLevel && foodCapacity > 0)
+    if(activity != RUNNNING_AWAY && saturationRate < hungerLevel && foodCapacity > 0)
     {
-        float foodConsumption = set->getFoodConsumptionUnits();
-
+        foodConsumptionRoutine(set);
     }
-    // parameters correction
 
-    //for simplicity, assume that no exaustion is involved
+    // parameters correction section
+
+    //for each turn, saturation rate decreased
     saturationRate -= metabolism;
 
     // TODO: add exaustion level based on current state
-    // & saturation rate
+    exaustionLevelHandlingRoutine(set);
 
     //animal is dead
-    if(saturationRate < 0.0f) {
+    // TODO: complete with min/max values
+    if(saturationRate < 0) {
         activity = Activity::DEAD;
         return;
     }
@@ -63,7 +64,7 @@ void Animal::move(int x, int y )
     {
         // first, check being activity, if hungry - go as far
         // as you could, else do not go far away
-        //todo: check neighbours
+        // TODO: base on activity
         const int gridSize = set->getGridSize();
 
 
@@ -77,6 +78,52 @@ void Animal::move(int x, int y )
         this->setLogY(y);
     }
 
+}
+
+void Animal::runFrom(const vector<Animal *>& enemies)
+{
+    // we should find the safest place to run away
+    int safeX = getLogX(),
+        safeY = getLogY();
+
+
+    // being can see enemies only in four directions, we should
+    // find an optimal position to move(assuming that there are up to four enemies)
+    int minDistance = numeric_limits<int>::max();
+    const Animal* enemy;
+    // find the closest enemy
+    for(const Animal* a : enemies)
+    {
+        int temp = abs(a->getLogX() - safeX + a->getLogY() - safeY);
+        if(temp < minDistance)
+        {
+            minDistance = temp;
+            enemy = a;
+        }
+    }
+    ParametersSet* set = ParametersSet::getInstance();
+    // try to run from him, for it's most likely he won't notice
+    // TODO: add handler functions
+    int modifier = set->getRandomInt() % 2 > 0 ? 1 : -1;
+    if(safeX == enemy->getLogX())
+    {
+        if(!set->checkCoordinate(safeX, safeY + modifier))
+            modifier = -modifier;
+        const int inc = modifier;
+        while(!set->isFreeCell(safeX, safeY + modifier))
+            modifier += inc;
+        move(safeX, safeY  + modifier);
+    }
+
+    else
+    {
+        if(!set->checkCoordinate(safeX + modifier, safeY))
+            modifier = -modifier;
+        const int inc = modifier;
+        while(!set->isFreeCell(safeX + modifier, safeY))
+            modifier += inc;
+        move(safeX  + modifier, safeY);
+    }
 }
 
 void Animal::huntRoutine(ParametersSet* set)
@@ -109,7 +156,9 @@ void Animal::huntRoutine(ParametersSet* set)
         } else {
             move(goalX, goalY);
             eat(prey);
+            activity = IDLE;
         }
+
     } else {
         // if no food, go to random adjacent place,
         // we assume, that this place should be as far, as being could reach, to increase chance of finding food
@@ -119,7 +168,45 @@ void Animal::huntRoutine(ParametersSet* set)
 
 void Animal::enemiesHandlingRoutine()
 {
+    // we assume, that these are most dangerous for being
+    vector<Animal*> dangerousEnemies = findEnemies();
+    if(!dangerousEnemies.empty()) {
+        activity = RUNNNING_AWAY;
+        runFrom(dangerousEnemies);
+    }
+    else
+        activity = IDLE;
 
+}
+
+void Animal::foodConsumptionRoutine(ParametersSet *set)
+{
+    // consume food from inner reserves, as much
+    // as you can in one turn
+}
+
+void Animal::exaustionLevelHandlingRoutine(ParametersSet *set)
+{
+    // based on current activity, inc / dec exaustion level
+    // TODO: complete after merging
+    switch (activity) {
+    case Animal::HUNTING:
+        // exaustion increased
+        break;
+    case Animal::IDLE:
+        // exaustion decreased
+        break;
+    case Animal::RUNNNING_AWAY:
+        //exaustionLevel increased high
+        break;
+    default:
+        break;
+    };
+}
+
+Animal::Activity Animal::getActivity() const
+{
+    return activity;
 }
 
 int Animal::getSpeed() const
@@ -132,7 +219,7 @@ void Animal::setSpeed(int value)
     speed = value;
 }
 
-float Animal::getMetabolism() const
+int Animal::getMetabolism() const
 {
     return metabolism;
 }
@@ -147,12 +234,12 @@ void Animal::setFoodCapacity(int value)
     foodCapacity = value;
 }
 
-float Animal::getSaturationRate() const
+int Animal::getSaturationRate() const
 {
     return saturationRate;
 }
 
-void Animal::setSaturationRate(float value)
+void Animal::setSaturationRate(int value)
 {
     saturationRate = value;
 }

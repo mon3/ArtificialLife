@@ -52,29 +52,29 @@ void MainWindow::initGame()
           scene->addItem(ex);
           set->addBeing(ex);
 
-     Plant* exp = new Plant(5, 5);
-     connectBeing(exp);
-     scene->addItem(exp);
-     set->addBeing(exp);
-     exp->setHitPoints(100);
+//     Plant* exp = new Plant(5, 5);
+//     connectBeing(exp);
+//     scene->addItem(exp);
+//     set->addBeing(exp);
+//     exp->setHitPoints(100);
 
-     exp = new Plant(1, 3);
-     connectBeing(exp);
-     scene->addItem(exp);
-     set->addBeing(exp);
-     exp->setHitPoints(150);
+//     exp = new Plant(1, 3);
+//     connectBeing(exp);
+//     scene->addItem(exp);
+//     set->addBeing(exp);
+//     exp->setHitPoints(150);
 
-     exp = new Plant(8, 8);
-     connectBeing(exp);
-     scene->addItem(exp);
-     set->addBeing(exp);
-     exp->setHitPoints(100);
+//     exp = new Plant(8, 8);
+//     connectBeing(exp);
+//     scene->addItem(exp);
+//     set->addBeing(exp);
+//     exp->setHitPoints(100);
 
-     exp = new Plant(1, 1);
-     connectBeing(exp);
-     scene->addItem(exp);
-     set->addBeing(exp);
-     exp->setHitPoints(80);
+//     exp = new Plant(1, 1);
+//     connectBeing(exp);
+//     scene->addItem(exp);
+//     set->addBeing(exp);
+//     exp->setHitPoints(80);
     //test button
     connect(ui->testPushBUtton, SIGNAL(pressed()), scene, SLOT(updateGrid()));
 

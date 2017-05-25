@@ -23,6 +23,10 @@ private:
 
     Being* hunt() override;
     void eat(Being*) override;
+
+    // Animal interface
+protected:
+    vector<Animal*> findEnemies() override;
 };
 
 #endif // HERBIVOROUS_H

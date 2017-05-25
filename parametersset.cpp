@@ -79,7 +79,7 @@ int ParametersSet::getMaxPlantHp() const
     return MAX_PLANT_HP_LEVEL;
 }
 
-float ParametersSet::getStartHungerLevel() const
+int ParametersSet::getStartHungerLevel() const
 {
     return startHungerLevel;
 }

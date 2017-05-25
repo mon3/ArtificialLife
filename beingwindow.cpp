@@ -18,26 +18,28 @@ void BeingWindow::initWindow(Being* being)
     //add being info
 
     //set new data
-    lineInfoChange(ui->lineEdit_7, QString::number(being->getLogX()));
-    lineInfoChange(ui->lineEdit_8, QString::number(being->getLogY()));
-    lineInfoChange(ui->lineEdit_9, QString::number(being->getHitPoints()));
+    lineInfoChange(ui->xLoc, QString::number(being->getLogX()));
+    lineInfoChange(ui->yLoc, QString::number(being->getLogY()));
+    lineInfoChange(ui->hpInfo, QString::number(being->getHitPoints()));
 
     //set specyfic type data
     Animal* a;
     if((a = qobject_cast<Animal*>(being)) != 0) {
         //add info spec for animal class
-
+        lineInfoChange(ui->activity, QVariant::fromValue(a->getActivity()).toString());
+        lineInfoChange(ui->speed, QString::number(a->getSpeed()));
+        lineInfoChange(ui->eveSight, QString::number(a->getEveSight()));
 
         //add info specyfic for sub-animal class
         if(a= qobject_cast<Predator*>(a))
-            lineInfoChange(ui->lineEdit_11, "Predator");
+            lineInfoChange(ui->typeInfo, "Predator");
         else
-            lineInfoChange(ui->lineEdit_11, "Herbivorous");
+            lineInfoChange(ui->typeInfo, "Herbivorous");
 
     }
     else
     {
-        lineInfoChange(ui->lineEdit_11, "Plant");
+        lineInfoChange(ui->typeInfo, "Plant");
     }
 }
 

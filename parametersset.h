@@ -56,7 +56,7 @@ public:
     int getPlantGrowbackLevel() const;
     float getMaxFoodCapacity() const;
     static int getRandomInt();
-    float getStartHungerLevel() const;
+    int getStartHungerLevel() const;
 
 
     // getters, more advanced for sugarscape
@@ -66,7 +66,7 @@ public:
     vector<Plant*> getAdjacentBeings(const Animal* a, const int) const;
 
     float getFoodConsumptionUnits() const;
-
+    function<bool(int, int)> checkCoordinate;
 public slots:
     void callWindow(Being* b);
 private:
@@ -97,7 +97,7 @@ private:
     //single creature params
     float biologicalChildAge;
     float biologicalAdultAge;
-    float startHungerLevel;
+    int startHungerLevel = 70;
     float maxFoodCapacity;
     float foodConsumptionUnits;
 
@@ -117,7 +117,7 @@ private:
 
 
     //helper lambda functions
-    function<bool(int, int)> checkCoordinate;
+
     function<int(int)> getRowMod;
     function<int(int)> getColMod;
 };

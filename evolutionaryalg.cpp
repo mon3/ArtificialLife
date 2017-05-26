@@ -106,7 +106,7 @@ void EvolutionaryAlg::selectMiBest(int mi, QVector<Animal *> &PopParentChild)
 
     for (unsigned i = 0; i< indivFitness.size(); ++i)
     {
-        qDebug() << "FITNESS = " << indivFitness[i].second ;
+//        qDebug() << "FITNESS = " << indivFitness[i].second ;
     }
 
 
@@ -119,8 +119,8 @@ void EvolutionaryAlg::selectMiBest(int mi, QVector<Animal *> &PopParentChild)
     newPop.resize(mi);
     PopParentChild = newPop;
 
-    qDebug() << "FINALLY = ";
-    printPopulation(PopParentChild);
+//    qDebug() << "FINALLY = ";
+//    printPopulation(PopParentChild);
 
 
 
@@ -243,15 +243,6 @@ void EvolutionaryAlg::initializeIndividualVectors(int X, int Y, Beings beingType
     QVector<int> features;
     stdDevs.push_back(genEye.getMean());
 
-
-
-
-
-//    QVector<ConstrainedValue> featuresConstrained;
-//    QVector<ConstrainedValue> stdDevsBound;
-
-
-
     Being* being;
 //    Being* beingConstr; being containing features with constraints
 
@@ -261,8 +252,6 @@ void EvolutionaryAlg::initializeIndividualVectors(int X, int Y, Beings beingType
         Generator genPredSpeed((ParametersSet::maxPredatorSpeed - ParametersSet::minPredatorSpeed) * 0.5,(ParametersSet::maxPredatorSpeed - ParametersSet::minPredatorSpeed) * randomDouble(0.4, 0.5), ParametersSet::minPredatorSpeed, ParametersSet::maxPredatorSpeed);
         Generator genPredFoodCap((ParametersSet::maxPredatorFoodCapacity - ParametersSet::minPredatorFoodCapacity) * 0.5,(ParametersSet::maxPredatorFoodCapacity - ParametersSet::minPredatorFoodCapacity) * randomDouble(0.1, 0.2), ParametersSet::minPredatorFoodCapacity, ParametersSet::maxPredatorFoodCapacity);
         Generator genPredMetabolism((ParametersSet::maxPredatorMetabolism - ParametersSet::minPredatorMetabolism) * 0.5,(ParametersSet::maxPredatorMetabolism - ParametersSet::minPredatorMetabolism) * randomDouble(0.1, 0.3), ParametersSet::minPredatorMetabolism, ParametersSet::maxPredatorMetabolism);
-
-
 
         stdDevs.push_back(genPredSpeed.getStddev());
         stdDevs.push_back(genHitPts.getStddev());
@@ -277,10 +266,8 @@ void EvolutionaryAlg::initializeIndividualVectors(int X, int Y, Beings beingType
         features.push_back((int)round(genPredFoodCap()));
         features.push_back((int)round(genExh()));
 
-        ConstrainedEyeSight eye = (int)round(genEye());
-//        featuresConstrained.push_back(eye);
-
-
+//        ConstrainedEyeSight eye = (int)round(genEye());
+////        featuresConstrained.push_back(eye);
 
         being = static_cast<Being*>(new Predator(X, Y, features, stdDevs));
 
@@ -374,7 +361,7 @@ void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIni
 
     // TODO: set mu as input parameter passed from UI
     // mu - size of the population
-    int mu = 20;
+    int mu = 50;
 
     // TODO: resolve correct logical positions: X, Y
     QVector<int> indicesX(N*N);
@@ -416,37 +403,51 @@ QVector<Animal*> EvolutionaryAlg::generateTemporaryPopulation(int lambda, QVecto
 void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) // type: mean, interpolation
 {
     QVector<Animal*> germs; // for each pair of tempPop <x_dash, sigma_dash>
-    QVector<double> stdDevs;
-    QVector<int> features;
+    QVector<double> stdDevs, stdDevs2;
+    QVector<int> features, features2;
 
-//    qDebug() << "TEMP POP SIZE = " << tempPop.size();
+    qDebug() << "TEMP POP SIZE = " << tempPop.size();
     Being* being;
+    Being* being2;
 
     for (int i=0; i< tempPop.size(); i+=2)
     {
         features.clear();
+        features2.clear();
         stdDevs.clear();
+        stdDevs2.clear();
 
         if(type ==1)
         {
             int j=0;
             for (auto &indiv : (tempPop.at(i)->getFeaturesEA())) // access by reference to avoid copying
             {
-                int newFeature;
-                newFeature += indiv;
-                newFeature += tempPop.at(i+1)->getFeaturesEA().at(j);
-                newFeature = newFeature/2;
+                double newFeature = 0.0;
+                double newFeature2 = 0.0;
+                newFeature += (indiv*0.25);
+                newFeature2 += (indiv*0.75);
+                newFeature += (0.75*tempPop.at(i+1)->getFeaturesEA().at(j));
+                newFeature2 += (0.25*tempPop.at(i+1)->getFeaturesEA().at(j));
+              //  newFeature = newFeature/2;
                 j++;
-                features.push_back(newFeature);
+                features.push_back((int)(newFeature));
+                features2.push_back((int)(newFeature2));
+
             }
 
             j = 0;
             for (auto &stdDev : tempPop.at(i)->getStdDevs())
             {
-                stdDev += tempPop.at(i+1)->getStdDevs().at(j);
-                stdDev = stdDev/2;
+                double newStd = 0.0, newStd2 = 0.0;
+                newStd += (0.25 * stdDev);
+                newStd += (0.75 * tempPop.at(i+1)->getStdDevs().at(j));
+                newStd2 += (0.75 * stdDev);
+                newStd2 += (0.25 * tempPop.at(i+1)->getStdDevs().at(j));
+//                stdDev += tempPop.at(i+1)->getStdDevs().at(j);
+//                stdDev = stdDev/2;
                 j++;
-                stdDevs.push_back(stdDev);
+                stdDevs.push_back(newStd);
+                stdDevs2.push_back(newStd2);
             }
         }
         else if(type==2)
@@ -482,18 +483,24 @@ void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) /
         if (tempPop.at(0)->type() == Beings::PREDATOR)
         {
         being = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), features, stdDevs));
+        being2 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), features2, stdDevs2));
+
         }
         else if (tempPop.at(0)->type() == Beings::HERBIVOROUS)
         {
             being = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), features, stdDevs));
+            being2 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), features2, stdDevs2));
         }
         else
         {
             qDebug() << "Wrong type provided! ";
         }
         germs.push_back(qobject_cast<Animal*>(being));
+        germs.push_back(qobject_cast<Animal*>(being2));
     }
 
+    // ska tutaj wziac lambda osobnikow skoro sa pary??
+    qDebug() << "GERMS = " << germs.size();
     tempPop = germs;
 
 }
@@ -550,5 +557,5 @@ void EvolutionaryAlg::mutation(QVector<Animal *> &RepPop)
         }
     }
 
-    printPopulation(RepPop);
+//    printPopulation(RepPop);
 }

@@ -20,7 +20,7 @@
     double normalizeFeature(int feature, int min, int max);
     void selectMiBest(int mi, QVector<Animal *> &PopParentChild); // will be reduced to next population of mi individuals
     void selectRoulette(int mi, QVector<Animal *> &PopParentChild); // roulette rule selection
-    void selectRank(int mi, QVector<Animal *> &PopParentChild); // roulette rule selection
+    void selectRank(int mi, QVector<Animal *> &PopParentChild); // rank selection
 
 
     double randomDouble(double min, double max);
@@ -28,7 +28,7 @@
     // TODO: check the conditions for QVector
     QVector<Animal*> generateTemporaryPopulation(int lambda, QVector<Animal*>& currentPop);
     void reproducePopulation(QVector<Animal*>& tempPop, int type); // type: mean, interpolation
-
+    void runEA(int mi, int lambda, int iterations, int reproduceType, QVector<Animal*> &predPopulation, QVector<Animal*> &herbPopulation);
 
     //mi - population size, lambda - chil, n - number of alleles in chromosome
    //  Animal: herbivorous or predator

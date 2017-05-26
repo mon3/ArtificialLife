@@ -42,6 +42,7 @@ QVector<int> EvolutionaryAlg::featuresToChromosome(Animal *animal)
     return chromosome;
 }
 
+
 double calculation(double a, double b, double c)
 {
   double d = abs(100 * (a - b) /(c - b));
@@ -96,7 +97,6 @@ void EvolutionaryAlg::selectMiBest(int mi, QVector<Animal *> &PopParentChild)
     QVector<std::pair<Animal*, double>> indivFitness;
     QVector<Animal *> newPop;
 
-
     for (auto &indiv: PopParentChild )
     {
         indivFitness.push_back(std::make_pair(indiv, this->fitnessFunction(this->featuresToChromosome(indiv))));
@@ -104,10 +104,10 @@ void EvolutionaryAlg::selectMiBest(int mi, QVector<Animal *> &PopParentChild)
 
     std::sort(indivFitness.begin(), indivFitness.end(), sort_pair_second<Animal*, double>());
 
-    for (unsigned i = 0; i< indivFitness.size(); ++i)
-    {
+//    for (unsigned i = 0; i< indivFitness.size(); ++i)
+//    {
 //        qDebug() << "FITNESS = " << indivFitness[i].second ;
-    }
+//    }
 
 
     std::transform(indivFitness.begin(),
@@ -119,49 +119,11 @@ void EvolutionaryAlg::selectMiBest(int mi, QVector<Animal *> &PopParentChild)
     newPop.resize(mi);
     PopParentChild = newPop;
 
-//    qDebug() << "FINALLY = ";
-//    printPopulation(PopParentChild);
-
-
-
-//    QVector<size_t> indexes = sort_indexes(fitnessPopulation);
-//    QVector<size_t>::iterator nth = indexes.begin() + mi;
-
-//    indexes.erase(indexes.begin(), nth); // indexes of individuals that should be removed from the population
-////    indexes.resize(mi);
-
-//    for (auto id : indexes)
-//    {
-////        PopParentChild.erase(std::remove(PopParentChild.begin(), PopParentChild.end(), id), PopParentChild.end());
-//        PopParentChild.erase(std::find(PopParentChild.begin(), PopParentChild.end(), id));
-//        // or items.erase(std::find(items.begin(), items.end(), id));
-//        // provided that we know id always exists in items
-//    }
-//    QVector<Animal*>::const_iterator first = PopParentChild.cbegin();
-//    QVector<Animal*>::const_iterator last = PopParentChild.cbegin() + mi;
-//    QVector<Animal*> newPop(first, last);
-//    PopParentChild = newPop;
-
-//    qDebug() << "FINALLY = ";
-//    printPopulation(PopParentChild);
-
-
-
-//    qDebug() << "resized indexes size = " << indexes.size();
-//        for (auto &index: indexes)
-//        {
-//            qDebug() <<index<< endl;
-
-//        }
-//    for (auto i: sort_indexes(fitnessPopulation)) {
-//      qDebug() <<i<<"\t" <<fitnessPopulation[i] << endl;
-//    }
-//    qDebug() << "\n";
-
 }
 
 void EvolutionaryAlg::selectRoulette(int mi, QVector<Animal *> &PopParentChild)
 {
+
 
 }
 
@@ -382,8 +344,8 @@ void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIni
 
     }
 
-    qDebug() << "Initialized predator pop size = " << predatorIniPop.size();
-    qDebug() << "Initialized herbivorous pop size = " << herbivorousIniPop.size();
+//    qDebug() << "Initialized predator pop size = " << predatorIniPop.size();
+//    qDebug() << "Initialized herbivorous pop size = " << herbivorousIniPop.size();
 
 
 }
@@ -428,7 +390,6 @@ void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) /
                 newFeature2 += (indiv*0.75);
                 newFeature += (0.75*tempPop.at(i+1)->getFeaturesEA().at(j));
                 newFeature2 += (0.25*tempPop.at(i+1)->getFeaturesEA().at(j));
-              //  newFeature = newFeature/2;
                 j++;
                 features.push_back((int)(newFeature));
                 features2.push_back((int)(newFeature2));
@@ -443,8 +404,6 @@ void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) /
                 newStd += (0.75 * tempPop.at(i+1)->getStdDevs().at(j));
                 newStd2 += (0.75 * stdDev);
                 newStd2 += (0.25 * tempPop.at(i+1)->getStdDevs().at(j));
-//                stdDev += tempPop.at(i+1)->getStdDevs().at(j);
-//                stdDev = stdDev/2;
                 j++;
                 stdDevs.push_back(newStd);
                 stdDevs2.push_back(newStd2);
@@ -460,19 +419,29 @@ void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) /
             // for each of the features
             for (auto &indiv : tempPop.at(i)->getFeaturesEA()) // access by reference to avoid copying
             {
-                indiv = indiv * a;
-                indiv += ((1-a)*((tempPop.at(i+1)->getFeaturesEA()).at(j)));
+                double newFeature = 0.0;
+                double newFeature2 = 0.0;
+                newFeature = indiv*a;
+                newFeature2 = indiv * (1-a);
+                newFeature += ((1-a)*((tempPop.at(i+1)->getFeaturesEA()).at(j)));
+                newFeature2 += (a*((tempPop.at(i+1)->getFeaturesEA()).at(j)));
                 j++;
-                features.push_back(indiv);
+                features.push_back(newFeature);
+                features2.push_back(newFeature2);
             }
 
             j = 0;
             for (auto &stdDev : tempPop.at(i)->getStdDevs())
             {
-                stdDev += (a*stdDev);
-                stdDev += ((1-a)*((tempPop.at(i+1)->getStdDevs()).at(j)));
+                double newStd = 0.0, newStd2 = 0.0;
+                newStd = a*stdDev;
+                newStd2 = (1-a)*stdDev;
+                newStd += ((1-a)*((tempPop.at(i+1)->getStdDevs()).at(j)));
+                newStd2 += (a*((tempPop.at(i+1)->getStdDevs()).at(j)));
                 j++;
-                stdDevs.push_back(stdDev);
+                stdDevs.push_back(newStd);
+                stdDevs2.push_back(newStd2);
+
             }
         }
         else
@@ -499,8 +468,6 @@ void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) /
         germs.push_back(qobject_cast<Animal*>(being2));
     }
 
-    // ska tutaj wziac lambda osobnikow skoro sa pary??
-    qDebug() << "GERMS = " << germs.size();
     tempPop = germs;
 
 }
@@ -512,9 +479,7 @@ void EvolutionaryAlg::printPopulation(QVector<Animal *> &Pop)
     {
         anim->displayFeatures();
         anim->displayStd();
-
     }
-
 }
 
 void EvolutionaryAlg::mutation(QVector<Animal *> &RepPop)
@@ -558,4 +523,54 @@ void EvolutionaryAlg::mutation(QVector<Animal *> &RepPop)
     }
 
 //    printPopulation(RepPop);
+}
+
+// whole Evolutionary Algorithm
+void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceType, QVector<Animal*> &predPopulation, QVector<Animal*> &herbPopulation)
+{
+    QVector<Animal*> predatorIniPop = predPopulation;
+    QVector<Animal*> herbivorousIniPop = herbPopulation;
+    ParametersSet* set = ParametersSet::getInstance();
+
+    QVector<Animal*> predatorTempPop;
+    QVector<Animal*> herbivorousTempPop;
+    QVector<Animal*> predParentsChildrenPop = predatorIniPop;
+    QVector<Animal*> herbParentsChildrenPop = herbivorousIniPop;
+    for (int i=0; i<iterations; ++i)
+    {
+
+//    qDebug() << "parent size = " << predParentsChildrenPop.size();
+//    qDebug() << "Predator Temp pop generation..." ;
+    predatorTempPop = this->generateTemporaryPopulation(lambda, predParentsChildrenPop);
+//    qDebug() << "Herbivorous Temp pop generation..." ;
+    herbivorousTempPop = this->generateTemporaryPopulation(lambda, herbParentsChildrenPop);
+//    qDebug() << "temp size = " << predatorTempPop.size();
+    this->reproducePopulation(predatorTempPop, reproduceType);
+//    qDebug() << "temp size after reproduce = " << predatorTempPop.size();
+    this->mutation(predatorTempPop);
+
+//    qDebug() << "temp size after mutation = " << predatorTempPop.size();
+
+    this->reproducePopulation(herbivorousTempPop, reproduceType);
+    this->mutation(herbivorousTempPop);
+
+//    predParentsChildrenPop.clear();
+//    herbParentsChildrenPop.clear();
+    predParentsChildrenPop = predParentsChildrenPop + predatorTempPop;
+    herbParentsChildrenPop = herbParentsChildrenPop +  herbivorousTempPop;
+
+//    qDebug() << "par+child  = " << predParentsChildrenPop.size();
+
+    predatorTempPop.clear();
+    herbivorousTempPop.clear();
+
+    this->selectMiBest(mi, predParentsChildrenPop);
+    this->selectMiBest(mi, herbParentsChildrenPop);
+
+//    qDebug() << "mi selection  = " << predParentsChildrenPop.size();
+
+    }
+    predPopulation = predParentsChildrenPop;
+    herbPopulation = herbParentsChildrenPop;
+
 }

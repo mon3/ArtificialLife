@@ -13,7 +13,6 @@ class Animal : public Being
 public:
 
     Animal(int _logX, int _logY) : Being(_logX, _logY) { }
-//    Animal(int _logX, int _logY) : Being(_logX, _logY) { }
     ~Animal(){}
     void action();
     virtual int type() const = 0;
@@ -84,21 +83,18 @@ private:
     void sleep();
     void run();
 
-
-
-
-    int eyeSight; // TO
+    int eyeSight; // feature used in EA
     int age;
 //    const int generation;
     int generation;
-    int speed; // TO
+    int speed; // feature used in EA
 //    int huntingPotential;
 
 
-    int foodCapacity; // TO
-    int metabolism; // TO
-    int exhaustionLevel; // TO
-    int saturationRate;
+    int foodCapacity; // feature used in EA
+    int metabolism; // feature used in EA
+    int exhaustionLevel; // feature used in EA
+    int saturationRate; // feature used in EA
     Activity activity;
 
     QVector<int> featuresEA; //standard deviations for evolutionary algorithm

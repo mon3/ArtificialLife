@@ -1,6 +1,6 @@
 #include "animal.h"
 
-const function<int(int)> Animal::direction = [=](int delta) -> int
+const function<int(int)> Animal::direction = [](const int& delta) -> int
 {
     // which means, we should not move in this dimension
     if(delta == 0) return 0;
@@ -13,24 +13,38 @@ const function<int(int)> Animal::direction = [=](int delta) -> int
 
 void Animal::action()
 {
-    if(activity == Activity::DEAD)
-        return;
+    if(activity == Activity::DEAD) {
+        return ParametersSet::getInstance()->removeBeing(this);
+    }
+
+    int oldX = this->getLogX(),
+        oldY = this->getLogY();
 
     ParametersSet* set = ParametersSet::getInstance();
 
     enemiesHandlingRoutine();
 
-    //hunting process, if hungry
-    const float hungerLevel = set->getStartHungerLevel();
-    if(activity != RUNNNING_AWAY && saturationRate < hungerLevel) {
-        activity = HUNTING;
-        huntRoutine(set);
-    }
-
-    //after hunting, unless animal is satisfied, consume inner reserve
-    if(activity != RUNNNING_AWAY && saturationRate < hungerLevel && foodCapacity > 0)
+    if(activity != RUNNNING_AWAY)
     {
-        foodConsumptionRoutine(set);
+        //hunting process, if hungry
+        const float hungerLevel = set->getStartHungerLevel();
+        if(saturationRate < hungerLevel) {
+
+            activity = HUNTING;
+            huntRoutine(set);
+
+            //after hunting, unless animal is satisfied, consume inner reserve
+            if(saturationRate < hungerLevel && foodCapacity > 0)
+            {
+                foodConsumptionRoutine(set);
+            }
+        }
+        else
+        {
+            activity = IDLE;
+            move();
+        }
+
     }
 
     // parameters correction section
@@ -47,6 +61,8 @@ void Animal::action()
         activity = Activity::DEAD;
         return;
     }
+    else
+        set->updateBeing(this, oldX, oldY);
 }
 
 void Animal::mousePressEvent(QGraphicsSceneMouseEvent *)
@@ -54,30 +70,84 @@ void Animal::mousePressEvent(QGraphicsSceneMouseEvent *)
     emit callWindow(this);
 }
 
+void Animal::foodConsumptionRule(int &foodValue)
+{
+    ParametersSet* set = ParametersSet::getInstance();
+    float currentSaturationRate = this->getSaturationRate();
+    // TODO: set max saturation value
+    if(currentSaturationRate + foodValue < 100.0f)
+    {
+        // if a whole plant is not enough to satisfy hunger, just eat it all
+        this->setSaturationRate(currentSaturationRate + foodValue);
+        foodValue = 0;
+    }
+    else
+    {
+        int delta = 100.0f - currentSaturationRate;
+        this->setSaturationRate(100.0f);
+        foodValue -= delta;
+
+        int currentFoodCapacity = this->getFoodCapacity();
+
+        // try to take as many plants as you can
+        const int maxFoodCapacity = set->getMaxFoodCapacity();
+        if(currentFoodCapacity + foodValue < maxFoodCapacity)
+        {
+            this->setFoodCapacity(currentFoodCapacity + foodValue);
+            foodValue = 0;
+        }
+        else
+        {
+            // if not, fill up your food cap
+            foodValue -= set->getMaxFoodCapacity() - currentFoodCapacity;
+            this->setFoodCapacity(maxFoodCapacity);
+        }
+
+    }
+}
+
 void Animal::move(int x, int y )
 {
     auto set = ParametersSet::getInstance();
     //move to random free location, within being reach
-
-
     if(x == UNKNOWN_LOCATION || y == UNKNOWN_LOCATION)
     {
-        // first, check being activity, if hungry - go as far
-        // as you could, else do not go far away
-        // TODO: base on activity
-        const int gridSize = set->getGridSize();
-
-
-        int addVal = (ParametersSet::getRandomInt() % 3) - 1;
-        this->setLogX(this->getLogX() + addVal);
-        addVal = (ParametersSet::getRandomInt() % 3) - 1;
-        this->setLogY(this->getLogY() + addVal);
+        // if being is idle
+        int goalX, goalY, addVal;
+        if(activity == IDLE)
+        {
+            moveClose(this->getLogX() + ParametersSet::getRandomInt(-1, 2),
+                      this->getLogY() + ParametersSet::getRandomInt(-1, 2));
+        }
+        else if (activity == HUNTING)
+        {
+            const int addVal = speed;
+            goalX = addVal * direction(ParametersSet::getRandomInt(-1, 2));
+            goalY = addVal * direction(ParametersSet::getRandomInt(-1, 2));
+            moveClose(goalX, goalY);
+        }
     } else
     {
         this->setLogX(x);
         this->setLogY(y);
     }
+}
 
+void Animal::moveClose(int goalX, int goalY)
+{
+    ParametersSet* set = ParametersSet::getInstance();
+
+    // direction of moving 1, 0, -1
+    int directionVector[2] = {direction(goalX - this->getLogX()), direction(goalY - this->getLogY())};
+
+    //move to the closest free cell
+    if(directionVector[0] != 0 || directionVector[1] != 0)
+        while(!set->isFreeCell(goalX, goalY) && set->checkCoordinate(goalX, goalY))
+        {
+            goalX -= directionVector[0];
+            goalY += directionVector[1];
+        }
+    move(goalX, goalY);
 }
 
 void Animal::runFrom(const vector<Animal *>& enemies)
@@ -104,7 +174,7 @@ void Animal::runFrom(const vector<Animal *>& enemies)
     ParametersSet* set = ParametersSet::getInstance();
     // try to run from him, for it's most likely he won't notice
     // TODO: add handler functions
-    int modifier = set->getRandomInt() % 2 > 0 ? 1 : -1;
+    int modifier = set->getRandomInt(0, 2) > 0 ? 1 : -1;
     if(safeX == enemy->getLogX())
     {
         if(!set->checkCoordinate(safeX, safeY + modifier))
@@ -114,7 +184,6 @@ void Animal::runFrom(const vector<Animal *>& enemies)
             modifier += inc;
         move(safeX, safeY  + modifier);
     }
-
     else
     {
         if(!set->checkCoordinate(safeX + modifier, safeY))
@@ -138,25 +207,16 @@ void Animal::huntRoutine(ParametersSet* set)
 
         //unless you can reach prey in one turn, get as close as you could
         if(speed < eveSight) {
-            // direction of moving 1, 0, -1
-            int directionVector[2] = {direction(goalX - this->getLogX()), direction(goalY - this->getLogY())};
 
+            int directionVector[2] = {direction(goalX - this->getLogX()), direction(goalY - this->getLogY())};
             // if direcVec > 0, means we should move to the right, so decrease goalX, increase goalY
             // do reverse in opposite
-            goalX -= directionVector[0] * speed;
-            goalY += directionVector[1] * speed;
-
-            //move to the closest free cell
-            while(!set->isFreeCell(goalX, goalY))
-            {
-                goalX -= directionVector[0];
-                goalY += directionVector[1];
-            }
-            move(goalX, goalY);
+            goalX = this->getLogX() + directionVector[0] * speed;
+            goalY = this->getLogY() + directionVector[1] * speed;
+            moveClose(goalX, goalY);
         } else {
-            move(goalX, goalY);
             eat(prey);
-            activity = IDLE;
+            move(goalX, goalY);
         }
 
     } else {
@@ -174,8 +234,6 @@ void Animal::enemiesHandlingRoutine()
         activity = RUNNNING_AWAY;
         runFrom(dangerousEnemies);
     }
-    else
-        activity = IDLE;
 
 }
 
@@ -183,6 +241,15 @@ void Animal::foodConsumptionRoutine(ParametersSet *set)
 {
     // consume food from inner reserves, as much
     // as you can in one turn
+
+    // first, determine how much food you must eat
+
+    // second, determine how much food you can eat
+
+    //if >, cons. all food
+
+    // else, cons. delta
+
 }
 
 void Animal::exaustionLevelHandlingRoutine(ParametersSet *set)

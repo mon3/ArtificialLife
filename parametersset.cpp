@@ -72,6 +72,7 @@ void ParametersSet::removeBeing(Animal * a)
     animalsOnBoard[a->getLogX()][a->getLogY()] = nullptr;
     a->scene()->removeItem(a);
     delete a;
+    qDebug() << "removed";
 }
 
 int ParametersSet::getMaxPlantHp() const
@@ -114,18 +115,20 @@ vector<Plant*> ParametersSet::getAdjacentBeings(const Animal * a, const int reac
 
 
 // don't like it, refactor
-void ParametersSet::addBeing(Animal *a)
+void ParametersSet::addBeing(Being *b)
 {
+    const int x = b->getLogX(),
+              y = b->getLogY();
     //throw an exception?
-    animalsOnBoard[a->getLogX()][a->getLogY()] = a;
-    mapPosition(a);
+    Animal* a;
+    if((a = qobject_cast<Animal*>(b)) != 0)
+        animalsOnBoard[x][y] = a;
+    else
+        plantsOnBoard[x][y] = qobject_cast<Plant*>(b);
+    mapPosition(b);
 }
 
-void ParametersSet::addBeing(Plant *p)
-{
-    plantsOnBoard[p->getLogX()][p->getLogY()] = p;
-    mapPosition(p);
-}
+
 
 void ParametersSet::mapPosition(Being *b)
 {
@@ -140,6 +143,19 @@ bool ParametersSet::isFreeCell(int x, int y)
         return false;
 
     return animalsOnBoard[x][y] == nullptr;
+}
+
+void ParametersSet::updateBeing(Being *b, const int oldX, const int oldY)
+{
+    const int x = b->getLogX(),
+              y = b->getLogY();
+    Animal* a = qobject_cast<Animal*>(b);
+    if(a != 0)
+    {
+        animalsOnBoard[oldX][oldY] = nullptr;
+        animalsOnBoard[x][y] = a;
+    }
+    mapPosition(b);
 }
 
 ParametersSet *ParametersSet::getInstance(int gridSize)
@@ -160,9 +176,9 @@ void ParametersSet::setSeason(Season newSeason)
     season = newSeason;
 }
 
-int ParametersSet::getRandomInt()
+int ParametersSet::getRandomInt(const int& min, const int& max)
 {
-    return rand();
+    return (rand() % (max - min)) + min;
 }
 
 void ParametersSet::callWindow(Being * b)

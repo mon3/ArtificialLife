@@ -39,13 +39,12 @@ public:
 
 
 
-    void addBeing(Animal*);
-    void addBeing(Plant*);
+    void addBeing(Being*);
 
     //consider making position/location making class
-    void mapPosition(Being* b);
-    bool isFreeCell(int x, int y);
 
+    bool isFreeCell(int x, int y);
+    void updateBeing(Being* b, const int oldX, const int oldY);
 
     // use polymorfism
     void removeBeing(Plant*);
@@ -55,13 +54,13 @@ public:
     int getMaxPlantHp() const;
     int getPlantGrowbackLevel() const;
     float getMaxFoodCapacity() const;
-    static int getRandomInt();
+    static int getRandomInt(const int&, const int&);
     int getStartHungerLevel() const;
 
 
     // getters, more advanced for sugarscape
     template<typename T>
-    vector<T*> getAdjacentBeings(const Animal* a, const int) const;
+    vector<T> getAdjacentBeings(const Animal* a, const int) const;
 
     vector<Plant*> getAdjacentBeings(const Animal* a, const int) const;
 
@@ -73,6 +72,7 @@ private:
 
     int magic_offset;
 
+    void mapPosition(Being* b);
 
     //to make singleton
     ParametersSet(const ParametersSet&) = delete;

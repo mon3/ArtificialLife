@@ -44,6 +44,7 @@ public:
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
+    void foodConsumptionRule(int& foodValue);
 signals:
     void callWindow(Being*);
 
@@ -51,12 +52,15 @@ protected:
 
     //subactions
     //set of subactions for every type of animal will be defined:
+
+    // TODO: consider to make a template function
     virtual Being* hunt() = 0;
     virtual void eat(Being*) = 0;
     virtual vector<Animal*> findEnemies() = 0;
 
 private:
     void move(int x = UNKNOWN_LOCATION, int y = UNKNOWN_LOCATION);
+    void moveClose(int goalX,int goalY);
     void mate(Animal*);
 
     void rest();

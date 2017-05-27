@@ -41,40 +41,36 @@ void MainWindow::initGame()
     connect(ui->stopButton, SIGNAL(pressed()), timer.data(), SLOT(stop()));
     connect(timer.data(), SIGNAL(timeout()), scene, SLOT(updateGrid()));
 
+    auto lambdaAdd = [&] (Being* b) -> void {
+        connectBeing(b);
+        scene->addItem(b);
+        set->addBeing(b);
+    };
+
     //test subjects
-     Herbivorous* ex = new Herbivorous(3, 3);
-     connectBeing(ex);
-     scene->addItem(ex);
-     set->addBeing(ex);
+    Herbivorous* ex = new Herbivorous(3, 3);
+    lambdaAdd(ex);
 
-     ex = new Herbivorous(9, 8);
-          connectBeing(ex);
-          scene->addItem(ex);
-          set->addBeing(ex);
+    ex = new Herbivorous(9, 8);
+    lambdaAdd(ex);
+    ex = new Herbivorous(4, 4);
+    lambdaAdd(ex);
 
-//     Plant* exp = new Plant(5, 5);
-//     connectBeing(exp);
-//     scene->addItem(exp);
-//     set->addBeing(exp);
-//     exp->setHitPoints(100);
+     Plant* pl = new Plant(4, 5);
+    lambdaAdd(pl);
+    pl = new Plant(2, 2);
+    lambdaAdd(pl);
 
-//     exp = new Plant(1, 3);
-//     connectBeing(exp);
-//     scene->addItem(exp);
-//     set->addBeing(exp);
-//     exp->setHitPoints(150);
+    pl = new Plant(4, 5);
+    lambdaAdd(pl);
 
-//     exp = new Plant(8, 8);
-//     connectBeing(exp);
-//     scene->addItem(exp);
-//     set->addBeing(exp);
-//     exp->setHitPoints(100);
+    pl = new Plant(7, 6);
+    lambdaAdd(pl);
 
-//     exp = new Plant(1, 1);
-//     connectBeing(exp);
-//     scene->addItem(exp);
-//     set->addBeing(exp);
-//     exp->setHitPoints(80);
+    pl = new Plant(8, 1);
+
+    lambdaAdd(pl);
+
     //test button
     connect(ui->testPushBUtton, SIGNAL(pressed()), scene, SLOT(updateGrid()));
 

@@ -26,7 +26,7 @@ int Being::getLogX() const
 
 void Being::setLogX(int value)
 {
-    int grSize = ParametersSet::getInstance()->getGridSize();
+    const int grSize = ParametersSet::getInstance()->getGridSize();
     if(value < grSize && value >= 0)
         logX = value;
 }
@@ -38,21 +38,14 @@ int Being::getLogY() const
 
 void Being::setLogY(int value)
 {
-    int grSize = ParametersSet::getInstance()->getGridSize();
+    const int grSize = ParametersSet::getInstance()->getGridSize();
     if(value < grSize && value >= 0)
         logY = value;
 }
 
 void Being::updateBeing()
 {
-    ParametersSet* set = ParametersSet::getInstance();
-    int oldX = logX,
-        oldY = logY;
-
-    this->action();
-
-    if(oldX != logX || oldY != logY)
-        set->mapPosition(this);
+    this->action();  
 }
 
 void Being::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)

@@ -6,7 +6,7 @@ class Plant : public Being
 {
     Q_OBJECT
 public:
-    Plant(int _logX, int _logY) : Being(_logX, _logY) { }
+    Plant(int _logX, int _logY) : Being(_logX, _logY) { setHitPoints(100); }
 
     void action();
     int type() const { return Beings::PLANT; }

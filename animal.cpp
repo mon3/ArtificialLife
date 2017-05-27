@@ -31,7 +31,7 @@ void Animal::action()
         if(saturationRate < hungerLevel) {
 
             activity = HUNTING;
-            huntRoutine(set);
+            huntRoutine();
 
             //after hunting, unless animal is satisfied, consume inner reserve
             if(saturationRate < hungerLevel && foodCapacity > 0)
@@ -160,7 +160,7 @@ void Animal::runFrom(const vector<Animal *>& enemies)
     // being can see enemies only in four directions, we should
     // find an optimal position to move(assuming that there are up to four enemies)
     int minDistance = numeric_limits<int>::max();
-    const Animal* enemy;
+    const Animal* enemy = nullptr;
     // find the closest enemy
     for(const Animal* a : enemies)
     {
@@ -195,7 +195,7 @@ void Animal::runFrom(const vector<Animal *>& enemies)
     }
 }
 
-void Animal::huntRoutine(ParametersSet* set)
+void Animal::huntRoutine()
 {
     //if there not, hunt
     Being* prey = hunt();

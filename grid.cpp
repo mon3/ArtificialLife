@@ -107,21 +107,5 @@ void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 
 void Grid::updateGrid()
 {
-    QList<QGraphicsItem*> list = this->items();
-
-    // TODO: better mapping
-    ParametersSet* set = ParametersSet::getInstance();
-    //not rightt!
-//    foreach (QGraphicsItem* item, list) {
-
-//        Being* b = static_cast< Being* >(item);
-//        if(b == nullptr) {
-//            qDebug() << "line";
-//            continue;
-//        }
-//        b->action();
-//        b->setPos((b->getLogX() * ParametersSet::SCENE_WIDTH) / set->getGridSize(),
-//                    (b->getLogY() * ParametersSet::SCENE_WIDTH) / set->getGridSize());
-//    }
 
 }

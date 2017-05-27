@@ -56,7 +56,7 @@ void MainWindow::initGame()
     ex = new Herbivorous(4, 4);
     lambdaAdd(ex);
 
-     Plant* pl = new Plant(4, 5);
+    Plant* pl = new Plant(4, 5);
     lambdaAdd(pl);
     pl = new Plant(2, 2);
     lambdaAdd(pl);

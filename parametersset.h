@@ -112,7 +112,7 @@ private:
     int minPlantSum;
     int maxPlantSum;
     float plantToSizeFactor;
-    int plantGrowbackLevel;
+    int plantGrowbackLevel = 30;
     const int MAX_PLANT_HP_LEVEL = 100;
 
 

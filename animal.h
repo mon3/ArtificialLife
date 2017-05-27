@@ -68,7 +68,7 @@ private:
     void runFrom(const vector<Animal*>& enemies);
 
     //routine functions, to simplify action()
-    void huntRoutine(ParametersSet*);
+    void huntRoutine();
     void enemiesHandlingRoutine();
     void foodConsumptionRoutine(ParametersSet*);
     void exaustionLevelHandlingRoutine(ParametersSet* set);

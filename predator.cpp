@@ -38,7 +38,7 @@ Being* Predator::hunt()
     maxValuedPlants.shrink_to_fit();
 
     //if there is several max positions, select one randomly
-    size_t size = maxValuedPlants.size();
+    const int  size = maxValuedPlants.size();
     if(size > 1)
         return maxValuedPlants[ParametersSet::getRandomInt(0, size)];
     qDebug() << "here3";

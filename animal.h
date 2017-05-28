@@ -61,9 +61,6 @@ public:
     void setFeaturesEA(QVector<int> vals);
     QVector<int> getFeaturesEA() const;
 
-    void setFeaturesEA(QVector<int>& vals, Beings beingType);
-
-
     void displayStd() const;
     void displayFeatures() const;
 

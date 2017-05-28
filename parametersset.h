@@ -34,7 +34,7 @@ public:
     static const int SCENE_WIDTH = 1000;
     static int BEING_WIDTH;
     ~ParametersSet() {  }
-    Point beingsInterpolation(const Being*, const Being*, const float& coeff = 0.5);
+    Point beingsInterpolation(const Being*, const Being*, const float& coeff = 0.5f);
 
 
     // COMMON for predator and herbivorous

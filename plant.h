@@ -17,7 +17,12 @@ private:
 
     // QGraphicsItem interface
 public:
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+signals:
+    void callWindow(Being*);
 };
 
 #endif // PLANT_H

@@ -22,6 +22,11 @@ Qt::GlobalColor Plant::getPenColor() const
     return Qt::blue;
 }
 
+void Plant::mousePressEvent(QGraphicsSceneMouseEvent *)
+{
+    emit callWindow(this);
+}
+
 
 void Plant::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {

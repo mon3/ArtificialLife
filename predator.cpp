@@ -52,7 +52,7 @@ Being* Predator::hunt()
 {
     qDebug() << "here1";
     vector<Herbivorous*> vec = ParametersSet::getInstance()->
-            getAdjacentBeings<Herbivorous*>(this, this->getEyeSight());
+            getAdjacentBeings<Herbivorous*>(this->getLogX(), this->getLogY(), this->getEyeSight());
     //no available plant at neighbourhood
     if(vec.empty()) {
         return nullptr;

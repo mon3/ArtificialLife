@@ -91,12 +91,10 @@ int ParametersSet::getStartHungerLevel() const
 
 
 
-vector<Plant*> ParametersSet::getAdjacentBeings(const Animal * a, const int reach) const
+vector<Plant*> ParametersSet::getAdjacentBeings(int logX, int logY, const int reach) const
 {
     vector<Plant*> result;
 
-    int logX = a->getLogX(), logY = a->getLogY()
-       ,eyeSight = a->getEyeSight();
     int checkX, checkY;
 
     //pushing to vector every being within animal reach

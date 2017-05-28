@@ -2,10 +2,10 @@
 #define PARAMETERSSET_TPP
 
 template<typename T>
-vector<T> ParametersSet::getAdjacentBeings(const Animal * a, const int reach) const
+vector<T> ParametersSet::getAdjacentBeings(int logX, int logY, const int reach) const
 {
     vector<T> result;
-    int logX = a->getLogX(), logY = a->getLogY();
+//    int logX = a->getLogX(), logY = a->getLogY();
     int checkX, checkY;
     for(int i = 1; i <= reach; ++i)
         for(int j = 0; j < 4; ++j) {

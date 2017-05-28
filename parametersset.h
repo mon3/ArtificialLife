@@ -109,9 +109,9 @@ public:
 
     // getters, more advanced for sugarscape
     template<typename T>
-    vector<T> getAdjacentBeings(const Animal* a, const int) const;
+    vector<T> getAdjacentBeings(int logX, int logY, const int) const;
 
-    vector<Plant*> getAdjacentBeings(const Animal* a, const int) const;
+    vector<Plant*> getAdjacentBeings(int logX, int logY, const int) const;
 
     float getFoodConsumptionUnits() const;
     function<bool(int, int)> checkCoordinate;

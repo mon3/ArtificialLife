@@ -58,7 +58,7 @@ public:
     void setStdDevs(QVector<double> vals);
     QVector<double> getStdDevs() const;
 
-    void setFeaturesEA(QVector<int> vals);
+    void setFeaturesEA(QVector<int>& vals, Beings type);
     QVector<int> getFeaturesEA() const;
 
     void displayStd() const;
@@ -68,6 +68,7 @@ public:
 
     Activity getActivity() const;
 
+    void setFeaturesEA(QVector<int> vals);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
     void foodConsumptionRule(int& foodValue);

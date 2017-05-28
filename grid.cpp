@@ -3,7 +3,10 @@
 
 #include <boost/range/algorithm_ext/push_back.hpp>
 #include <boost/range/irange.hpp>
+#include <QVector>
+#include <evolutionaryalg.h>
 #include <QGraphicsItem>
+
 int random(int min, int max) //range : [min, max)
 {
    static bool first = true;
@@ -27,67 +30,91 @@ struct rangegenerator {
 };
 
 
-void initializePopulations(int N, std::vector<Animal*>& predatorIniPop, std::vector<Animal*>& herbivorousIniPop)
-{
-//    std::vector<Animal*> predatorIniPop;
-//    std::vector<Animal*> herbivorousIniPop;
-
-    int initialPopSize = int(N * N * 0.2);
-    qDebug() << "Initial pop size: " << initialPopSize << endl;
-
-
-
-    // vector representing grid
-//    std::vector<int> availableGridElementsX;
-//    boost::push_back(availableGridElementsX, boost::irange(1, N*N+1));
-
-    std::vector<int> indicesX(N*N);
-    std::vector<int> indicesY(N*N);
-
-    generate(begin(indicesX), end(indicesX), rangegenerator(0));
-    generate(begin(indicesY), end(indicesY), rangegenerator(0));
-
-    random_shuffle(begin(indicesX), end(indicesX));
-    random_shuffle(begin(indicesY), end(indicesY));
-
-//    for (auto i= indices.begin(); i != indices.end(); ++i)
-//    {
-//        qDebug() << *i << ' ';
-//    }
-
-//    qDebug() << "Indices size: " << indicesX.size();
-
-    for (int i=0; i< initialPopSize; ++i)
-    {
-        predatorIniPop.push_back(new Predator(indicesX[i], indicesY[i]));
-//        qDebug() << indicesX[i] << " " << indicesY[i] ;
-
-
-        herbivorousIniPop.push_back(new Predator(indicesX[i+2], indicesY[i+2]));
-//        qDebug() << indicesX[i+2] << " " << indicesY[i+2] ;
-
-    }
-
-//    boost::push_back(availableGridElementsY, boost::irange(1, N*N+1));
-//    for (int i=0; i<= initialPopSize; ++i)
-//    {
-//      int currX = rand() % availableGridElementsX.size();
-//      int currY = rand() % availableGridElementsX.size();
-//      predatorIniPop.push_back(newPredator(availableGridElementsX(currX), availableGridElementsY(currY)));
-//      availableGridElementsX.erase(currX);
-//      availableGridElementsY.erase(currY);
-//      qDebug() << rand() % availableGridElementsX.size() << ' ';
-//    }
-
-//    for (auto i = availableGridElements.begin(); i != availableGridElements.end(); ++i)
-//        qDebug() << *i << ' ';
-
-}
 
 Grid::Grid()
 {
+    this->setEA(new EvolutionaryAlg());
+    QVector<Animal*> predatorIniPop;
+    QVector<Animal*> herbivorousIniPop;
+    ParametersSet* set = ParametersSet::getInstance();
+    EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
+    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
+
+    qDebug()<<"GRID ... ";
+//    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
+    qDebug() << "PREDATOR FROM EA...";
+    EA->printPopulation(predatorIniPop);
+
+    QVector<std::pair<Animal*, double>> indivFitness;
+
+
+    for (auto &indiv: predatorIniPop)
+    {
+        indivFitness.push_back(std::make_pair(indiv, EA->fitnessFunction(EA->featuresToChromosome(indiv))));
+    }
+
+//    std::sort(indivFitness.begin(), indivFitness.end(), EA->sort_pair_second<Animal*, double>());
+
+    qDebug() << "FINAL POPULATION SIZE = " << predatorIniPop.size();
+
+    for (unsigned i = 0; i< indivFitness.size(); ++i)
+    {
+        qDebug() << "FITNESS = " << indivFitness[i].second ;
+    }
+//    qDebug() << "HERBIVOROUS AFTER 50 ITERS...";
+//    EA->printPopulation(herbParentsChildrenPop);
+
+    for (int i=0; i< predatorIniPop.size(); ++i)
+    {
+        addItem(predatorIniPop[i]);
+        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+        // TODO:: add paint functions to visualize initial populations
+        addItem(herbivorousIniPop[i]);
+        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+
+    }
+
+    this->updateGrid();
 
 }
+
+
+//void Grid::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[], QWidget *widget)
+//{
+//    QList<QGraphicsItem*> list = this->items();
+//    QVector<QGraphicsItem*> vector; //I also tried QVector<int>vectorA(100);
+
+//    vector = QVector<QGraphicsItem*>::fromList(list);
+//    items =  &vector[0];
+
+//    // TODO: better mapping￼
+//    for (int i=0; i< list.size(); ++i)
+//    {
+//         Being* var = static_cast<Being*>(items[i]);
+//         var->paint(painter);
+//    }
+////    int i =0 ;
+////    foreach (QGraphicsItem* item, list) {
+////        Being* var = static_cast<Being*>(item);
+////        var -> paint(painter,options[i], widget );
+////        qDebug() << ++i;
+
+////}
+//}
+
+//void Grid::drawForeground(QPainter *painter, const QRectF &rect)
+//{
+//    QList<QGraphicsItem*> list = this->items();
+//    qDebug() <<"List size: " << list.size();
+
+////    int i =0 ;
+//    foreach (QGraphicsItem* item, list) {
+//        Being* var = static_cast<Being*>(item);
+//        var -> paint(painter);
+////        qDebug() << ++i;
+
+//}
+//}
 
 void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 {
@@ -108,4 +135,46 @@ void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 void Grid::updateGrid()
 {
 
+    QList<QGraphicsItem*> list = this->items();
+    // TODO: better mapping
+    ParametersSet* set = ParametersSet::getInstance();
+    int i =0 ;
+    foreach (QGraphicsItem* item, list) {
+//        qDebug() << ++i;
+        Being* var = static_cast<Being*>(item);
+
+        //not safe! do qcast later
+        Animal* a = qobject_cast<Animal*>(var);
+        QVector<int> res = EA->featuresToChromosome(a);
+        double fitness =  EA->fitnessFunction(res);
+
+//        qDebug() <<"Type: " <<a->type();
+//        qDebug() << "Size: " << res.size();
+
+        for (const int& i : res) // access by const reference
+        {
+//                qDebug() << i << ' ';
+//            qDebug() << i ;
+
+
+        }
+//        qDebug() << '\n';
+
+//        a->action();
+        var->setPos((var->getLogX() * ParametersSet::SCENE_WIDTH) / set->getGridSize(),
+                    (var->getLogY() * ParametersSet::SCENE_WIDTH) / set->getGridSize());
+    }
+
+
+}
+
+
+void Grid::setEA(EvolutionaryAlg* ea)
+{
+    EA = ea;
+}
+
+EvolutionaryAlg* Grid::getEA() const
+{
+    return EA;
 }

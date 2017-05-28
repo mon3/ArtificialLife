@@ -9,6 +9,7 @@
 #include <functional>
 #include <algorithm>
 #include <iterator>
+
 using namespace std;
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
@@ -35,8 +36,56 @@ public:
 
 
 
+    // COMMON for predator and herbivorous
+    static const int minHitPoints = 0;
+    static const int maxHitPoints = 100;
 
+    static const int minExhaustionLevel = 0;
+    static const int maxExhaustionLevel = 100;
 
+    static const int minEyeSight = 1;
+    static const int maxEyeSight = 6;
+
+    static const int minAge = 0;
+    static const int maxAge = 100;
+
+    // DIFFERENT
+
+    static const int minPredatorSpeed = 1;
+    static const int maxPredatorSpeed = 5;
+
+    static const int minHerbivorousSpeed = 1;
+    static const int maxHerbivorousSpeed = 3;
+
+    static const int minPredatorFoodCapacity= 1600;// 2*SaturaionRate
+    static const int maxPredatorFoodCapacity = 8000;
+
+    static const int minHerbivorousFoodCapacity= 1000;
+    static const int maxHerbivorousFoodCapacity = 3000;
+
+    static const int minHerbivorousMetabolism = 15;
+    static const int maxHerbivorousMetabolism = 300;
+
+    static const int minPredatorMetabolism = 50;
+    static const int maxPredatorMetabolism = 600;
+
+    static const int minHerbivorousSaturationRate = 500;
+    static const int maxHerbivorousSaturationRate = 1500;
+
+    static const int minPredatorSaturationRate = 800;
+    static const int maxPredatorSaturationRate = 4000;
+
+    // features coefficients for fitness function calculation
+    static constexpr double eyeSightCoeff = 15.0 ;
+    static constexpr double speedCoeff = 14.0 ;
+    static constexpr double hitPointsCoeff = 22.5;
+    static constexpr double metabolismCoeff = 8.0 ;
+    static constexpr double foodCapacityCoeff = 50.0 ;
+    static constexpr double exhLevelCoeff = -10.0; // the less value of exhLevel, the better
+
+    //TODO : use a template?
+    vector<Plant *> getAdjacentPlants(Animal*) const;
+    vector<Herbivorous*> getAdjacentHerbivorous(Animal*) const;
 
 
     void addBeing(Being*);

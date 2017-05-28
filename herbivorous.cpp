@@ -2,8 +2,41 @@
 
 
 
+Herbivorous::Herbivorous(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity, int metabolism, int exhaustionLevel, int saturationRate, QVector<double> stdDevs):Animal(x,y)
+{
+    setHitPoints(hitPoints);
+    setEyeSight(eyeSight);
+    setAge(age);
+    setGeneration(generation);
+    setSpeed(speed);
+    setFoodCapacity(foodCapacity);
+    setMetabolism(metabolism);
+    setExhaustionLevel(exhaustionLevel);
+    setSaturationRate(saturationRate);
+    setStdDevs(stdDevs);
+}
 
 
+Herbivorous::Herbivorous(int x, int y, int eyeSight, int speed, int hitPoints, int metabolism, int foodCapacity, int exhaustionLevel, QVector<double> stdDevs):Animal(x, y)
+{
+    setEyeSight(eyeSight);
+    setSpeed(speed);
+    setHitPoints(hitPoints);
+    setMetabolism(metabolism);
+    setFoodCapacity(foodCapacity);
+    setExhaustionLevel(exhaustionLevel);
+    setStdDevs(stdDevs);
+}
+
+
+Herbivorous::Herbivorous(int x, int y, QVector<int> features, QVector<double> stdDevs):Animal(x, y)
+{
+    setFeaturesEA(features, Beings::HERBIVOROUS);
+    setStdDevs(stdDevs);
+}
+
+
+//Being* Herbivorous::hunt()
 Being* Herbivorous::hunt()
 {
     vector<Plant*> vec = ParametersSet::getInstance()->getAdjacentBeings(this, getSpeed());
@@ -42,6 +75,8 @@ Being* Herbivorous::hunt()
 
     return p;
 }
+
+
 
 // ask if correct
 void Herbivorous::eat(Being* b)

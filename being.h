@@ -6,7 +6,6 @@
 #include <QGraphicsRectItem>
 #include "parametersset.h"
 
-
 class Being : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
@@ -23,17 +22,24 @@ public:
 
     virtual void action() = 0;
     virtual  int type() const = 0 ;
+
 public slots:
     void updateBeing();
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual Qt::GlobalColor getPenColor() const = 0;
 
+    void paint(QPainter *painter);
+
+
+
 private:
 
     int logX;
     int logY;
     int hitPoints;
+
+
 };
 
 #endif // BEING_H

@@ -6,6 +6,7 @@ void Plant::action()
 {
     ParametersSet* set = ParametersSet::getInstance();
     //for each turn
+
     int hp = getHitPoints(),
         delta = set->getPlantGrowbackLevel(),
         maxHp = set->getMaxPlantHp();
@@ -28,4 +29,8 @@ void Plant::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->setBrush(getPenColor());
 
     painter->drawEllipse(this->rect());
+
+    // int hp = getHitPoints(); // TODO: not sure if needed
+//    if()
+//    setHitPoints(getHitPoints() + ParametersSet::getInstance()->getPlantGrowbackLevel());
 }

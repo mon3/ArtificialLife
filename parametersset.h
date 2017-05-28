@@ -20,6 +20,7 @@ class Animal;
 class Herbivorous;
 class Plant;
 class BeingWindow;
+typedef std::pair<int, int> Point;
 class ParametersSet : public QObject
 {
     Q_OBJECT
@@ -33,7 +34,7 @@ public:
     static const int SCENE_WIDTH = 1000;
     static int BEING_WIDTH;
     ~ParametersSet() {  }
-
+    Point beingsInterpolation(const Being*, const Being*, const float& coeff = 0.5);
 
 
     // COMMON for predator and herbivorous

@@ -181,6 +181,38 @@ void ParametersSet::setSeason(Season newSeason)
     season = newSeason;
 }
 
+Point ParametersSet::beingsInterpolation(const Being *a, const Being *b, const float &coeff)
+{
+
+    const int xA = a->getLogX(),
+              xB = b->getLogX();
+    const int yA = a->getLogY(),
+              yB = b->getLogY();
+    const bool equalX = xA == xB;
+    const bool equalY = yA == yB;
+    float x = xA, y = yB;
+
+    // make correction due to float precision?
+    if (equalX)
+        y = yA * coeff + yB * (1 - coeff);
+    if (equalY)
+        x = xA * coeff + xB * (1 - coeff);
+
+
+    //get adjacent free point
+    // TODO: still possible endless loop
+    for(int i =1; !isFreeCell(x, y); ++i)
+        for(int j =0; j < 4; ++j)
+        {
+            int tempX = x + i * getColMod(j);
+            int tempY = y + i * getRowMod(j);
+            if(isFreeCell(tempX, tempY))
+                return Point(tempX, tempY);
+        }
+
+    return Point(x, y);
+}
+
 int ParametersSet::getRandomInt(const int& min, const int& max)
 {
     return (rand() % (max - min)) + min;

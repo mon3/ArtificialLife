@@ -39,7 +39,7 @@ SOURCES += main.cpp\
     predator.cpp \
     being.cpp \
     beingwindow.cpp \
-    # constrainedvalue.cpp \
+    constrainedvalue.cpp \
     evolutionaryalg.cpp \
     parametersset.tpp
 
@@ -54,7 +54,7 @@ HEADERS  += mainwindow.h \
     being.h \
     beingwindow.h \
     evolutionaryalg.h \
-    # constrainedvalue.h
+    constrainedvalue.h
 
 FORMS    += mainwindow.ui \
     beingwindow.ui

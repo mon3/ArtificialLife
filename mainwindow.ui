@@ -23,7 +23,7 @@
       <widget class="QGraphicsView" name="graphicsView"/>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>3</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_x">
         <attribute name="title">
@@ -214,7 +214,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit">
+               <widget class="QLineEdit" name="miValue">
                 <property name="text">
                  <string/>
                 </property>
@@ -232,7 +232,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_3">
+               <widget class="QLineEdit" name="labmdaValue">
                 <property name="text">
                  <string/>
                 </property>
@@ -321,7 +321,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QRadioButton" name="Interpolation_2">
+               <widget class="QRadioButton" name="AverageReproduction">
                 <property name="text">
                  <string>Average</string>
                 </property>

@@ -53,9 +53,8 @@ void Being::updateBeing()
 
 
 
-void Being::paint(QPainter *painter)
 
-//void Being::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void Being::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->fillRect(this->rect(), getPenColor());
 }

@@ -1,7 +1,6 @@
 #ifndef PREDATOR_H
 #define PREDATOR_H
 #include "animal.h"
-<<<<<<< HEAD
 #include "herbivorous.h"
 #include <constrainedvalue.cpp>
 

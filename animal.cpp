@@ -109,12 +109,11 @@ void Animal::foodConsumptionRule(int &foodValue)
 
 void Animal::move(int x, int y )
 {
-    auto set = ParametersSet::getInstance();
     //move to random free location, within being reach
     if(x == UNKNOWN_LOCATION || y == UNKNOWN_LOCATION)
     {
         // if being is idle
-        int goalX, goalY, addVal;
+        int goalX, goalY;
         if(activity == IDLE)
         {
             moveClose(this->getLogX() + ParametersSet::getRandomInt(-1, 2),
@@ -207,7 +206,7 @@ void Animal::huntRoutine()
             goalY = prey->getLogY();
 
         //unless you can reach prey in one turn, get as close as you could
-        if(speed < eveSight) {
+        if(speed < this->getEyeSight()) {
 
             int directionVector[2] = {direction(goalX - this->getLogX()), direction(goalY - this->getLogY())};
             // if direcVec > 0, means we should move to the right, so decrease goalX, increase goalY
@@ -342,36 +341,16 @@ int Animal::getGeneration() const
     return generation;
 }
 
-void Animal::setFoodCapacity(int value)
-{
-    foodCapacity = value;
-}
 
-int Animal::getFoodCapacity() const
-{
-    return foodCapacity;
-}
 
-void Animal::setSpeed(int value)
-{
-    // the number of frames the animal can jump over during 1 iteration
-    speed = value;
-}
 
-int Animal::getSpeed() const
-{
-    return speed;
-}
 
 void Animal::setMetabolism(int value)
 {
     metabolism = value;
 }
 
-int Animal::getMetabolism() const
-{
-    return metabolism;
-}
+
 
 void Animal::setExhaustionLevel(int value)
 {
@@ -383,15 +362,7 @@ int Animal::getExhaustionLevel() const
     return exhaustionLevel;
 }
 
-void Animal::setSaturationRate(int value)
-{
-    saturationRate = value;
-}
 
-int Animal::getSaturationRate() const
-{
-    return saturationRate;
-}
 
 void Animal::setStdDevs(QVector<double> vals)
 {

@@ -7,14 +7,9 @@ int ParametersSet::BEING_WIDTH  = 25;
 ParametersSet::ParametersSet(int gridSize)
     :  _gridSize(gridSize)
 {
-<<<<<<< HEAD
     BEING_WIDTH = (SCENE_WIDTH / _gridSize) >> 1;
     magic_offset = BEING_WIDTH >> 1;
-=======
-    BEING_WIDTH = (SCENE_WIDTH / gridSize) / 1.5;
-    qDebug() << "grid size = " << gridSize ;
-    qDebug() << "being_width = " << BEING_WIDTH;
->>>>>>> evolution
+
     window = QSharedPointer<BeingWindow>(new BeingWindow);
 
     //instatiation of board
@@ -99,26 +94,17 @@ int ParametersSet::getStartHungerLevel() const
 vector<Plant*> ParametersSet::getAdjacentBeings(const Animal * a, const int reach) const
 {
     vector<Plant*> result;
-<<<<<<< HEAD
-    int logX = a->getLogX(), logY = a->getLogY();
-=======
+
     int logX = a->getLogX(), logY = a->getLogY()
        ,eyeSight = a->getEyeSight();
->>>>>>> evolution
     int checkX, checkY;
 
     //pushing to vector every being within animal reach
     //TODO: add comment to lookup section
-<<<<<<< HEAD
     for(int i = 1; i <= reach; ++i) {
         if(i > _gridSize) break;
         for(int j = 0; j < 4; ++j) {
             checkX = logX + i * getColMod(j);
-=======
-    for(int i = 1; i <= eyeSight; ++i) {
-        for(int j = 0; j < 3; ++j) {
-            checkX = logX + i * getRowMod(j);
->>>>>>> evolution
             checkY = logY + i * getRowMod(j);
             if(checkCoordinate(checkX, checkY)
                 && plantsOnBoard[checkX][checkY] != nullptr
@@ -132,7 +118,6 @@ vector<Plant*> ParametersSet::getAdjacentBeings(const Animal * a, const int reac
     return result;
 }
 
-<<<<<<< HEAD
 
 // don't like it, refactor
 void ParametersSet::addBeing(Being *b)
@@ -147,24 +132,8 @@ void ParametersSet::addBeing(Being *b)
         plantsOnBoard[x][y] = qobject_cast<Plant*>(b);
     mapPosition(b);
 }
-=======
-vector<Herbivorous *> ParametersSet::getAdjacentHerbivorous(Animal* a) const
-{
-    vector<Herbivorous*> result;
-    int logX = a->getLogX(), logY = a->getLogY()
-       ,eveSight = a->getEyeSight();
-    int checkX, checkY;
-    for(int i = 1; i <= eveSight; ++i)
-        for(int j = 0; j < 3; ++j) {
-            checkX = logX + i * getRowMod(j);
-            checkY = logY + i * getRowMod(j);
-            if(checkCoordinate(checkX, checkY)) {
-                Herbivorous* h =  qobject_cast<Herbivorous*>(animalsOnBoard[checkX][checkY]);
-                if(h != 0)
-                    result.push_back(h);
-            }
-        }
->>>>>>> evolution
+
+
 
 
 

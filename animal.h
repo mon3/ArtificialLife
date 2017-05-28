@@ -67,16 +67,7 @@ public:
     void displayStd() const;
     void displayFeatures() const;
 
-    int getSaturationRate() const;
-    void setSaturationRate(int value);
 
-    int getFoodCapacity() const;
-    void setFoodCapacity(int value);
-
-    int getMetabolism() const;
-
-    int getSpeed() const;
-    void setSpeed(int value);
 
     Activity getActivity() const;
 

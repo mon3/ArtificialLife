@@ -10,6 +10,8 @@
 
  public:
     EvolutionaryAlg();
+    EvolutionaryAlg(int mi, int lambda, int maxIters, int reproductionType, int selectionType): mi_(mi), lambda_(lambda),
+        maxIters_(maxIters), reproductionType_(reproductionType), selectionType_(selectionType) {}
     QVector<int> featuresToChromosome(Animal* animal);
     void initializePopulations(int N, QVector<Animal*>& predatorIniPop, QVector<Animal*>& herbivorousIniPop);
     void initializeIndividual(int X, int Y, Beings beingType, QVector<Animal*>& IniPop);
@@ -34,6 +36,28 @@
    //  Animal: herbivorous or predator
      EvolutionaryAlg(int mi, int lambda, int n, Animal* animal);
 
+     void setMi(int value);
+     int getMi() const;
+
+     void setLambda(int value);
+     int getLambda() const;
+
+     void setMaxIters(int value);
+     int getMaxIters() const;
+
+     void setReproductionType(int value);
+     int getReproductionType() const;
+
+     void setSelectionType(int value);
+     int getSelectionType() const;
+
+
+ private:
+     int mi_; // size of parent population
+     int lambda_; // size of children population
+     int maxIters_; // maximum number of iterations of EA
+     int reproductionType_; // reproduction type: 1 - mean; 2 - interpolation
+     int selectionType_; // selection type: 1 - mi best; 2 - roulette rule, 3 - tournament
 };
 
 

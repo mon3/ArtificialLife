@@ -1,11 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <evolutionaryalg.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->miValue->setValidator(new QIntValidator(0,100, parent));
+    //TODO: lambda > mi!!!
+    ui->lambdaValue->setValidator(new QIntValidator(0,100, parent));
+
     connect(ui->setParamsButton, SIGNAL(pressed()), this, SLOT(initGame()));
 }
 
@@ -21,6 +27,7 @@ void MainWindow::initGame()
 {
     //todo: values validation
 
+    int mi=0, lambda = 0, maxIters = 1, reproductionType = 0, selectionType = 0;
     if (ui->sceneSizeEdit->text().isEmpty())
         {
             qDebug("Please set correct grid parameters!");
@@ -29,8 +36,56 @@ void MainWindow::initGame()
     {
         int gridSize = ui->sceneSizeEdit->text().toInt();
 
+    if (ui->miValue->text().isEmpty())
+    {
+        qDebug("Please set parameter MI for EA!");
+    }
+    else
+    {
+        mi = ui->miValue->text().toInt();
+    }
+
+
+    if (ui->lambdaValue->text().isEmpty())
+    {
+        qDebug("Please set parameter LAMBDA for EA!");
+    }
+    else
+    {
+        lambda = ui->lambdaValue->text().toInt();
+    }
+
+    if (ui->Interpolation->isChecked())
+    {
+        reproductionType = 2;
+    }
+    else
+    {
+        reproductionType = 1;
+    }
+// nie trzeba else, bo zawsze ktorys bedzie zaznaczony
+
+    if(ui->MiBestSelection->isChecked())
+    {
+        selectionType = 1;
+    }
+    else if (ui->RouletteSelection->isChecked())
+    {
+        selectionType = 2;
+    }
+    else
+    {
+        selectionType = 3;
+    }
+
+
+
+    EvolutionaryAlg* EA = new EvolutionaryAlg(mi, lambda, maxIters, reproductionType, selectionType);
+    qDebug() << EA->getMi() << "\t" << EA->getLambda() << "\t" << EA->getReproductionType() << "\t" << EA->getSelectionType();
 
     ParametersSet* set = ParametersSet::getInstance(gridSize);
+    QVector<Animal*> predatorIniPop;
+    QVector<Animal*> herbivorousIniPop;
 
     Grid* scene = new Grid();
     const QRect rec = QRect(0, 0, ParametersSet::SCENE_WIDTH, ParametersSet::SCENE_WIDTH);
@@ -50,11 +105,15 @@ void MainWindow::initGame()
     //test subjects
     Herbivorous* ex = new Herbivorous(3, 3);
     lambdaAdd(ex);
+    herbivorousIniPop.push_back(ex);
 
     ex = new Herbivorous(9, 8);
     lambdaAdd(ex);
+    herbivorousIniPop.push_back(ex);
+
     ex = new Herbivorous(4, 4);
     lambdaAdd(ex);
+    herbivorousIniPop.push_back(ex);
 
     Plant* pl = new Plant(4, 5);
     lambdaAdd(pl);
@@ -76,6 +135,11 @@ void MainWindow::initGame()
 
     connect(ui->velocitySlider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
     ui->graphicsView->setScene(scene);
+
+
+
+
+
     }
 
 }

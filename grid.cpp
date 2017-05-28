@@ -38,41 +38,111 @@ Grid::Grid()
     QVector<Animal*> herbivorousIniPop;
     ParametersSet* set = ParametersSet::getInstance();
     EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
-    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
+//    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
 
-    qDebug()<<"GRID ... ";
-//    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
-    qDebug() << "PREDATOR FROM EA...";
-    EA->printPopulation(predatorIniPop);
+//    qDebug()<<"GRID ... ";
+////    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
+//    qDebug() << "PREDATOR FROM EA...";
+//    EA->printPopulation(predatorIniPop);
+//    EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
+//    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
 
-    QVector<std::pair<Animal*, double>> indivFitness;
+//    qDebug()<<"GRID ... ";
+////    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
+//    qDebug() << "PREDATOR FROM EA...";
+//    EA->printPopulation(predatorIniPop);
+
+//    QVector<std::pair<Animal*, double>> indivFitness;
 
 
-    for (auto &indiv: predatorIniPop)
-    {
-        indivFitness.push_back(std::make_pair(indiv, EA->fitnessFunction(EA->featuresToChromosome(indiv))));
-    }
+//    for (auto &indiv: predatorIniPop)
+//    {
+//        indivFitness.push_back(std::make_pair(indiv, EA->fitnessFunction(EA->featuresToChromosome(indiv))));
+//    }
 
 //    std::sort(indivFitness.begin(), indivFitness.end(), EA->sort_pair_second<Animal*, double>());
 
-    qDebug() << "FINAL POPULATION SIZE = " << predatorIniPop.size();
+//    qDebug() << "FINAL POPULATION SIZE = " << predatorIniPop.size();
 
-    for (unsigned i = 0; i< indivFitness.size(); ++i)
-    {
-        qDebug() << "FITNESS = " << indivFitness[i].second ;
-    }
-//    qDebug() << "HERBIVOROUS AFTER 50 ITERS...";
-//    EA->printPopulation(herbParentsChildrenPop);
+//    for (unsigned i = 0; i< indivFitness.size(); ++i)
+//    {
+//        qDebug() << "FITNESS = " << indivFitness[i].second ;
+//    }  EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
+//    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
 
-    for (int i=0; i< predatorIniPop.size(); ++i)
-    {
-        addItem(predatorIniPop[i]);
-        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-        // TODO:: add paint functions to visualize initial populations
-        addItem(herbivorousIniPop[i]);
-        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+//    qDebug()<<"GRID ... ";
+////    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
+//    qDebug() << "PREDATOR FROM EA...";
+//    EA->printPopulation(predatorIniPop);
 
-    }
+//    QVector<std::pair<Animal*, double>> indivFitness;
+
+
+//    for (auto &indiv: predatorIniPop)
+//    {
+//        indivFitness.push_back(std::make_pair(indiv, EA->fitnessFunction(EA->featuresToChromosome(indiv))));
+//    }
+
+////    std::sort(indivFitness.begin(), indivFitness.end(), EA->sort_pair_second<Animal*, double>());
+
+//    qDebug() << "FINAL POPULATION SIZE = " << predatorIniPop.size();
+
+//    for (unsigned i = 0; i< indivFitness.size(); ++i)
+//    {
+//        qDebug() << "FITNESS = " << indivFitness[i].second ;
+//    }
+////    qDebug() << "HERBIVOROUS AFTER 50 ITERS...";
+////    EA->printPopulation(herbParentsChildrenPop);
+
+//    for (int i=0; i< predatorIniPop.size(); ++i)
+//    {
+//        addItem(predatorIniPop[i]);
+//        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+//        // TODO:: add paint functions to visualize initial populations
+//        addItem(herbivorousIniPop[i]);
+//        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+
+//    }
+////    qDebug() << "HERBIVOROUS AFTER 50 ITERS...";
+////    EA->printPopulation(herbParentsChildrenPop);
+
+//    for (int i=0; i< predatorIniPop.size(); ++i)
+//    {
+//        addItem(predatorIniPop[i]);
+//        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+//        // TODO:: add paint functions to visualize initial populations
+//        addItem(herbivorousIniPop[i]);
+//        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+
+//    }
+//    QVector<std::pair<Animal*, double>> indivFitness;
+
+
+//    for (auto &indiv: predatorIniPop)
+//    {
+//        indivFitness.push_back(std::make_pair(indiv, EA->fitnessFunction(EA->featuresToChromosome(indiv))));
+//    }
+
+////    std::sort(indivFitness.begin(), indivFitness.end(), EA->sort_pair_second<Animal*, double>());
+
+//    qDebug() << "FINAL POPULATION SIZE = " << predatorIniPop.size();
+
+//    for (unsigned i = 0; i< indivFitness.size(); ++i)
+//    {
+//        qDebug() << "FITNESS = " << indivFitness[i].second ;
+//    }
+////    qDebug() << "HERBIVOROUS AFTER 50 ITERS...";
+////    EA->printPopulation(herbParentsChildrenPop);
+
+//    for (int i=0; i< predatorIniPop.size(); ++i)
+//    {
+//        addItem(predatorIniPop[i]);
+//        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+//        // TODO:: add paint functions to visualize initial populations
+//        addItem(herbivorousIniPop[i]);
+//        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
+
+//    }
 
     this->updateGrid();
 
@@ -144,20 +214,20 @@ void Grid::updateGrid()
         Being* var = static_cast<Being*>(item);
 
         //not safe! do qcast later
-        Animal* a = qobject_cast<Animal*>(var);
-        QVector<int> res = EA->featuresToChromosome(a);
-        double fitness =  EA->fitnessFunction(res);
+//        Animal* a = qobject_cast<Animal*>(var);
+//        QVector<int> res = EA->featuresToChromosome(a);
+//        double fitness =  EA->fitnessFunction(res);
 
 //        qDebug() <<"Type: " <<a->type();
 //        qDebug() << "Size: " << res.size();
 
-        for (const int& i : res) // access by const reference
-        {
-//                qDebug() << i << ' ';
-//            qDebug() << i ;
+//        for (const int& i : res) // access by const reference
+//        {
+////                qDebug() << i << ' ';
+////            qDebug() << i ;
 
 
-        }
+//        }
 //        qDebug() << '\n';
 
 //        a->action();

@@ -574,3 +574,54 @@ void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceTyp
     herbPopulation = herbParentsChildrenPop;
 
 }
+
+
+void EvolutionaryAlg::setMi(int value)
+{
+    mi_ = value;
+}
+
+int EvolutionaryAlg::getMi() const
+{
+    return mi_;
+}
+
+void EvolutionaryAlg::setLambda(int value)
+{
+    lambda_ = value;
+}
+
+int EvolutionaryAlg::getLambda() const
+{
+    return lambda_;
+}
+
+void EvolutionaryAlg::setMaxIters(int value)
+{
+    maxIters_ = value;
+}
+
+int EvolutionaryAlg::getMaxIters() const
+{
+    return maxIters_;
+}
+
+void EvolutionaryAlg::setReproductionType(int value)
+{
+    reproductionType_ = value;
+}
+
+int EvolutionaryAlg::getReproductionType() const
+{
+    return reproductionType_;
+}
+
+void EvolutionaryAlg::setSelectionType(int value)
+{
+    selectionType_ = value;
+}
+
+int EvolutionaryAlg::getSelectionType() const
+{
+    return selectionType_;
+}

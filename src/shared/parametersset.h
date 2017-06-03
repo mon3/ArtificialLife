@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <iterator>
 
+#include "locationhandler.h"
+
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
 enum Beings { PLANT, HERBIVOROUS, PREDATOR };

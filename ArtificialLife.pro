@@ -43,7 +43,9 @@ SOURCES += src/main.cpp\
     src/grid/beingwindow.cpp \
     src/evolalg/constrainedvalue.cpp \
     src/evolalg/evolutionaryalg.cpp \
-    src/shared/parametersset.tpp
+    src/shared/parametersset.tpp \
+    src/shared/locationhandler.cpp \
+    src/shared/board.cpp
 
 HEADERS  += src/grid/mainwindow.h \
     src/sugarscape/animal.h \
@@ -55,7 +57,9 @@ HEADERS  += src/grid/mainwindow.h \
     src/sugarscape/being.h \
     src/grid/beingwindow.h \
     src/evolalg/evolutionaryalg.h \
-    src/evolalg/constrainedvalue.h
+    src/evolalg/constrainedvalue.h \
+    src/shared/locationhandler.h \
+    src/shared/board.h
 
 FORMS    += src/grid/mainwindow.ui \
     src/grid/beingwindow.ui

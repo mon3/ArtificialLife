@@ -213,7 +213,7 @@ void Grid::updateGrid()
     int i =0 ;
     foreach (QGraphicsItem* item, list) {
 //        qDebug() << ++i;
-        Being* var = static_cast<Being*>(item);
+
 
         //not safe! do qcast later
 //        Animal* a = qobject_cast<Animal*>(var);
@@ -233,8 +233,7 @@ void Grid::updateGrid()
 //        qDebug() << '\n';
 
 //        a->action();
-        var->setPos((var->getLogX() * ParametersSet::SCENE_WIDTH) / set->getGridSize(),
-                    (var->getLogY() * ParametersSet::SCENE_WIDTH) / set->getGridSize());
+
     }
 
 

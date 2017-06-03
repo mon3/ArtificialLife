@@ -67,10 +67,7 @@ void Animal::action()
         set->updateBeing(this, oldX, oldY);
 }
 
-void Animal::mousePressEvent(QGraphicsSceneMouseEvent *)
-{
-    emit callWindow(this);
-}
+
 
 void Animal::foodConsumptionRule(int &foodValue)
 {
@@ -450,4 +447,9 @@ void Animal::displayStd() const
         qDebug() <<"Sigma: " << std;
     }
     qDebug() << '\n';
+}
+
+
+void Animal::accept(Visitor *)
+{
 }

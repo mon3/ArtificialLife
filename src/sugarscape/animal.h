@@ -23,9 +23,6 @@ public:
         MATING,
         HUNTING, //for herbivorous ?
         IDLE,
-//      RESTING,
-//      SLEEPING,
-//      NURSING, - for no need to nurse child
         RUNNNING_AWAY,
         DEAD
     };
@@ -70,10 +67,7 @@ public:
 
     void setFeaturesEA(QVector<int> vals);
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *);
     void foodConsumptionRule(int& foodValue);
-signals:
-    void callWindow(Being*);
 
 protected:
 
@@ -120,13 +114,15 @@ private:
     QVector<int> featuresEA; //standard deviations for evolutionary algorithm
     QVector<double> stdDevs; //standard deviations for evolutionary algorithm
 
-//  for painter to define color
-    virtual Qt::GlobalColor getPenColor() const = 0;
 
 //  undefined grid location
     static const int UNKNOWN_LOCATION = -1;
 
     const static std::function<int(int)> direction;
+
+    // Being interface
+protected:
+    virtual void accept(Visitor *) override = 0;
 };
 
 #endif // ANIMAL_H

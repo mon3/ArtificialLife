@@ -135,3 +135,9 @@ void Predator::setPredSpeedConstr(ConstrainedPredatorSpeed speedConstr)
 {
     speedConstr_ = speedConstr;
 }
+
+
+void Predator::accept(Visitor *v)
+{
+    v->visit(this);
+}

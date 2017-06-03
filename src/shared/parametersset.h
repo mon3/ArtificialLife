@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <iterator>
 
-#include "locationhandler.h"
 
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
@@ -93,9 +92,9 @@ public:
     bool isFreeCell(int x, int y);
     void updateBeing(Being* b, const int oldX, const int oldY);
 
-    // use polymorfism
-    void removeBeing(Plant*);
-    void removeBeing(Animal*);
+//    // use polymorfism
+//    void removeBeing(Plant*);
+//    void removeBeing(Animal*);
 
     //getters
     int getMaxPlantHp() const;
@@ -144,7 +143,7 @@ private:
     //single creature params
     float biologicalChildAge;
     float biologicalAdultAge;
-    int startHungerLevel = 70;
+    int startHungerLevel;
     float maxFoodCapacity;
     float foodConsumptionUnits;
 

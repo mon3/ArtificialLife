@@ -37,6 +37,10 @@ private:
 protected:
     std::vector<Animal*> findEnemies() override;
 
+
+    // Being interface
+protected:
+    void accept(Visitor *) override;
 };
 
 #endif // HERBIVOROUS_H

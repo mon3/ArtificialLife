@@ -1,7 +1,10 @@
 #ifndef PLANT_H
 #define PLANT_H
-#include "being.h"
 #include <QDebug>
+
+#include "src/sugarscape/being.h"
+
+
 class Plant : public Being
 {
     Q_OBJECT
@@ -12,17 +15,8 @@ public:
     int type() const { return Beings::PLANT; }
 
     // Being interface
-private:
-    Qt::GlobalColor getPenColor() const override;
-
-    // QGraphicsItem interface
-public:
-
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *);
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-signals:
-    void callWindow(Being*);
+    void accept(Visitor *) override;
 };
 
 #endif // PLANT_H

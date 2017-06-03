@@ -39,3 +39,9 @@ void Plant::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 //    if()
 //    setHitPoints(getHitPoints() + ParametersSet::getInstance()->getPlantGrowbackLevel());
 }
+
+
+void Plant::accept(Visitor *v)
+{
+    v->visit(this);
+}

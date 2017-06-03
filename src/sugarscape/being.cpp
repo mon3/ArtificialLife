@@ -5,7 +5,6 @@ Being::Being(int _logX, int _logY)
   : QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH), logX(_logX), logY(_logY)
 {
 
-//    this->setRect(logX, logY, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH);
 }
 
 int Being::getHitPoints() const

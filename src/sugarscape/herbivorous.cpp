@@ -69,7 +69,7 @@ Being* Herbivorous::hunt()
     maxValuedPlants.shrink_to_fit();
 
     //if there is several max positions, select one randomly
-    const int size = maxValuedPlants.size();
+    auto size = maxValuedPlants.size();
     if(size > 1)
         return maxValuedPlants[ParametersSet::getRandomInt(0, size)];
 
@@ -94,4 +94,10 @@ void Herbivorous::eat(Being* b)
 std::vector<Animal*> Herbivorous::findEnemies()
 {
     return std::vector<Animal*>();
+}
+
+
+void Herbivorous::accept(Visitor * v)
+{
+    v->visit(this);
 }

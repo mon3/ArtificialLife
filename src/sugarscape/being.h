@@ -2,15 +2,13 @@
 #define BEING_H
 
 #include <QObject>
-#include <QPainter>
-#include <QGraphicsRectItem>
 #include "src/shared/parametersset.h"
+#include "src/view/visitor.h"
 
-class Being : public QObject, public QGraphicsRectItem
+class Being
 {
     Q_OBJECT
 public:
-
     Being(int _logX, int _logY);
     int getHitPoints() const;
     void setHitPoints(int value);
@@ -23,24 +21,13 @@ public:
 
     virtual void action() = 0;
     virtual  int type() const = 0 ;
-
-public slots:
-    void updateBeing();
 protected:
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    virtual Qt::GlobalColor getPenColor() const = 0;
-
-    void paint(QPainter *painter);
-
-
-
+    virtual void accept(Visitor*) = 0;
 private:
 
     int logX;
     int logY;
     int hitPoints;
-
-
 };
 
 #endif // BEING_H

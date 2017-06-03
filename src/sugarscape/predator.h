@@ -1,7 +1,7 @@
 #ifndef PREDATOR_H
 #define PREDATOR_H
-#include "animal.h"
-#include "herbivorous.h"
+#include "src/sugarscape/animal.h"
+#include "src/sugarscape/herbivorous.h"
 #include "src/evolalg/constrainedvalue.h"
 
 //typedef ConstrainedValue<int, ParametersSet::minEyeSight, ParametersSet::maxEyeSight> ConstrainedEyeSight;
@@ -75,6 +75,10 @@ private:
 protected:
     std::vector<Animal*> findEnemies() override;
 
+
+    // Being interface
+protected:
+    void accept(Visitor *) override;
 };
 
 #endif // PREDATOR_H

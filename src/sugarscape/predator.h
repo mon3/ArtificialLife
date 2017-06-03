@@ -2,15 +2,22 @@
 #define PREDATOR_H
 #include "animal.h"
 #include "herbivorous.h"
-#include <constrainedvalue.cpp>
+#include "src/evolalg/constrainedvalue.h"
+
+//typedef ConstrainedValue<int, ParametersSet::minEyeSight, ParametersSet::maxEyeSight> ConstrainedEyeSight;
+//typedef ConstrainedValue<int, ParametersSet::minPredatorSpeed, ParametersSet::maxPredatorSpeed> ConstrainedPredatorSpeed;
+//typedef ConstrainedValue<int, ParametersSet::minHitPoints, ParametersSet::maxHitPoints> ConstrainedHitPoints;
+//typedef ConstrainedValue<int, ParametersSet::minPredatorMetabolism, ParametersSet::maxPredatorMetabolism> ConstrainedPredatorMetabolism;
+//typedef ConstrainedValue<int, ParametersSet::minPredatorFoodCapacity, ParametersSet::maxPredatorFoodCapacity> ConstrainedPredatorFoodCapcity;
+//typedef ConstrainedValue<int, ParametersSet::minExhaustionLevel, ParametersSet::maxExhaustionLevel> ConstrainedExhLevel;
 
 
-typedef ConstrainedValue<int, ParametersSet::minEyeSight, ParametersSet::maxEyeSight> ConstrainedEyeSight;
-typedef ConstrainedValue<int, ParametersSet::minPredatorSpeed, ParametersSet::maxPredatorSpeed> ConstrainedPredatorSpeed;
-typedef ConstrainedValue<int, ParametersSet::minHitPoints, ParametersSet::maxHitPoints> ConstrainedHitPoints;
-typedef ConstrainedValue<int, ParametersSet::minPredatorMetabolism, ParametersSet::maxPredatorMetabolism> ConstrainedPredatorMetabolism;
-typedef ConstrainedValue<int, ParametersSet::minPredatorFoodCapacity, ParametersSet::maxPredatorFoodCapacity> ConstrainedPredatorFoodCapcity;
-typedef ConstrainedValue<int, ParametersSet::minExhaustionLevel, ParametersSet::maxExhaustionLevel> ConstrainedExhLevel;
+typedef int ConstrainedEyeSight;
+typedef int ConstrainedPredatorSpeed;
+typedef int ConstrainedHitPoints;
+typedef int ConstrainedPredatorMetabolism;
+typedef int ConstrainedPredatorFoodCapcity;
+typedef int ConstrainedExhLevel;
 
 
 class Predator : public Animal
@@ -24,9 +31,9 @@ public:
              int metabolism, int exhaustionLevel, int saturationRate, QVector<double> stdDevs);
     Predator(int x, int y, int eyeSight, int speed, int hitPoints, int metabolism,  int foodCapacity,
               int exhaustionLevel, QVector<double> stdDevs);
-    Predator(int x, int y, ConstrainedEyeSight es, ConstrainedPredatorSpeed speed, ConstrainedHitPoints hp,
-                       ConstrainedPredatorMetabolism metab, ConstrainedPredatorFoodCapcity fc, ConstrainedExhLevel exhLev,
-                       QVector<double> stdDevs);
+//    Predator(int x, int y, ConstrainedEyeSight es, ConstrainedPredatorSpeed speed, ConstrainedHitPoints hp,
+//                       ConstrainedPredatorMetabolism metab, ConstrainedPredatorFoodCapcity fc, ConstrainedExhLevel exhLev,
+//                       QVector<double> stdDevs);
 
 
     Predator(int x, int y, QVector<int> features, QVector<double> stdDevs);
@@ -66,7 +73,7 @@ private:
 
     // Animal interface
 protected:
-    vector<Animal*> findEnemies() override;
+    std::vector<Animal*> findEnemies() override;
 
 };
 

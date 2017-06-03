@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <functional>
 #include "being.h"
-#include <constrainedvalue.h>
+#include "src/evolalg/constrainedvalue.h"
 
 
 
@@ -84,7 +84,7 @@ protected:
     // TODO: consider to make a template function
     virtual Being* hunt() = 0;
     virtual void eat(Being*) = 0;
-    virtual vector<Animal*> findEnemies() = 0;
+    virtual std::vector<Animal*> findEnemies() = 0;
 
 private:
     void move(int x = UNKNOWN_LOCATION, int y = UNKNOWN_LOCATION);
@@ -94,7 +94,7 @@ private:
 
     void rest();
     void sleep();
-    void runFrom(const vector<Animal*>& enemies);
+    void runFrom(const std::vector<Animal*>& enemies);
 
     //routine functions, to simplify action()
     void huntRoutine();
@@ -126,7 +126,7 @@ private:
 //  undefined grid location
     static const int UNKNOWN_LOCATION = -1;
 
-    const static function<int(int)> direction;
+    const static std::function<int(int)> direction;
 };
 
 #endif // ANIMAL_H

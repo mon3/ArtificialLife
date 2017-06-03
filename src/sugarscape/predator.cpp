@@ -34,24 +34,24 @@ Predator::Predator(int x, int y, QVector<int> features, QVector<double> stdDevs)
 
 
 
-Predator::Predator(int x, int y, ConstrainedEyeSight es, ConstrainedPredatorSpeed speed, ConstrainedHitPoints hp,
-                   ConstrainedPredatorMetabolism metab, ConstrainedPredatorFoodCapcity fc, ConstrainedExhLevel exhLev,
-                   QVector<double> stdDevs):Animal(x, y)
-{
+//Predator::Predator(int x, int y, ConstrainedEyeSight es, ConstrainedPredatorSpeed speed, ConstrainedHitPoints hp,
+//                   ConstrainedPredatorMetabolism metab, ConstrainedPredatorFoodCapcity fc, ConstrainedExhLevel exhLev,
+//                   QVector<double> stdDevs):Animal(x, y)
+//{
 
-    setPredEyeSightConstr(es);
-    setPredSpeedConstr(speed);
-    setPredHitPointsConstr(hp);
-    setPredMetabolismConstr(metab);
-    setPredFoodCapacityConstr(fc);
-    setPredExhLevel(exhLev);
-    setStdDevs(stdDevs);
-}
+//    setPredEyeSightConstr(es);
+//    setPredSpeedConstr(speed);
+//    setPredHitPointsConstr(hp);
+//    setPredMetabolismConstr(metab);
+//    setPredFoodCapacityConstr(fc);
+//    setPredExhLevel(exhLev);
+//    setStdDevs(stdDevs);
+//}
 
 Being* Predator::hunt()
 {
     qDebug() << "here1";
-    vector<Herbivorous*> vec = ParametersSet::getInstance()->
+    std::vector<Herbivorous*> vec = ParametersSet::getInstance()->
             getAdjacentBeings<Herbivorous*>(this->getLogX(), this->getLogY(), this->getEyeSight());
     //no available plant at neighbourhood
     if(vec.empty()) {
@@ -60,7 +60,7 @@ Being* Predator::hunt()
 
     //find most valuable plant
     Herbivorous* p = nullptr;
-    int maxSugar = numeric_limits<int>::min();
+    int maxSugar = std::numeric_limits<int>::min();
 
 
     //find which plant is most valued
@@ -73,9 +73,9 @@ Being* Predator::hunt()
     }
     qDebug() << "here2";
     // test whether there are several posiotions with max faculty
-    vector<Herbivorous*> maxValuedPlants;
+    std::vector<Herbivorous*> maxValuedPlants;
 
-    copy_if(vec.begin(), vec.end(), std::back_inserter(maxValuedPlants), [&](Herbivorous* _p) -> bool {
+    std::copy_if(vec.begin(), vec.end(), std::back_inserter(maxValuedPlants), [&](Herbivorous* _p) -> bool {
        return _p->getHitPoints() == maxSugar;
     });
 
@@ -100,10 +100,10 @@ void Predator::eat(Being * b)
 }
 
 
-vector<Animal*> Predator::findEnemies()
+std::vector<Animal*> Predator::findEnemies()
 {
     //does nothing
-    return vector<Animal*>();
+    return std::vector<Animal*>();
 }
 
 

@@ -5,14 +5,15 @@
 #include <QPainter>
 
 #include <QObject>
-#include "parametersset.h"
-#include "predator.h"
-#include "herbivorous.h"
-#include "plant.h"
+#include "src/shared/parametersset.h"
+#include "src/sugarscape/predator.h"
+#include "src/sugarscape/herbivorous.h"
+#include "src/sugarscape/plant.h"
 
 #include <QDebug>
 #include <QPainter>
-#include <evolutionaryalg.h>
+
+#include "src/evolalg/evolutionaryalg.h"
 
 class Grid : public QGraphicsScene
 {

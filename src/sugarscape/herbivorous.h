@@ -35,7 +35,7 @@ private:
 
     // Animal interface
 protected:
-    vector<Animal*> findEnemies() override;
+    std::vector<Animal*> findEnemies() override;
 
 };
 

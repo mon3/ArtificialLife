@@ -4,12 +4,13 @@
 #include <QObject>
 #include <QPainter>
 #include <QGraphicsRectItem>
-#include "parametersset.h"
+#include "src/shared/parametersset.h"
 
 class Being : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
+
     Being(int _logX, int _logY);
     int getHitPoints() const;
     void setHitPoints(int value);

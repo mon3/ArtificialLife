@@ -39,7 +39,7 @@ Herbivorous::Herbivorous(int x, int y, QVector<int> features, QVector<double> st
 //Being* Herbivorous::hunt()
 Being* Herbivorous::hunt()
 {
-    vector<Plant*> vec = ParametersSet::getInstance()->getAdjacentBeings(this->getLogX(), this->getLogY(), getSpeed());
+    std::vector<Plant*> vec = ParametersSet::getInstance()->getAdjacentBeings(this->getLogX(), this->getLogY(), getSpeed());
     //no available plant at neighbourhood
     if(vec.empty()) {
         return nullptr;
@@ -47,7 +47,7 @@ Being* Herbivorous::hunt()
 
     //find most valuable plant
     Plant* p = nullptr;
-    int maxSugar = numeric_limits<int>::min();
+    int maxSugar = std::numeric_limits<int>::min();
 
 
     //find which plant is most valued
@@ -60,9 +60,9 @@ Being* Herbivorous::hunt()
     }
 
     // test whether there are several posiotions with max faculty
-    vector<Plant*> maxValuedPlants;
+    std::vector<Plant*> maxValuedPlants;
 
-    copy_if(vec.begin(), vec.end(), std::back_inserter(maxValuedPlants), [&](Plant* _p) -> bool {
+    std::copy_if(vec.begin(), vec.end(), std::back_inserter(maxValuedPlants), [&](Plant* _p) -> bool {
        return _p->getHitPoints() == maxSugar;
     });
 
@@ -91,7 +91,7 @@ void Herbivorous::eat(Being* b)
 
 
 
-vector<Animal*> Herbivorous::findEnemies()
+std::vector<Animal*> Herbivorous::findEnemies()
 {
-    return vector<Animal*>();
+    return std::vector<Animal*>();
 }

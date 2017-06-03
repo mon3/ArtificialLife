@@ -5,9 +5,9 @@
 #include <QGraphicsScene>
 #include <QDebug>
 #include <QLineEdit>
-#include "animal.h"
-#include "predator.h"
-#include "herbivorous.h"
+#include "src/sugarscape/animal.h"
+#include "src/sugarscape/predator.h"
+#include "src/sugarscape/herbivorous.h"
 namespace Ui {
 class BeingWindow;
 }

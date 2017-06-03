@@ -2,7 +2,7 @@
 #define EVOLUTIONARYALG_H
 
 #include <QVector>
-#include <animal.h>
+#include <src/sugarscape/animal.h>
 
  class EvolutionaryAlg
  {

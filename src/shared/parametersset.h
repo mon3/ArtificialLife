@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <iterator>
 
-using namespace std;
 enum Season {winter, spring, summer, autumn};
 enum DayTime {day, night};
 enum Beings { PLANT, HERBIVOROUS, PREDATOR };
@@ -84,10 +83,6 @@ public:
     static constexpr double foodCapacityCoeff = 50.0 ;
     static constexpr double exhLevelCoeff = -10.0; // the less value of exhLevel, the better
 
-    //TODO : use a template?
-    vector<Plant *> getAdjacentPlants(Animal*) const;
-    vector<Herbivorous*> getAdjacentHerbivorous(Animal*) const;
-
 
     void addBeing(Being*);
 
@@ -110,12 +105,12 @@ public:
 
     // getters, more advanced for sugarscape
     template<typename T>
-    vector<T> getAdjacentBeings(int logX, int logY, const int) const;
+    std::vector<T> getAdjacentBeings(int logX, int logY, const int) const;
 
-    vector<Plant*> getAdjacentBeings(int logX, int logY, const int) const;
+    std::vector<Plant*> getAdjacentBeings(int logX, int logY, const int) const;
 
     float getFoodConsumptionUnits() const;
-    function<bool(int, int)> checkCoordinate;
+    std::function<bool(int, int)> checkCoordinate;
 public slots:
     void callWindow(Being* b);
 private:
@@ -135,8 +130,8 @@ private:
     QSharedPointer<BeingWindow> window;
 
     // TODO: use smart pointers
-    vector<vector <Plant* > > plantsOnBoard;
-    vector<vector <Animal* > > animalsOnBoard;
+    std::vector<std::vector <Plant* > > plantsOnBoard;
+    std::vector<std::vector <Animal* > > animalsOnBoard;
     //game board params
     const int _gridSize;
     Season season;
@@ -168,11 +163,11 @@ private:
 
     //helper lambda functions
 
-    function<int(int)> getRowMod;
-    function<int(int)> getColMod;
+    std::function <int(int) > getRowMod;
+    std::function< int(int) > getColMod;
 };
 
-#include "parametersset.tpp"
+#include "src/shared/parametersset.tpp"
 
 #endif // PARAMETERSSET_H
 

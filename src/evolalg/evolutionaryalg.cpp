@@ -2,12 +2,14 @@
 
 #include <QVector>
 #include <QDebug>
-#include <being.h>
+
+// use "" to include your custom files
+
+#include "src/sugarscape/being.h"
 #include <random>
-#include <predator.h>
-#include <herbivorous.h>
+#include <src/sugarscape/predator.h>
+#include <src/sugarscape/herbivorous.h>
 #include <algorithm>
-#include <boost/lambda/lambda.hpp>
 
 
 EvolutionaryAlg::EvolutionaryAlg()
@@ -329,11 +331,11 @@ void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIni
     QVector<int> indicesX(N*N);
     QVector<int> indicesY(N*N);
 
-    generate(begin(indicesX), end(indicesX), rangegenerator(0));
-    generate(begin(indicesY), end(indicesY), rangegenerator(0));
+    std::generate(std::begin(indicesX), std::end(indicesX), rangegenerator(0));
+    std::generate(std::begin(indicesY), std::end(indicesY), rangegenerator(0));
 
-    random_shuffle(begin(indicesX), end(indicesX));
-    random_shuffle(begin(indicesY), end(indicesY));
+    std::random_shuffle(std::begin(indicesX), std::end(indicesX));
+    std::random_shuffle(std::begin(indicesY), std::end(indicesY));
 
     for (int i=0; i< mu; ++i)
     {

@@ -1,5 +1,5 @@
-#include "parametersset.h"
-#include "beingwindow.h"
+#include "src/shared/parametersset.h"
+#include "src/grid/beingwindow.h"
 
 ParametersSet* ParametersSet::instance = nullptr;
 int ParametersSet::BEING_WIDTH  = 25;
@@ -13,19 +13,19 @@ ParametersSet::ParametersSet(int gridSize)
     window = QSharedPointer<BeingWindow>(new BeingWindow);
 
     //instatiation of board
-    animalsOnBoard = vector< vector<Animal* > >(gridSize, vector<Animal*>(gridSize));
-    plantsOnBoard  = vector< vector<Plant* > >(gridSize, vector<Plant*>(gridSize));
+    animalsOnBoard = std::vector< std::vector<Animal* > >(gridSize, std::vector<Animal*>(gridSize));
+    plantsOnBoard  = std::vector< std::vector<Plant* > >(gridSize, std::vector<Plant*>(gridSize));
 
     //very ugly; refactor later; use  c table instead?
-    for(vector<Animal* >& vec : animalsOnBoard) {
+    for(std::vector<Animal* >& vec : animalsOnBoard) {
         vec.resize(gridSize);
-        vec = vector<Animal*>(gridSize, nullptr);
+        vec = std::vector<Animal*>(gridSize, nullptr);
     }
 
-    for(vector<Plant* >& vec : plantsOnBoard)
+    for(std::vector<Plant* >& vec : plantsOnBoard)
     {
         vec.resize(gridSize);
-        vec = vector<Plant*>(gridSize, nullptr);
+        vec = std::vector<Plant*>(gridSize, nullptr);
     }
 
     maxFoodCapacity = 20.0f;
@@ -91,9 +91,9 @@ int ParametersSet::getStartHungerLevel() const
 
 
 
-vector<Plant*> ParametersSet::getAdjacentBeings(int logX, int logY, const int reach) const
+std::vector<Plant*> ParametersSet::getAdjacentBeings(int logX, int logY, const int reach) const
 {
-    vector<Plant*> result;
+    std::vector<Plant*> result;
 
     int checkX, checkY;
 

@@ -1,6 +1,6 @@
 #include "animal.h"
 
-const function<int(int)> Animal::direction = [](const int& delta) -> int
+const std::function<int(int)> Animal::direction = [](const int& delta) -> int
 {
     // which means, we should not move in this dimension
     if(delta == 0) return 0;
@@ -9,6 +9,7 @@ const function<int(int)> Animal::direction = [](const int& delta) -> int
     // opposite in reverse
     return delta > 0 ? 1 : -1;
 };
+
 
 
 void Animal::action()
@@ -150,7 +151,7 @@ void Animal::moveClose(int goalX, int goalY)
     move(goalX, goalY);
 }
 
-void Animal::runFrom(const vector<Animal *>& enemies)
+void Animal::runFrom(const std::vector<Animal *>& enemies)
 {
     // we should find the safest place to run away
     int safeX = getLogX(),
@@ -159,7 +160,7 @@ void Animal::runFrom(const vector<Animal *>& enemies)
 
     // being can see enemies only in four directions, we should
     // find an optimal position to move(assuming that there are up to four enemies)
-    int minDistance = numeric_limits<int>::max();
+    int minDistance = std::numeric_limits<int>::max();
     const Animal* enemy = nullptr;
     // find the closest enemy
     for(const Animal* a : enemies)
@@ -197,7 +198,6 @@ void Animal::runFrom(const vector<Animal *>& enemies)
 
 void Animal::huntRoutine()
 {
-    //if there not, hunt
     Being* prey = hunt();
 
     //if there is a prey to hunt, go there and collect resources from site,
@@ -229,7 +229,7 @@ void Animal::huntRoutine()
 void Animal::enemiesHandlingRoutine()
 {
     // we assume, that these are most dangerous for being
-    vector<Animal*> dangerousEnemies = findEnemies();
+    std::vector<Animal*> dangerousEnemies = findEnemies();
     if(!dangerousEnemies.empty()) {
         activity = RUNNNING_AWAY;
         runFrom(dangerousEnemies);

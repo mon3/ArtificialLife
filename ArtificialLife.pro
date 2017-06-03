@@ -12,7 +12,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ArtificialLife
 TEMPLATE = app
-#TEMPLATE = subdirs
 
 
 # The following define makes your compiler emit warnings if you use
@@ -28,36 +27,38 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 # QT += testlib
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    animal.cpp \
-    food.cpp \
-    grid.cpp \
-    herbivorous.cpp \
-    parametersset.cpp \
-    plant.cpp \
-    predator.cpp \
-    being.cpp \
-    beingwindow.cpp \
-    constrainedvalue.cpp \
-    evolutionaryalg.cpp \
-    parametersset.tpp
 
-HEADERS  += mainwindow.h \
-    animal.h \
-    food.h \
-    grid.h \
-    herbivorous.h \
-    parametersset.h \
-    plant.h \
-    predator.h \
-    being.h \
-    beingwindow.h \
-    evolutionaryalg.h \
-    constrainedvalue.h
 
-FORMS    += mainwindow.ui \
-    beingwindow.ui
+
+
+SOURCES += src/main.cpp\
+        src/grid/mainwindow.cpp \
+    src/sugarscape/animal.cpp \
+    src/grid/grid.cpp \
+    src/sugarscape/herbivorous.cpp \
+    src/shared/parametersset.cpp \
+    src/sugarscape/plant.cpp \
+    src/sugarscape/predator.cpp \
+    src/sugarscape/being.cpp \
+    src/grid/beingwindow.cpp \
+    src/evolalg/constrainedvalue.cpp \
+    src/evolalg/evolutionaryalg.cpp \
+    src/shared/parametersset.tpp
+
+HEADERS  += src/grid/mainwindow.h \
+    src/sugarscape/animal.h \
+    src/grid/grid.h \
+    src/sugarscape/herbivorous.h \
+    src/shared/parametersset.h \
+    src/sugarscape/plant.h \
+    src/sugarscape/predator.h \
+    src/sugarscape/being.h \
+    src/grid/beingwindow.h \
+    src/evolalg/evolutionaryalg.h \
+    src/evolalg/constrainedvalue.h
+
+FORMS    += src/grid/mainwindow.ui \
+    src/grid/beingwindow.ui
 #CONFIG   += c++11
 
 #unix|macx: QMAKE_CXXFLAGS += -fpermissive

@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "src/grid/mainwindow.h"
 #include <QApplication>
 #include <QStyleFactory>
 #include <iostream>

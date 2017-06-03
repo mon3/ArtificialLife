@@ -4,7 +4,9 @@
 #include <boost/range/algorithm_ext/push_back.hpp>
 #include <boost/range/irange.hpp>
 #include <QVector>
-#include <evolutionaryalg.h>
+
+// use "" to include yours file, <> for standard libraries
+#include "src/evolalg/evolutionaryalg.h"
 #include <QGraphicsItem>
 
 int random(int min, int max) //range : [min, max)

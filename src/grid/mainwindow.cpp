@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <evolutionaryalg.h>
+#include "src/evolalg/evolutionaryalg.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :

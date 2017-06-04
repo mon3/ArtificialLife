@@ -204,6 +204,8 @@ void Grid::drawBackground(QPainter *painter, const QRectF &rect)
     }
 }
 
+
+
 void Grid::updateGrid()
 {
 
@@ -211,28 +213,10 @@ void Grid::updateGrid()
     // TODO: better mapping
     ParametersSet* set = ParametersSet::getInstance();
     int i =0 ;
+    BeingItem* b;
     foreach (QGraphicsItem* item, list) {
-//        qDebug() << ++i;
-
-
-        //not safe! do qcast later
-//        Animal* a = qobject_cast<Animal*>(var);
-//        QVector<int> res = EA->featuresToChromosome(a);
-//        double fitness =  EA->fitnessFunction(res);
-
-//        qDebug() <<"Type: " <<a->type();
-//        qDebug() << "Size: " << res.size();
-
-//        for (const int& i : res) // access by const reference
-//        {
-////                qDebug() << i << ' ';
-////            qDebug() << i ;
-
-
-//        }
-//        qDebug() << '\n';
-
-//        a->action();
+        b = qobject_cast<BeingItem*>(item);
+        if(b != 0)
 
     }
 

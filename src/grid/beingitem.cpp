@@ -8,7 +8,11 @@ BeingItem::BeingItem(Being *b) :
 
 void BeingItem::updateBeing()
 {
-    being->update();
+    being->action();
+    const int WIDTH = ParameterSet::SCENE_WIDTH;
+    const int OFFSET = ParametersSet::BEING_WIDTH >> 1;
+    this->setPos((being->getLogX() * WIDTH) / gridSize + OFFSET,
+              (being->getLogY() * WIDTH) / gridSize + OFFSET);
 }
 
 void BeingItem::mousePressEvent(QGraphicsSceneMouseEvent *)
@@ -20,7 +24,7 @@ void BeingItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 {
     this->painter = painter;
     visit(being.get());
-    painter = nullptr;
+    this->painter = nullptr;
 }
 
 

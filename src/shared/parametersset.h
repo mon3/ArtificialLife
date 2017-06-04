@@ -34,7 +34,7 @@ public:
     static const int SCENE_WIDTH = 1000;
     static int BEING_WIDTH;
     ~ParametersSet() {  }
-    Point beingsInterpolation(const Being*, const Being*, const float& coeff = 0.5f);
+
 
 
     // COMMON for predator and herbivorous
@@ -89,8 +89,6 @@ public:
 
     //consider making position/location making class
 
-    bool isFreeCell(int x, int y);
-    void updateBeing(Being* b, const int oldX, const int oldY);
 
 //    // use polymorfism
 //    void removeBeing(Plant*);
@@ -103,37 +101,18 @@ public:
     static int getRandomInt(const int&, const int&);
     int getStartHungerLevel() const;
 
-
-    // getters, more advanced for sugarscape
-    template<typename T>
-    std::vector<T> getAdjacentBeings(int logX, int logY, const int) const;
-
-    std::vector<Plant*> getAdjacentBeings(int logX, int logY, const int) const;
-
     float getFoodConsumptionUnits() const;
-    std::function<bool(int, int)> checkCoordinate;
 public slots:
     void callWindow(Being* b);
 private:
-
-    int magic_offset;
-
-    void mapPosition(Being* b);
-
     //to make singleton
     ParametersSet(const ParametersSet&) = delete;
     ParametersSet& operator=(const ParametersSet&) = delete;
     ParametersSet(int gridSize);
-
-
-
     static ParametersSet* instance;
+
     QSharedPointer<BeingWindow> window;
 
-    // TODO: use smart pointers
-    std::vector<std::vector <Plant* > > plantsOnBoard;
-    std::vector<std::vector <Animal* > > animalsOnBoard;
-    //game board params
     const int _gridSize;
     Season season;
     DayTime dayTime;
@@ -160,12 +139,6 @@ private:
     float plantToSizeFactor;
     int plantGrowbackLevel = 30;
     const int MAX_PLANT_HP_LEVEL = 100;
-
-
-    //helper lambda functions
-
-    std::function <int(int) > getRowMod;
-    std::function< int(int) > getColMod;
 };
 
 #include "src/shared/parametersset.tpp"

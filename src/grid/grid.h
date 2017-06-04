@@ -6,9 +6,7 @@
 
 #include <QObject>
 #include "src/shared/parametersset.h"
-#include "src/sugarscape/predator.h"
-#include "src/sugarscape/herbivorous.h"
-#include "src/sugarscape/plant.h"
+#include "src/grid/beingitem.h"
 
 #include <QDebug>
 #include <QPainter>
@@ -33,8 +31,6 @@ protected:
 
 //    void drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[], QWidget *widget);
 private:
-//    QPainter *gridPainter;
-
     // maybe pointer to the object?
     EvolutionaryAlg* EA;
 public slots:

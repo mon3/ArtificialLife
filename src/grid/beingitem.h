@@ -8,7 +8,7 @@
 
 
 #include "src/sugarscape/being.h"
-
+#include "src/shared/parametersset.h"
 
 class BeingItem : public QGraphicsRectItem, public Visitor
 {
@@ -16,6 +16,7 @@ class BeingItem : public QGraphicsRectItem, public Visitor
 private:
     std::unique_ptr<Being> being;
     QPainter* painter = nullptr;
+    static int magic_offset;
 public:
     BeingItem(Being* b);
 
@@ -26,7 +27,6 @@ protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 signals:
     void callWindow(Being*);
-
     // Visitor interface
 public:
     void visit(Plant *p) override;

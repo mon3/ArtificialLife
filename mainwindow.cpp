@@ -69,14 +69,14 @@ void MainWindow::initGame()
     {
         selectionType = 1;
     }
-    else if (ui->RouletteSelection->isChecked())
-    {
-        selectionType = 2;
-    }
-    else
-    {
-        selectionType = 3;
-    }
+//    else if (ui->RouletteSelection->isChecked())
+//    {
+//        selectionType = 2;
+//    }
+//    else
+//    {
+//        selectionType = 3;
+//    }
 
 
 

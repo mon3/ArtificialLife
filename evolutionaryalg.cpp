@@ -293,7 +293,7 @@ void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIni
     // mu - size of the population
     int mu = 50;
 
-    // TODO: resolve correct logical positions: X, Y
+    // TODO: resolve correct logical positions: X, Y; check the correct way of initializing positions
     QVector<int> indicesX(N*N);
     QVector<int> indicesY(N*N);
 
@@ -305,16 +305,9 @@ void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIni
 
     for (int i=0; i< mu; ++i)
     {
-//        qDebug() << indicesX[i] << " " << indicesY[i] ;
-
         initializeIndividualVectors(indicesX[i], indicesY[i], Beings::PREDATOR, predatorIniPop);
         initializeIndividualVectors(indicesX[i+2], indicesY[i+2], Beings::HERBIVOROUS, herbivorousIniPop);
-
     }
-
-//    qDebug() << "Initialized predator pop size = " << predatorIniPop.size();
-//    qDebug() << "Initialized herbivorous pop size = " << herbivorousIniPop.size();
-
 
 }
 

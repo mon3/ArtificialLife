@@ -47,7 +47,7 @@ public:
     void setPredMetabolismConstr(ConstrainedPredatorMetabolism metabolismConstr);
     void setPredExhLevel(ConstrainedExhLevel exhLevelConstr);
     void setPredSpeedConstr(ConstrainedPredatorSpeed speedConstr);
-
+    void accept(Visitor *) override;
 
     // Being interface
 private:
@@ -75,10 +75,6 @@ private:
 protected:
     std::vector<Animal*> findEnemies() override;
 
-
-    // Being interface
-protected:
-    void accept(Visitor *) override;
 };
 
 #endif // PREDATOR_H

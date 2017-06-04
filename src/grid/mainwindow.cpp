@@ -96,39 +96,39 @@ void MainWindow::initGame()
     connect(ui->stopButton, SIGNAL(pressed()), timer.data(), SLOT(stop()));
     connect(timer.data(), SIGNAL(timeout()), scene, SLOT(updateGrid()));
 
-    auto lambdaAdd = [&] (Being* b) -> void {
-        connectBeing(b);
-        scene->addItem(b);
-        set->addBeing(b);
-    };
+//    auto lambdaAdd = [&] (Being* b) -> void {
+//        connectBeing(b);
+//        scene->addItem(b);
+//        set->addBeing(b);
+//    };
 
-    //test subjects
-    Herbivorous* ex = new Herbivorous(3, 3);
-    lambdaAdd(ex);
-    herbivorousIniPop.push_back(ex);
+//    //test subjects
+//    Herbivorous* ex = new Herbivorous(3, 3);
+//    lambdaAdd(ex);
+//    herbivorousIniPop.push_back(ex);
 
-    ex = new Herbivorous(9, 8);
-    lambdaAdd(ex);
-    herbivorousIniPop.push_back(ex);
+//    ex = new Herbivorous(9, 8);
+//    lambdaAdd(ex);
+//    herbivorousIniPop.push_back(ex);
 
-    ex = new Herbivorous(4, 4);
-    lambdaAdd(ex);
-    herbivorousIniPop.push_back(ex);
+//    ex = new Herbivorous(4, 4);
+//    lambdaAdd(ex);
+//    herbivorousIniPop.push_back(ex);
 
-    Plant* pl = new Plant(4, 5);
-    lambdaAdd(pl);
-    pl = new Plant(2, 2);
-    lambdaAdd(pl);
+//    Plant* pl = new Plant(4, 5);
+//    lambdaAdd(pl);
+//    pl = new Plant(2, 2);
+//    lambdaAdd(pl);
 
-    pl = new Plant(4, 5);
-    lambdaAdd(pl);
+//    pl = new Plant(4, 5);
+//    lambdaAdd(pl);
 
-    pl = new Plant(7, 6);
-    lambdaAdd(pl);
+//    pl = new Plant(7, 6);
+//    lambdaAdd(pl);
 
-    pl = new Plant(8, 1);
+//    pl = new Plant(8, 1);
 
-    lambdaAdd(pl);
+//    lambdaAdd(pl);
 
     //test button
     connect(ui->testPushBUtton, SIGNAL(pressed()), scene, SLOT(updateGrid()));

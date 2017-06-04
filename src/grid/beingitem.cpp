@@ -1,16 +1,18 @@
 #include "beingitem.h"
 
-BeingItem::BeingItem(Being *b) :
-    QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH)
+BeingItem::BeingItem(std::unique_ptr<Being>& b) :
+    QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH), Visitor()
 {
-    being = std::make_unique<Being>(b);
+    being = std::move(b);
 }
 
 void BeingItem::updateBeing()
 {
     being->action();
-    const int WIDTH = ParameterSet::SCENE_WIDTH;
+
+    const int WIDTH = ParametersSet::SCENE_WIDTH;
     const int OFFSET = ParametersSet::BEING_WIDTH >> 1;
+    const int gridSize = ParametersSet::getInstance()->getGridSize();
     this->setPos((being->getLogX() * WIDTH) / gridSize + OFFSET,
               (being->getLogY() * WIDTH) / gridSize + OFFSET);
 }
@@ -20,10 +22,11 @@ void BeingItem::mousePressEvent(QGraphicsSceneMouseEvent *)
     emit callWindow(being.get());
 }
 
-void BeingItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void BeingItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * s, QWidget * w)
 {
+    Q_UNUSED(s); Q_UNUSED(w);
     this->painter = painter;
-    visit(being.get());
+    being->accept(this);
     this->painter = nullptr;
 }
 

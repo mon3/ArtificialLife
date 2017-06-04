@@ -1,5 +1,7 @@
 #include "board.h"
 
+Board* Board::instance = nullptr;
+
 Board::Board(const int gridSize_) : gridSize(gridSize_)
 {
     //instatiation of board
@@ -22,7 +24,7 @@ Board::Board(const int gridSize_) : gridSize(gridSize_)
     // instatiate lambda's
     checkCoordinate = [&] (int x, int y) -> bool
     {
-        return (x >= 0 && y >= 0 && x < _gridSize && y < _gridSize);
+        return (x >= 0 && y >= 0 && x < gridSize && y < gridSize);
     };
 
     // TODO: ask to explain
@@ -38,7 +40,14 @@ Board::Board(const int gridSize_) : gridSize(gridSize_)
     };
 }
 
-std::vector<Plant *> Board::getAdjacentBeings(int logX, int logY, const int) const
+Board* Board::getInstance(const int gridSize_)
+{
+    if(instance == nullptr)
+        instance = new Board(gridSize_);
+    return instance;
+}
+
+std::vector<Plant *> Board::getAdjacentBeings(int logX, int logY, const int reach) const
 {
     std::vector<Plant*> result;
 
@@ -47,7 +56,7 @@ std::vector<Plant *> Board::getAdjacentBeings(int logX, int logY, const int) con
     //pushing to vector every being within animal reach
     //TODO: add comment to lookup section
     for(int i = 1; i <= reach; ++i) {
-        if(i > _gridSize) break;
+        if(i > gridSize) break;
         for(int j = 0; j < 4; ++j) {
             checkX = logX + i * getColMod(j);
             checkY = logY + i * getRowMod(j);
@@ -108,7 +117,7 @@ void Board::updateBeing(Being *b, const int oldX, const int oldY)
     //mapPosition(b);
 }
 
-Point ParametersSet::beingsInterpolation(const Being *a, const Being *b, const float &coeff)
+Point Board::beingsInterpolation(const Being *a, const Being *b, const float &coeff)
 {
 
     const int xA = a->getLogX(),

@@ -2,7 +2,7 @@
 
 
 Being::Being(int _logX, int _logY)
-  : QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH), logX(_logX), logY(_logY)
+  : logX(_logX), logY(_logY)
 {
 
 }
@@ -43,17 +43,4 @@ void Being::setLogY(int value)
         logY = value;
 }
 
-void Being::updateBeing()
-{
-    this->action();  
-}
 
-
-
-
-
-
-void Being::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
-{
-    painter->fillRect(this->rect(), getPenColor());
-}

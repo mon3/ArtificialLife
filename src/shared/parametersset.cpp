@@ -11,21 +11,7 @@ ParametersSet::ParametersSet(int gridSize)
 
     window = QSharedPointer<BeingWindow>(new BeingWindow);
 
-    //instatiation of board
-    animalsOnBoard = std::vector< std::vector<Animal* > >(gridSize, std::vector<Animal*>(gridSize));
-    plantsOnBoard  = std::vector< std::vector<Plant* > >(gridSize, std::vector<Plant*>(gridSize));
 
-    //very ugly; refactor later; use  c table instead?
-    for(std::vector<Animal* >& vec : animalsOnBoard) {
-        vec.resize(gridSize);
-        vec = std::vector<Animal*>(gridSize, nullptr);
-    }
-
-    for(std::vector<Plant* >& vec : plantsOnBoard)
-    {
-        vec.resize(gridSize);
-        vec = std::vector<Plant*>(gridSize, nullptr);
-    }
 
     maxFoodCapacity = 20.0f;
 

@@ -9,9 +9,8 @@ class Predator;
 class Herbivorous;
 class Visitor
 {
-
 public:
-    Visitor();
+    Visitor() { }
     virtual void visit(Plant*) = 0;
     virtual void visit(Predator*) = 0;
     virtual void visit(Herbivorous*) = 0;

@@ -20,6 +20,7 @@ public:
 
 
     int type() const { return Beings::HERBIVOROUS; }
+    void accept(Visitor *) override;
     // Being interface
 private:
     inline virtual Qt::GlobalColor getPenColor() const { return Qt::green; }
@@ -35,12 +36,7 @@ private:
 
     // Animal interface
 protected:
-    std::vector<Animal*> findEnemies() override;
-
-
-    // Being interface
-protected:
-    void accept(Visitor *) override;
+    std::vector<Animal*> findEnemies() override; 
 };
 
 #endif // HERBIVOROUS_H

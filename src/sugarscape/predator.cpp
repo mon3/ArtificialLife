@@ -51,7 +51,7 @@ Predator::Predator(int x, int y, QVector<int> features, QVector<double> stdDevs)
 Being* Predator::hunt()
 {
     qDebug() << "here1";
-    std::vector<Herbivorous*> vec = ParametersSet::getInstance()->
+    std::vector<Herbivorous*> vec = Board::getInstance()->
             getAdjacentBeings<Herbivorous*>(this->getLogX(), this->getLogY(), this->getEyeSight());
     //no available plant at neighbourhood
     if(vec.empty()) {
@@ -96,7 +96,8 @@ void Predator::eat(Being * b)
     int herbValue = herb->getHitPoints();
     foodConsumptionRule(herbValue);
     // after eating, herb. is removed from board
-    ParametersSet::getInstance()->removeBeing(herb);
+    // error
+    Board::getInstance()->removeBeing(herb);
 }
 
 

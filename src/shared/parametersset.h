@@ -85,14 +85,6 @@ public:
     static constexpr double exhLevelCoeff = -10.0; // the less value of exhLevel, the better
 
 
-    void addBeing(Being*);
-
-    //consider making position/location making class
-
-
-//    // use polymorfism
-//    void removeBeing(Plant*);
-//    void removeBeing(Animal*);
 
     //getters
     int getMaxPlantHp() const;
@@ -141,7 +133,6 @@ private:
     const int MAX_PLANT_HP_LEVEL = 100;
 };
 
-#include "src/shared/parametersset.tpp"
 
 #endif // PARAMETERSSET_H
 

@@ -39,7 +39,7 @@ Herbivorous::Herbivorous(int x, int y, QVector<int> features, QVector<double> st
 //Being* Herbivorous::hunt()
 Being* Herbivorous::hunt()
 {
-    std::vector<Plant*> vec = ParametersSet::getInstance()->getAdjacentBeings(this->getLogX(), this->getLogY(), getSpeed());
+    std::vector<Plant*> vec = Board::getInstance()->getAdjacentBeings(this->getLogX(), this->getLogY(), getSpeed());
     //no available plant at neighbourhood
     if(vec.empty()) {
         return nullptr;

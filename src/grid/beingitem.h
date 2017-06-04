@@ -5,12 +5,12 @@
 
 #include <QObject>
 #include <QGraphicsRectItem>
-
+#include <QPainter>
 
 #include "src/sugarscape/being.h"
 #include "src/shared/parametersset.h"
 
-class BeingItem : public QGraphicsRectItem, public Visitor
+class BeingItem : public QObject, public QGraphicsRectItem, public Visitor
 {
     Q_OBJECT
 private:
@@ -18,7 +18,7 @@ private:
     QPainter* painter = nullptr;
     static int magic_offset;
 public:
-    BeingItem(Being* b);
+    BeingItem(std::unique_ptr<Being>& b);
 
 public slots:
     void updateBeing();

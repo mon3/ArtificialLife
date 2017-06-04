@@ -16,14 +16,14 @@ void Animal::action()
 {
 
     if(activity == Activity::DEAD) {
-        return ParametersSet::getInstance()->removeBeing(this);
+        return Board::getInstance()->removeBeing(this);
     }
 
     int oldX = this->getLogX(),
         oldY = this->getLogY();
 
     ParametersSet* set = ParametersSet::getInstance();
-
+    Board* board = Board::getInstance();
     enemiesHandlingRoutine();
 
     if(activity != RUNNNING_AWAY)
@@ -64,7 +64,7 @@ void Animal::action()
         return;
     }
     else
-        set->updateBeing(this, oldX, oldY);
+        board->updateBeing(this, oldX, oldY);
 }
 
 
@@ -133,14 +133,14 @@ void Animal::move(int x, int y )
 
 void Animal::moveClose(int goalX, int goalY)
 {
-    ParametersSet* set = ParametersSet::getInstance();
+    Board* board = Board::getInstance();
 
     // direction of moving 1, 0, -1
     int directionVector[2] = {direction(goalX - this->getLogX()), direction(goalY - this->getLogY())};
 
     //move to the closest free cell
     if(directionVector[0] != 0 || directionVector[1] != 0)
-        while(!set->isFreeCell(goalX, goalY) && set->checkCoordinate(goalX, goalY))
+        while(!board->isFreeCell(goalX, goalY) && board->checkCoordinate(goalX, goalY))
         {
             goalX -= directionVector[0];
             goalY += directionVector[1];
@@ -169,25 +169,25 @@ void Animal::runFrom(const std::vector<Animal *>& enemies)
             enemy = a;
         }
     }
-    ParametersSet* set = ParametersSet::getInstance();
+    Board* board = Board::getInstance();
     // try to run from him, for it's most likely he won't notice
     // TODO: add handler functions
-    int modifier = set->getRandomInt(0, 2) > 0 ? 1 : -1;
+    int modifier = ParametersSet::getRandomInt(0, 2) > 0 ? 1 : -1;
     if(safeX == enemy->getLogX())
     {
-        if(!set->checkCoordinate(safeX, safeY + modifier))
+        if(!board->checkCoordinate(safeX, safeY + modifier))
             modifier = -modifier;
         const int inc = modifier;
-        while(!set->isFreeCell(safeX, safeY + modifier))
+        while(!board->isFreeCell(safeX, safeY + modifier))
             modifier += inc;
         move(safeX, safeY  + modifier);
     }
     else
     {
-        if(!set->checkCoordinate(safeX + modifier, safeY))
+        if(!board->checkCoordinate(safeX + modifier, safeY))
             modifier = -modifier;
         const int inc = modifier;
-        while(!set->isFreeCell(safeX + modifier, safeY))
+        while(!board->isFreeCell(safeX + modifier, safeY))
             modifier += inc;
         move(safeX  + modifier, safeY);
     }

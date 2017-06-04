@@ -1,8 +1,8 @@
-#ifndef PARAMETERSSET_TPP
-#define PARAMETERSSET_TPP
+#ifndef BOARD_TPP
+#define BOARD_TPP
 
 template<typename T>
-std::vector<T> ParametersSet::getAdjacentBeings(int logX, int logY, const int reach) const
+std::vector<T> Board::getAdjacentBeings(int logX, int logY, const int reach) const
 {
     std::vector<T> result;
 //    int logX = a->getLogX(), logY = a->getLogY();
@@ -22,4 +22,4 @@ std::vector<T> ParametersSet::getAdjacentBeings(int logX, int logY, const int re
 }
 
 
-#endif // PARAMETERSSET_TPP
+#endif

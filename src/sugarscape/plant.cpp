@@ -17,28 +17,7 @@ void Plant::action()
 }
 
 
-Qt::GlobalColor Plant::getPenColor() const
-{
-    return Qt::blue;
-}
 
-void Plant::mousePressEvent(QGraphicsSceneMouseEvent *)
-{
-    emit callWindow(this);
-}
-
-
-void Plant::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    Q_UNUSED(option); Q_UNUSED(widget);
-    painter->setBrush(getPenColor());
-
-    painter->drawEllipse(this->rect());
-
-    // int hp = getHitPoints(); // TODO: not sure if needed
-//    if()
-//    setHitPoints(getHitPoints() + ParametersSet::getInstance()->getPlantGrowbackLevel());
-}
 
 
 void Plant::accept(Visitor *v)

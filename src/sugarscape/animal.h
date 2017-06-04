@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <functional>
 #include "being.h"
+#include "src/shared/board.h"
 #include "src/evolalg/constrainedvalue.h"
 
 
@@ -66,6 +67,7 @@ public:
     Activity getActivity() const;
 
     void setFeaturesEA(QVector<int> vals);
+    virtual void accept(Visitor *) override = 0;
 protected:
     void foodConsumptionRule(int& foodValue);
 
@@ -121,8 +123,7 @@ private:
     const static std::function<int(int)> direction;
 
     // Being interface
-protected:
-    virtual void accept(Visitor *) override = 0;
+
 };
 
 #endif // ANIMAL_H

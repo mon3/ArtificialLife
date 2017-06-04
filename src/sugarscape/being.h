@@ -5,7 +5,7 @@
 #include "src/shared/parametersset.h"
 #include "src/view/visitor.h"
 
-class Being
+class Being : public QObject
 {
     Q_OBJECT
 public:
@@ -21,7 +21,6 @@ public:
 
     virtual void action() = 0;
     virtual  int type() const = 0 ;
-protected:
     virtual void accept(Visitor*) = 0;
 private:
 

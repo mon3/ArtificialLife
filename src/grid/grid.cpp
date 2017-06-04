@@ -209,18 +209,6 @@ void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 void Grid::updateGrid()
 {
 
-    QList<QGraphicsItem*> list = this->items();
-    // TODO: better mapping
-    ParametersSet* set = ParametersSet::getInstance();
-    int i =0 ;
-    BeingItem* b;
-    foreach (QGraphicsItem* item, list) {
-        b = qobject_cast<BeingItem*>(item);
-        if(b != 0)
-
-    }
-
-
 }
 
 

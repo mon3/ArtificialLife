@@ -1,7 +1,24 @@
 #include "predator.h"
 
+Predator::Predator(int logX, int logY): Animal(logX, logY)
+{
+    QVector<int> randFeatures;
+    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxEyeSight));
+    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxPredatorSpeed));
+    randFeatures.push_back(static_cast<int>(1.0*ParametersSet::maxHitPoints));
+    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxPredatorMetabolism));
+    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxPredatorFoodCapacity));
+    randFeatures.push_back(static_cast<int>(1.0*ParametersSet::minExhaustionLevel));
+
+    setFeaturesForEA(randFeatures);
+
+}
+
+
 Predator::Predator(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity, int metabolism, int exhaustionLevel, int saturationRate, QVector<double> stdDevs):Animal(x,y)
 {
+    QVector<int> featuresVec = this->featuresToVectorEA(eyeSight, speed, hitPoints, metabolism, foodCapacity, exhaustionLevel);
+    setFeaturesForEA(featuresVec);
     setHitPoints(hitPoints);
     setEyeSight(eyeSight);
     setAge(age);
@@ -10,12 +27,15 @@ Predator::Predator(int x, int y, int hitPoints, int eyeSight, int age, int gener
     setFoodCapacity(foodCapacity);
     setMetabolism(metabolism);
     setExhaustionLevel(exhaustionLevel);
+
     setSaturationRate(saturationRate);
     setStdDevs(stdDevs);
 }
 
 Predator::Predator(int x, int y, int eyeSight, int speed, int hitPoints, int metabolism, int foodCapacity, int exhaustionLevel, QVector<double> stdDevs):Animal(x, y)
 {
+    QVector<int> featuresVec = this->featuresToVectorEA(eyeSight, speed, hitPoints, metabolism, foodCapacity, exhaustionLevel);
+    setFeaturesForEA(featuresVec);
     setEyeSight(eyeSight);
     setSpeed(speed);
     setHitPoints(hitPoints);
@@ -27,10 +47,40 @@ Predator::Predator(int x, int y, int eyeSight, int speed, int hitPoints, int met
 
 Predator::Predator(int x, int y, QVector<int> features, QVector<double> stdDevs):Animal(x, y)
 {
-
-    setFeaturesEA(features, Beings::PREDATOR);
+    setFeaturesForEA(features);
+//    setFeaturesEA(features, Beings::PREDATOR);
     setStdDevs(stdDevs);
 }
+
+void Predator::setFeaturesForEA(QVector<int>& vals)
+{
+    vals[0] = ((vals.at(0)<=ParametersSet::minEyeSight) ? ParametersSet::minEyeSight: vals.at(0));
+    vals[0] = ((vals.at(0)>=ParametersSet::maxEyeSight) ? ParametersSet::maxEyeSight: vals.at(0));
+
+    vals[1] = ((vals.at(1)<=ParametersSet::minPredatorSpeed) ? ParametersSet::minPredatorSpeed: vals.at(1));
+    vals[1] = ((vals.at(1)>=ParametersSet::maxPredatorSpeed) ? ParametersSet::maxPredatorSpeed: vals.at(1));
+
+    vals[2] = ((vals.at(2)<=ParametersSet::minHitPoints) ? ParametersSet::minHitPoints: vals.at(2));
+    vals[2] = ((vals.at(2)>=ParametersSet::maxHitPoints) ? ParametersSet::maxHitPoints: vals.at(2));
+
+    vals[3] = ((vals.at(3)<=ParametersSet::minPredatorMetabolism) ? ParametersSet::minPredatorMetabolism: vals.at(3));
+    vals[3] = ((vals.at(3)>=ParametersSet::maxPredatorMetabolism) ? ParametersSet::maxPredatorMetabolism: vals.at(3));
+
+    vals[4] = ((vals.at(4)<=ParametersSet::minPredatorFoodCapacity) ? ParametersSet::minPredatorFoodCapacity: vals.at(4));
+    vals[4] = ((vals.at(4)>=ParametersSet::maxPredatorFoodCapacity) ? ParametersSet::maxPredatorFoodCapacity: vals.at(4));
+
+    vals[5] = ((vals.at(5)<=ParametersSet::minExhaustionLevel) ? ParametersSet::minExhaustionLevel: vals.at(5));
+    vals[5] = ((vals.at(5)>=ParametersSet::maxExhaustionLevel) ? ParametersSet::maxExhaustionLevel: vals.at(5));
+
+    this->setFeaturesEA(vals);
+    setEyeSight(vals[0]);
+    setSpeed(vals[1]);
+    setHitPoints(vals[2]);
+    setMetabolism(vals[3]);
+    setFoodCapacity(vals[4]);
+    setExhaustionLevel(vals[5]);
+}
+
 
 
 
@@ -47,6 +97,21 @@ Predator::Predator(int x, int y, ConstrainedEyeSight es, ConstrainedPredatorSpee
     setPredExhLevel(exhLev);
     setStdDevs(stdDevs);
 }
+
+QVector<int> Predator::featuresToChromosome()
+{
+    QVector<int> chromosome;
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[0], ParametersSet::minEyeSight, ParametersSet::maxEyeSight));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[1], ParametersSet::minPredatorSpeed, ParametersSet::maxPredatorSpeed));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[2], ParametersSet::minHitPoints, ParametersSet::maxHitPoints));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[3], ParametersSet::minPredatorMetabolism, ParametersSet::maxPredatorMetabolism));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[4], ParametersSet::minPredatorFoodCapacity, ParametersSet::maxPredatorFoodCapacity));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[5], ParametersSet::minExhaustionLevel, ParametersSet::maxExhaustionLevel));
+
+    return chromosome;
+}
+
+
 
 Being* Predator::hunt()
 {

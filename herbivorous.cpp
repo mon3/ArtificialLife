@@ -1,9 +1,27 @@
 #include "herbivorous.h"
 
 
+Herbivorous::Herbivorous(int logX, int logY): Animal(logX, logY)
+{
+    QVector<int> randFeatures;
+    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxEyeSight));
+    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxHerbivorousSpeed));
+    randFeatures.push_back(static_cast<int>(1.0*ParametersSet::maxHitPoints));
+    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxHerbivorousMetabolism));
+    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxHerbivorousFoodCapacity));
+    randFeatures.push_back(static_cast<int>(1.0*ParametersSet::minExhaustionLevel));
+
+    setFeaturesForEA(randFeatures);
+
+}
+
+
+
 
 Herbivorous::Herbivorous(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity, int metabolism, int exhaustionLevel, int saturationRate, QVector<double> stdDevs):Animal(x,y)
 {
+    QVector<int> featuresVec = this->featuresToVectorEA(eyeSight, speed, hitPoints, metabolism, foodCapacity, exhaustionLevel);
+    setFeaturesForEA(featuresVec);
     setHitPoints(hitPoints);
     setEyeSight(eyeSight);
     setAge(age);
@@ -31,9 +49,54 @@ Herbivorous::Herbivorous(int x, int y, int eyeSight, int speed, int hitPoints, i
 
 Herbivorous::Herbivorous(int x, int y, QVector<int> features, QVector<double> stdDevs):Animal(x, y)
 {
-    setFeaturesEA(features, Beings::HERBIVOROUS);
+    setFeaturesForEA(features);
     setStdDevs(stdDevs);
 }
+
+
+void Herbivorous::setFeaturesForEA(QVector<int>& vals)
+{
+    vals[0] = ((vals.at(0)<=ParametersSet::minEyeSight) ? ParametersSet::minEyeSight: vals.at(0));
+    vals[0] = ((vals.at(0)>=ParametersSet::maxEyeSight) ? ParametersSet::maxEyeSight: vals.at(0));
+
+    vals[1] = ((vals.at(1)<=ParametersSet::minHerbivorousSpeed) ? ParametersSet::minHerbivorousSpeed: vals.at(1));
+    vals[1] = ((vals.at(1)>=ParametersSet::maxHerbivorousSpeed) ? ParametersSet::maxHerbivorousSpeed: vals.at(1));
+
+    vals[2] = ((vals.at(2)<=ParametersSet::minHitPoints) ? ParametersSet::minHitPoints: vals.at(2));
+    vals[2] = ((vals.at(2)>=ParametersSet::maxHitPoints) ? ParametersSet::maxHitPoints: vals.at(2));
+
+    vals[3] = ((vals.at(3)<=ParametersSet::minHerbivorousMetabolism) ? ParametersSet::minHerbivorousMetabolism: vals.at(3));
+    vals[3] = ((vals.at(3)>=ParametersSet::maxHerbivorousMetabolism) ? ParametersSet::maxHerbivorousMetabolism: vals.at(3));
+
+    vals[4] = ((vals.at(4)<=ParametersSet::minHerbivorousFoodCapacity) ? ParametersSet::minHerbivorousFoodCapacity: vals.at(4));
+    vals[4] = ((vals.at(4)>=ParametersSet::maxHerbivorousFoodCapacity) ? ParametersSet::maxHerbivorousFoodCapacity: vals.at(4));
+
+    vals[5] = ((vals.at(5)<=ParametersSet::minExhaustionLevel) ? ParametersSet::minExhaustionLevel: vals.at(5));
+    vals[5] = ((vals.at(5)>=ParametersSet::maxExhaustionLevel) ? ParametersSet::maxExhaustionLevel: vals.at(5));
+
+    this->setFeaturesEA(vals);
+    setEyeSight(vals[0]);
+    setSpeed(vals[1]);
+    setHitPoints(vals[2]);
+    setMetabolism(vals[3]);
+    setFoodCapacity(vals[4]);
+    setExhaustionLevel(vals[5]);
+}
+
+
+QVector<int> Herbivorous::featuresToChromosome()
+{
+    QVector<int> chromosome;
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[0], ParametersSet::minEyeSight, ParametersSet::maxEyeSight));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[1], ParametersSet::minHerbivorousSpeed, ParametersSet::maxHerbivorousSpeed));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[2], ParametersSet::minHitPoints, ParametersSet::maxHitPoints));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[3], ParametersSet::minHerbivorousMetabolism, ParametersSet::maxHerbivorousMetabolism));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[4], ParametersSet::minHerbivorousFoodCapacity, ParametersSet::maxHerbivorousFoodCapacity));
+    chromosome.push_back(normalizeFeature(this->getFeaturesEA()[5], ParametersSet::minExhaustionLevel, ParametersSet::maxExhaustionLevel));
+
+    return chromosome;
+}
+
 
 
 //Being* Herbivorous::hunt()

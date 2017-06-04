@@ -18,6 +18,8 @@ public:
     ~Animal(){}
     void action();
     virtual int type() const = 0;
+    virtual void setFeaturesForEA(QVector<int>& vals) = 0;
+    virtual QVector<int> featuresToChromosome() = 0;
 
     enum Activity {
         MATING,
@@ -58,16 +60,15 @@ public:
     void setStdDevs(QVector<double> vals);
     QVector<double> getStdDevs() const;
 
-    void setFeaturesEA(QVector<int>& vals, Beings type);
+public:
     QVector<int> getFeaturesEA() const;
 
     void displayStd() const;
     void displayFeatures() const;
-
-
+    double normalizeFeature(int feature,int min, int max);
 
     Activity getActivity() const;
-
+    QVector<int> featuresToVectorEA(int eye, int speed, int hitPoints, int metabolism, int foodCapacity, int exhLevel);
     void setFeaturesEA(QVector<int> vals);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);

@@ -9,7 +9,9 @@ class Herbivorous : public Animal
 {
     Q_OBJECT
 public:
-    Herbivorous(int logX, int logY) : Animal(logX, logY) { }
+    void setFeaturesForEA(QVector<int>& vals);
+    QVector<int> featuresToChromosome();
+    Herbivorous(int logX, int logY);
     Herbivorous(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity,
              int metabolism, int exhaustionLevel, int saturationRate, QVector<double> stdDevs);
 

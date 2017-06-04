@@ -18,8 +18,10 @@ class Predator : public Animal
     Q_OBJECT
 public:
 
+    void setFeaturesForEA(QVector<int>& vals);
+    QVector<int> featuresToChromosome();
 
-    Predator(int x, int y) : Animal(x, y) { }
+    Predator(int x, int y);
     Predator(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity,
              int metabolism, int exhaustionLevel, int saturationRate, QVector<double> stdDevs);
     Predator(int x, int y, int eyeSight, int speed, int hitPoints, int metabolism,  int foodCapacity,
@@ -29,7 +31,7 @@ public:
                        QVector<double> stdDevs);
 
 
-    Predator(int x, int y, QVector<int> features, QVector<double> stdDevs);
+
 
 //    Predator(QVector<int> features, QVector<double> stdDevs);
 
@@ -41,7 +43,7 @@ public:
     void setPredExhLevel(ConstrainedExhLevel exhLevelConstr);
     void setPredSpeedConstr(ConstrainedPredatorSpeed speedConstr);
 
-
+    Predator(int x, int y, QVector<int> features, QVector<double> stdDevs);
     // Being interface
 private:
     inline virtual Qt::GlobalColor getPenColor() const { return Qt::red; }

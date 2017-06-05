@@ -47,12 +47,31 @@ void MeanReproduction::reproducePopulation(QVector<Animal *> &tempPop)
                 stdDevsChild1.push_back(StdChild1);
                 stdDevsChild2.push_back(StdChild2);
             }
+        const float param = 0.5f;
+        auto const parent1 = static_cast<Being*>(tempPop.at(i));
+        auto const parent2 = static_cast<Being*>(tempPop.at(i+1));
 
-       // TODO: Discuss what to do with X and Y
+//        ParametersSet* set = ParametersSet::getInstance();
+//        Point child1Point = set->beingsInterpolation(parent1, parent2, param);
+//        Point child2Point = set->beingsInterpolation(parent1, parent2, param);
+
+//        if (tempPop.at(0)->type() == Beings::PREDATOR)
+//       //TODO :: przerobic z dziedziczenia
+//        {
+//            // TODO: change the position of being
+
+//        beingChild1 = static_cast<Being*>(new Predator(child1Point.first, child1Point.second, featuresChild1, stdDevsChild1));
+//        beingChild2 = static_cast<Being*>(new Predator(child2Point.first, child2Point.second, featuresChild2, stdDevsChild2));
+
+//        }
+//        else if (tempPop.at(0)->type() == Beings::HERBIVOROUS)
+//        {
+//            beingChild1 = static_cast<Being*>(new Herbivorous(child1Point.first, child1Point.second, featuresChild1, stdDevsChild1));
+//            beingChild2 = static_cast<Being*>(new Herbivorous(child1Point.first, child1Point.second, featuresChild2, stdDevsChild2));
+//        }
         if (tempPop.at(0)->type() == Beings::PREDATOR)
         {
             // TODO: change the position of being
-
         beingChild1 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
         beingChild2 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
 

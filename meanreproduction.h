@@ -1,5 +1,6 @@
 #ifndef MEANREPRODUCTION_H
 #define MEANREPRODUCTION_H
+#include<parametersset.h>
 #include<eareproductiontype.h>
 
 

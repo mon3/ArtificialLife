@@ -1,11 +1,11 @@
 #include <eainitializer.h>
+#include <animal.h>
 
 
 void EaInitializer::initialize(Herbivorous& herb, int X, int Y)
 {
     QVector<double> stdDevs;
     QVector<int> features;
-    Being* being;
 
     Generator genExh(ParametersSet::maxExhaustionLevel *0.3, (ParametersSet::maxExhaustionLevel-ParametersSet::minExhaustionLevel) * (herb.randomDouble(0.2, 0.3)), ParametersSet::minExhaustionLevel, ParametersSet::maxExhaustionLevel);
     Generator genHitPts(ParametersSet::maxHitPoints *0.7, (ParametersSet::maxHitPoints - ParametersSet::minHitPoints) * (herb.randomDouble(0.2, 0.8)), ParametersSet::minHitPoints, ParametersSet::maxHitPoints);
@@ -28,8 +28,20 @@ void EaInitializer::initialize(Herbivorous& herb, int X, int Y)
     features.push_back(static_cast<int>(round(genHerbFoodCap())));
     features.push_back(static_cast<int>(round(genExh())));
 
-    herb.setFeaturesForEA(features);
-    herb.setStdDevs(stdDevs);
+
+    Herbivorous::FeatureStd Eye(static_cast<int>(round(genEye())), genEye.getMean());
+    Herbivorous::FeatureStd Speed(static_cast<int>(round(genHerbSpeed())), genHerbSpeed.getStddev());
+    Herbivorous::FeatureStd HitPoints(static_cast<int>(round(genHitPts())), genHitPts.getStddev());
+    Herbivorous::FeatureStd Metabolism(static_cast<int>(round(genHerbMetabolism())), genHerbMetabolism.getStddev());
+    Herbivorous::FeatureStd FoodCapacity(static_cast<int>(round(genHerbFoodCap())), genHerbFoodCap.getStddev());
+    Herbivorous::FeatureStd Exhaustion(static_cast<int>(round(genExh())), genExh.getStddev());
+
+//    herb.setFeaturesForEA(features);
+//    herb.setStdDevs(stdDevs);
+    herb.setFeatureStdevs(Eye, Speed, HitPoints, Metabolism, FoodCapacity, Exhaustion);
+
+    herb.setX(X);
+    herb.setY(Y);
 
 }
 
@@ -39,7 +51,6 @@ void EaInitializer::initialize(Predator& pred, int X, int Y)
 {
     QVector<double> stdDevs;
     QVector<int> features;
-    Being* being;
 
     Generator genExh(ParametersSet::maxExhaustionLevel *0.3, (ParametersSet::maxExhaustionLevel-ParametersSet::minExhaustionLevel) * (pred.randomDouble(0.2, 0.3)), ParametersSet::minExhaustionLevel, ParametersSet::maxExhaustionLevel);
     Generator genHitPts(ParametersSet::maxHitPoints *0.7, (ParametersSet::maxHitPoints - ParametersSet::minHitPoints) * (pred.randomDouble(0.2, 0.8)), ParametersSet::minHitPoints, ParametersSet::maxHitPoints);
@@ -62,7 +73,18 @@ void EaInitializer::initialize(Predator& pred, int X, int Y)
     features.push_back(static_cast<int>(round(genPredFoodCap())));
     features.push_back(static_cast<int>(round(genExh())));
 
-    pred.setFeaturesForEA(features);
-    pred.setStdDevs(stdDevs);
+
+    Predator::FeatureStd Eye(static_cast<int>(round(genEye())), genEye.getMean());
+    Predator::FeatureStd Speed(static_cast<int>(round(genPredSpeed())), genPredSpeed.getStddev());
+    Predator::FeatureStd HitPoints(static_cast<int>(round(genHitPts())), genHitPts.getStddev());
+    Predator::FeatureStd Metabolism(static_cast<int>(round(genPredMetabolism())), genPredMetabolism.getStddev());
+    Predator::FeatureStd FoodCapacity(static_cast<int>(round(genPredFoodCap())), genPredFoodCap.getStddev());
+    Predator::FeatureStd Exhaustion(static_cast<int>(round(genExh())), genExh.getStddev());
+
+    pred.setFeatureStdevs(Eye, Speed, HitPoints, Metabolism, FoodCapacity, Exhaustion);
+//    pred.setFeaturesForEA(features);
+//    pred.setStdDevs(stdDevs);
+    pred.setX(X);
+    pred.setY(Y);
 
 }

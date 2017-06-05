@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <functional>
 #include "being.h"
-#include <constrainedvalue.h>
 #include <eapopulationinitializer.h>
 
 class Animal : public Being
@@ -25,10 +24,12 @@ public:
 
     // for feature and stdDevs used in EA
     struct FeatureStd{
-       FeatureStd(int value, double stdDev); // do inicjalizacji w taki sposob
-       int value;
+       FeatureStd(int value, double stdDev):feature(value), stdDev(stdDev){} // do inicjalizacji w taki sposob
+       int feature;
        double stdDev;
     };
+
+    virtual void setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd HitPoints, FeatureStd Metabolism, FeatureStd FoodCapacity, FeatureStd ExhLevel) = 0;
 
     enum Activity {
         MATING,

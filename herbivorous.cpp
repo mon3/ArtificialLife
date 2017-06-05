@@ -15,6 +15,27 @@ Herbivorous::Herbivorous(int logX, int logY): Animal(logX, logY)
 
 }
 
+void Herbivorous::setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd HitPoints, FeatureStd Metabolism, FeatureStd FoodCapacity, FeatureStd ExhLevel)
+{
+
+    QVector<int> vals;
+    vals.push_back(Eye.feature);
+    vals.push_back(Speed.feature);
+    vals.push_back(HitPoints.feature);
+    vals.push_back(Metabolism.feature);
+    vals.push_back(FoodCapacity.feature);
+    vals.push_back(ExhLevel.feature);
+    this->setFeaturesForEA(vals);
+
+    QVector<double> stdDevs;
+    stdDevs.push_back(Eye.stdDev);
+    stdDevs.push_back(Speed.stdDev);
+    stdDevs.push_back(HitPoints.stdDev);
+    stdDevs.push_back(Metabolism.stdDev);
+    stdDevs.push_back(FoodCapacity.stdDev);
+    stdDevs.push_back(ExhLevel.stdDev);
+    this->setStdDevs(stdDevs);
+}
 
 
 

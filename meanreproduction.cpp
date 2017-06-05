@@ -1,4 +1,6 @@
 #include <meanreproduction.h>
+typedef std::pair<int, int> Point;
+
 
 void MeanReproduction::reproducePopulation(QVector<Animal *> &tempPop)
 {
@@ -50,6 +52,7 @@ void MeanReproduction::reproducePopulation(QVector<Animal *> &tempPop)
         if (tempPop.at(0)->type() == Beings::PREDATOR)
         {
             // TODO: change the position of being
+
         beingChild1 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
         beingChild2 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
 

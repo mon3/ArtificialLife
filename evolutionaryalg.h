@@ -13,15 +13,14 @@
     EvolutionaryAlg();
     EvolutionaryAlg(int mi, int lambda, int maxIters, int reproductionType, int selectionType): mi_(mi), lambda_(lambda),
         maxIters_(maxIters), reproductionType_(reproductionType), selectionType_(selectionType) {}
+
     void initializePopulations(int N, QVector<Animal*>& predatorIniPop, QVector<Animal*>& herbivorousIniPop);
-    void initializeIndividual(int X, int Y, Beings beingType, QVector<Animal*>& IniPop);
-    void initializeIndividualVectors(int X, int Y, Beings beingType, QVector<Animal *> &IniPop);
     void mutation(QVector<Animal *> &RepPop);
     void printPopulation(QVector<Animal *> &Pop);
     double fitnessFunction(QVector<int> chromosome);
     void selectMiBest(int mi, QVector<Animal *> &PopParentChild); // will be reduced to next population of mi individuals
-    void selectRoulette(int mi, QVector<Animal *> &PopParentChild); // roulette rule selection
-    void selectRank(int mi, QVector<Animal *> &PopParentChild); // rank selection
+//    void selectRoulette(int mi, QVector<Animal *> &PopParentChild); // roulette rule selection
+//    void selectRank(int mi, QVector<Animal *> &PopParentChild); // rank selection
 
 
     double randomDouble(double min, double max);

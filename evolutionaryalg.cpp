@@ -11,14 +11,12 @@
 #include <reproduction.h>
 
 EvolutionaryAlg::EvolutionaryAlg()
-{
-      qDebug() << "EA Constructor. " ;
-}
+{}
 
 // parametry do algorytmu
 double EvolutionaryAlg::fitnessFunction(QVector<int> chromosome)
 {
-    double fitness;
+    double fitness = 0.0;
 
     fitness += (chromosome.at(0)*ParametersSet::eyeSightCoeff);
     fitness += (chromosome.at(1)*ParametersSet::speedCoeff);
@@ -28,20 +26,6 @@ double EvolutionaryAlg::fitnessFunction(QVector<int> chromosome)
     fitness += (chromosome.at(5)*ParametersSet::exhLevelCoeff);
 
     return fitness;
-}
-
-template <typename T>
-QVector<size_t> sort_indexes(const QVector<T> &v) {
-
-  // initialize original index locations
-  QVector<size_t> idx(v.size());
-  iota(idx.begin(), idx.end(), 0);
-
-  // sort indexes based on comparing values in v
-  sort(idx.begin(), idx.end(),
-       [&v](size_t i1, size_t i2) {return v[i1] > v[i2];});
-
-  return idx;
 }
 
 
@@ -77,16 +61,16 @@ void EvolutionaryAlg::selectMiBest(int mi, QVector<Animal *> &PopParentChild)
 
 }
 
-void EvolutionaryAlg::selectRoulette(int mi, QVector<Animal *> &PopParentChild)
-{
+//void EvolutionaryAlg::selectRoulette(int mi, QVector<Animal *> &PopParentChild)
+//{
 
 
-}
+//}
 
-void EvolutionaryAlg::selectRank(int mi, QVector<Animal *> &PopParentChild)
-{
+//void EvolutionaryAlg::selectRank(int mi, QVector<Animal *> &PopParentChild)
+//{
 
-}
+//}
 
 struct rangegenerator {
     rangegenerator(int init) : start(init) { }
@@ -150,7 +134,6 @@ QVector<Animal*> EvolutionaryAlg::generateTemporaryPopulation(int lambda, QVecto
 // wzorzec strategii dla TYPE
 void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) // type: mean - 0 , interpolation -1
 {
-
       Reproduction reproduction;
       reproduction.setStrategy(type);
       reproduction.reproduce(tempPop);
@@ -200,32 +183,21 @@ void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceTyp
 {
     QVector<Animal*> predatorIniPop = predPopulation;
     QVector<Animal*> herbivorousIniPop = herbPopulation;
-//    ParametersSet* set = ParametersSet::getInstance();
 
-    QVector<Animal*> predatorTempPop;
-    QVector<Animal*> herbivorousTempPop;
     QVector<Animal*> predParentsChildrenPop = predatorIniPop;
     QVector<Animal*> herbParentsChildrenPop = herbivorousIniPop;
     for (int i=0; i<iterations; ++i)
     {
 
-//    qDebug() << "parent size = " << predParentsChildrenPop.size();
-//    qDebug() << "Predator Temp pop generation..." ;
-    predatorTempPop = this->generateTemporaryPopulation(lambda, predParentsChildrenPop);
-//    qDebug() << "Herbivorous Temp pop generation..." ;
-    herbivorousTempPop = this->generateTemporaryPopulation(lambda, herbParentsChildrenPop);
-//    qDebug() << "temp size = " << predatorTempPop.size();
+    auto predatorTempPop = this->generateTemporaryPopulation(lambda, predParentsChildrenPop);
+    auto herbivorousTempPop = this->generateTemporaryPopulation(lambda, herbParentsChildrenPop);
     this->reproducePopulation(predatorTempPop, reproduceType);
-//    qDebug() << "temp size after reproduce = " << predatorTempPop.size();
     this->mutation(predatorTempPop);
 
-//    qDebug() << "temp size after mutation = " << predatorTempPop.size();
 
     this->reproducePopulation(herbivorousTempPop, reproduceType);
     this->mutation(herbivorousTempPop);
 
-//    predParentsChildrenPop.clear();
-//    herbParentsChildrenPop.clear();
     predParentsChildrenPop = predParentsChildrenPop + predatorTempPop;
     herbParentsChildrenPop = herbParentsChildrenPop +  herbivorousTempPop;
 

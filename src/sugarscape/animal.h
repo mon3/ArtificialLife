@@ -4,10 +4,7 @@
 #include <QDebug>
 #include <functional>
 #include "being.h"
-#include "src/shared/board.h"
-#include "src/evolalg/constrainedvalue.h"
-
-
+#include <eapopulationinitializer.h>
 
 class Animal : public Being
 {
@@ -19,6 +16,20 @@ public:
     ~Animal(){}
     void action();
     virtual int type() const = 0;
+    virtual void setFeaturesForEA(QVector<int>& vals) = 0;
+    virtual QVector<int> featuresToChromosome() = 0;
+    virtual void acceptInitializer(EaPopulationInitializer& eaInit, int X, int Y) = 0;
+
+    double randomDouble(double min, double max);
+
+    // for feature and stdDevs used in EA
+    struct FeatureStd{
+       FeatureStd(int value, double stdDev):feature(value), stdDev(stdDev){} // do inicjalizacji w taki sposob
+       int feature;
+       double stdDev;
+    };
+
+    virtual void setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd HitPoints, FeatureStd Metabolism, FeatureStd FoodCapacity, FeatureStd ExhLevel) = 0;
 
     enum Activity {
         MATING,
@@ -56,16 +67,15 @@ public:
     void setStdDevs(QVector<double> vals);
     QVector<double> getStdDevs() const;
 
-    void setFeaturesEA(QVector<int>& vals, Beings type);
+public:
     QVector<int> getFeaturesEA() const;
 
     void displayStd() const;
     void displayFeatures() const;
-
-
+    double normalizeFeature(int feature,int min, int max);
 
     Activity getActivity() const;
-
+    QVector<int> featuresToVectorEA(int eye, int speed, int hitPoints, int metabolism, int foodCapacity, int exhLevel);
     void setFeaturesEA(QVector<int> vals);
     virtual void accept(Visitor *) override = 0;
 protected:

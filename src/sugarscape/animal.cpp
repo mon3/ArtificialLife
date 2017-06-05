@@ -10,6 +10,20 @@ const std::function<int(int)> Animal::direction = [](const int& delta) -> int
     return delta > 0 ? 1 : -1;
 };
 
+QVector<int> Animal::featuresToVectorEA(int eye, int speed, int hitPoints, int metabolism, int foodCapacity, int exhLevel)
+{
+    QVector<int> vectorOfFeatures;
+    vectorOfFeatures.push_back(eye);
+    vectorOfFeatures.push_back(speed);
+    vectorOfFeatures.push_back(hitPoints);
+    vectorOfFeatures.push_back(metabolism);
+    vectorOfFeatures.push_back(foodCapacity);
+    vectorOfFeatures.push_back(exhLevel);
+
+    return vectorOfFeatures;
+}
+
+
 
 
 void Animal::action()
@@ -372,53 +386,21 @@ QVector<double> Animal::getStdDevs() const
     return stdDevs;
 }
 
-// TODO:: verify if &vals is needed
-void Animal::setFeaturesEA(QVector<int>& vals, Beings beingType)
+double calculation(double a, double b, double c)
 {
-    vals[0] = ((vals.at(0)<=ParametersSet::minEyeSight) ? ParametersSet::minEyeSight: vals.at(0));
-    vals[0] = ((vals.at(0)>=ParametersSet::maxEyeSight) ? ParametersSet::maxEyeSight: vals.at(0));
+  double d = abs(100 * (a - b) /(c - b));
+  return d;
+}
 
-    vals[2] = ((vals.at(2)<=ParametersSet::minHitPoints) ? ParametersSet::minHitPoints: vals.at(2));
-    vals[2] = ((vals.at(2)>=ParametersSet::maxHitPoints) ? ParametersSet::maxHitPoints: vals.at(2));
+double Animal:: randomDouble(double min, double max)
+{
+    return min + static_cast <double> (rand()) /( static_cast <double> (RAND_MAX/(max - min)));
+}
 
-    vals[5] = ((vals.at(5)<=ParametersSet::minExhaustionLevel) ? ParametersSet::minExhaustionLevel: vals.at(5));
-    vals[5] = ((vals.at(5)>=ParametersSet::maxExhaustionLevel) ? ParametersSet::maxExhaustionLevel: vals.at(5));
-
-    if (beingType == Beings::PREDATOR)
-    {
-        vals[1] = ((vals.at(1)<=ParametersSet::minPredatorSpeed) ? ParametersSet::minPredatorSpeed: vals.at(1));
-        vals[1] = ((vals.at(1)>=ParametersSet::maxPredatorSpeed) ? ParametersSet::maxPredatorSpeed: vals.at(1));
-
-        vals[3] = ((vals.at(3)<=ParametersSet::minPredatorMetabolism) ? ParametersSet::minPredatorMetabolism: vals.at(3));
-        vals[3] = ((vals.at(3)>=ParametersSet::maxPredatorMetabolism) ? ParametersSet::maxPredatorMetabolism: vals.at(3));
-
-        vals[4] = ((vals.at(4)<=ParametersSet::minPredatorFoodCapacity) ? ParametersSet::minPredatorFoodCapacity: vals.at(4));
-        vals[4] = ((vals.at(4)>=ParametersSet::maxPredatorFoodCapacity) ? ParametersSet::maxPredatorFoodCapacity: vals.at(4));
-
-    }
-    else if (beingType == Beings::HERBIVOROUS)
-    {
-        vals[1] = ((vals.at(1)<=ParametersSet::minHerbivorousSpeed) ? ParametersSet::minHerbivorousSpeed: vals.at(1));
-        vals[1] = ((vals.at(1)>=ParametersSet::maxHerbivorousSpeed) ? ParametersSet::maxHerbivorousSpeed: vals.at(1));
-
-        vals[3] = ((vals.at(3)<=ParametersSet::minHerbivorousMetabolism) ? ParametersSet::minHerbivorousMetabolism: vals.at(3));
-        vals[3] = ((vals.at(3)>=ParametersSet::maxHerbivorousMetabolism) ? ParametersSet::maxHerbivorousMetabolism: vals.at(3));
-
-        vals[4] = ((vals.at(4)<=ParametersSet::minHerbivorousFoodCapacity) ? ParametersSet::minHerbivorousFoodCapacity: vals.at(4));
-        vals[4] = ((vals.at(4)>=ParametersSet::maxHerbivorousFoodCapacity) ? ParametersSet::maxHerbivorousFoodCapacity: vals.at(4));
-    }
-    else
-    {
-        qDebug() << "WRONG BEING TYPE PASSED AS VALUE! ";
-    }
-
-    featuresEA = vals;
-    setEyeSight(vals[0]);
-    setSpeed(vals[1]);
-    setHitPoints(vals[2]);
-    setMetabolism(vals[3]);
-    setFoodCapacity(vals[4]);
-    setExhaustionLevel(vals[5]);
+double Animal::normalizeFeature(int feature,int min, int max)
+{
+    double res = calculation(feature, min, max);
+    return res;
 }
 
 void Animal::setFeaturesEA(QVector<int> vals)

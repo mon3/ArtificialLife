@@ -40,12 +40,12 @@ Grid::Grid()
     QVector<Animal*> herbivorousIniPop;
     ParametersSet* set = ParametersSet::getInstance();
     EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
-//    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
+    EA->runEA(50, 80, 100, 0, predatorIniPop, herbivorousIniPop);
 
 //    qDebug()<<"GRID ... ";
 ////    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
 //    qDebug() << "PREDATOR FROM EA...";
-//    EA->printPopulation(predatorIniPop);
+    EA->printPopulation(predatorIniPop);
 //    EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
 //    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
 

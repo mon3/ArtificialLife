@@ -10,8 +10,12 @@
 #include <src/sugarscape/predator.h>
 #include <src/sugarscape/herbivorous.h>
 #include <algorithm>
+<<<<<<< HEAD:src/evolalg/evolutionaryalg.cpp
+
+=======
 #include <boost/lambda/lambda.hpp>
 #include <reproduction.h>
+>>>>>>> beings_action:evolutionaryalg.cpp
 
 EvolutionaryAlg::EvolutionaryAlg()
 {}

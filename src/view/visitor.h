@@ -7,6 +7,9 @@
 class Plant;
 class Predator;
 class Herbivorous;
+/*!
+ * \brief The Visitor class - abstract base class for visitors
+ */
 class Visitor
 {
 public:

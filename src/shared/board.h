@@ -10,6 +10,8 @@ typedef std::pair<int, int> Point;
  * \brief The Board class handles location of Beings
  *
  * Singleton; provides information about current game board
+ *
+ *  \ingroup shared
  */
 class Board : public Visitor
 {
@@ -75,7 +77,14 @@ public:
      * depending on being current/old position, change logical being place
      */
     void updateBeing(Being* b, const int oldX, const int oldY);
-    Point beingsInterpolation(const Being*, const Being*, const float& coeff = 0.5f);
+
+    /*!
+     * \brief beingsInterpolation get free place in between beings
+     * \param a, b - two beings in between point we are looking for
+     * \param coeff how close to the second being a point must be
+     * \return interpolated free cell location
+     */
+    Point beingsInterpolation(const Being* a , const Being* b, const float& coeff = 0.5f);
 
     // Visitor interface
 public:

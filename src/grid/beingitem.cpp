@@ -35,26 +35,26 @@ void BeingItem::mousePressEvent(QGraphicsSceneMouseEvent *)
 void BeingItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * s, QWidget * w)
 {
     Q_UNUSED(s); Q_UNUSED(w);
-    this->painter = painter;
+    this->painter_ = painter;
     being->accept(this);
-    this->painter = nullptr;
+    this->painter_ = nullptr;
 }
 
 
 void BeingItem::visit(Plant *)
 {
-    painter->setBrush(Qt::blue);
-    painter->drawEllipse(this->rect());
+    painter_->setBrush(Qt::blue);
+    painter_->drawEllipse(this->rect());
 }
 
 void BeingItem::visit(Predator *)
 {
-    painter->setBrush(Qt::red);
-    painter->drawRect(this->rect());
+    painter_->setBrush(Qt::red);
+    painter_->drawRect(this->rect());
 }
 
 void BeingItem::visit(Herbivorous *)
 {
-    painter->setPen(Qt::green);
-    painter->drawRect(this->rect());
+    painter_->setPen(Qt::green);
+    painter_->drawRect(this->rect());
 }

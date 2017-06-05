@@ -19,16 +19,19 @@ class BeingItem : public QObject, public QGraphicsRectItem, public Visitor
     Q_OBJECT
 private:
     std::unique_ptr<Being> being;
-    QPainter* painter = nullptr;
+    QPainter* painter_ = nullptr;
     static int magic_offset;
 public:
     BeingItem(Being*&& b);
 
 public slots:
+    /*!
+     * \brief updateBeing Update with each turn
+     */
     void updateBeing();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void paint(QPainter *painter_, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 signals:
     void callWindow(Being*);
     // Visitor interface

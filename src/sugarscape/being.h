@@ -23,8 +23,6 @@ public:
     virtual  int type() const = 0 ;
     virtual void accept(Visitor*) = 0;
     bool getIsDead() const;
-
-protected:
     void setIsDead();
 private:
     bool isDead;

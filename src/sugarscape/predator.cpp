@@ -97,7 +97,7 @@ void Predator::eat(Being * b)
     foodConsumptionRule(herbValue);
     // after eating, herb. is removed from board
     // error
-    Board::getInstance()->removeBeing(herb);
+    herb->setIsDead();
     qDebug() << "eaten!";
 }
 

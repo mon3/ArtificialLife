@@ -202,9 +202,9 @@ void Animal::huntRoutine()
     if(prey != nullptr) {
         int goalX = prey->getLogX(),
             goalY = prey->getLogY();
-
+        int distance = abs(this->getLogX() - goalX + this->getLogY() - goalY);
         //unless you can reach prey in one turn, get as close as you could
-        if(speed < this->getEyeSight()) {
+        if(speed < distance && speed < this->getEyeSight()) {
 
             int directionVector[2] = {direction(goalX - this->getLogX()), direction(goalY - this->getLogY())};
             // if direcVec > 0, means we should move to the right, so decrease goalX, increase goalY

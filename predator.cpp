@@ -3,11 +3,11 @@
 Predator::Predator(int logX, int logY): Animal(logX, logY)
 {
     QVector<int> randFeatures;
-    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxEyeSight));
-    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxPredatorSpeed));
+    randFeatures.push_back(static_cast<int>((this->randomDouble(0.1, 1.0))*ParametersSet::maxEyeSight));
+    randFeatures.push_back(static_cast<int>((this->randomDouble(0.1, 1.0))*ParametersSet::maxPredatorSpeed));
     randFeatures.push_back(static_cast<int>(1.0*ParametersSet::maxHitPoints));
-    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxPredatorMetabolism));
-    randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxPredatorFoodCapacity));
+    randFeatures.push_back(static_cast<int>((this->randomDouble(0.1, 1.0))*ParametersSet::maxPredatorMetabolism));
+    randFeatures.push_back(static_cast<int>((this->randomDouble(0.1, 1.0))*ParametersSet::maxPredatorFoodCapacity));
     randFeatures.push_back(static_cast<int>(1.0*ParametersSet::minExhaustionLevel));
 
     setFeaturesForEA(randFeatures);

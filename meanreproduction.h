@@ -5,9 +5,10 @@
 
 class MeanReproduction: public EaReproductionType {
 public:
-    MeanReproduction() {}
+//    MeanReproduction() {}
 
     void reproducePopulation(QVector<Animal*>& tempPop);
+    ~MeanReproduction() {}
 };
 
 

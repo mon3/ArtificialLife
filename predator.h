@@ -20,6 +20,7 @@ public:
 
     void setFeaturesForEA(QVector<int>& vals);
     QVector<int> featuresToChromosome();
+    virtual void acceptInitializer(EaPopulationInitializer& eaInit, int X, int Y) {eaInit.initialize(*this, X, Y);}
 
     Predator(int x, int y);
     Predator(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity,

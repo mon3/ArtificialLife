@@ -6,9 +6,10 @@
 
 class InterpolationReproduction: public EaReproductionType {
 public:
-    InterpolationReproduction() {}
+//    InterpolationReproduction() {}
 
     void reproducePopulation(QVector<Animal*>& tempPop);
+    ~InterpolationReproduction(){}
 };
 
 

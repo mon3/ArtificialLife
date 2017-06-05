@@ -7,10 +7,11 @@
 
 class EaReproductionType {
 protected:
-    EaReproductionType();
+    EaReproductionType() {}
 
 public:
     virtual void reproducePopulation(QVector<Animal*>& tempPop) = 0;// type: mean, interpolation
+    virtual ~EaReproductionType() {}
 
 };
 

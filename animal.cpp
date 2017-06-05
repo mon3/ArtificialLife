@@ -394,6 +394,10 @@ double calculation(double a, double b, double c)
   return d;
 }
 
+double Animal:: randomDouble(double min, double max)
+{
+    return min + static_cast <double> (rand()) /( static_cast <double> (RAND_MAX/(max - min)));
+}
 
 double Animal::normalizeFeature(int feature,int min, int max)
 {

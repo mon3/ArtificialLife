@@ -16,10 +16,7 @@ void InterpolationReproduction::reproducePopulation(QVector<Animal*>& tempPop)
         stdDevsChild1.clear();
         stdDevsChild2.clear();
 
-        std::default_random_engine generator;
-        std::normal_distribution<double> distribution(0.0, 1.0);
-        double a = distribution(generator);
-
+        double a = tempPop.at(0)->randomDouble(0.15, 0.8);
             int j=0;
             // for each of the features
             for (auto &indiv : tempPop.at(i)->getFeaturesEA()) // access by reference to avoid copying

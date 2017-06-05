@@ -8,7 +8,7 @@
 #include <herbivorous.h>
 #include <algorithm>
 #include <boost/lambda/lambda.hpp>
-
+#include <reproduction.h>
 
 EvolutionaryAlg::EvolutionaryAlg()
 {
@@ -98,197 +98,15 @@ struct rangegenerator {
     int start;
 };
 
-class Generator {
-    std::default_random_engine generator;
-    std::normal_distribution<double> distribution;
-    double min;
-    double max;
-    double mean;
-    double stddev;
-public:
-    Generator(double mean, double stddev, double min, double max):
-        distribution(mean, stddev), min(min), max(max), mean(mean), stddev(stddev)
-    {}
-
-    double operator ()() {
-        while (true) {
-            double number = this->distribution(generator);
-            if (number >= this->min && number <= this->max)
-                return number;
-        }
-    }
-
-    double getMean() const
-    {
-        return mean;
-    }
-
-    double getStddev() const
-    {
-        return stddev;
-    }
-
-    double getMin() const
-    {
-        return min;
-    }
-
-    double getMax() const
-    {
-        return max;
-    }
-};
-
-
 double EvolutionaryAlg::randomDouble(double min, double max)
 {
     return min + static_cast <double> (rand()) /( static_cast <double> (RAND_MAX/(max - min)));
 }
 
 
-// new individual will be added to Initial population
-void EvolutionaryAlg::initializeIndividualVectors(int X, int Y, Beings beingType, QVector<Animal *> &IniPop)
-{
-    // possible solution: to tighten the boundaries for stddev
-    // parameters: mean, sigma, min, max
-    Generator genExh(ParametersSet::maxExhaustionLevel *0.3, (ParametersSet::maxExhaustionLevel-ParametersSet::minExhaustionLevel) * randomDouble(0.2, 0.3), ParametersSet::minExhaustionLevel, ParametersSet::maxExhaustionLevel);
-    Generator genHitPts(ParametersSet::maxHitPoints *0.7, (ParametersSet::maxHitPoints - ParametersSet::minHitPoints) * randomDouble(0.2, 0.8), ParametersSet::minHitPoints, ParametersSet::maxHitPoints);
-    Generator genEye((ParametersSet::maxEyeSight - ParametersSet::minEyeSight) *0.5,(ParametersSet::maxEyeSight - ParametersSet::minEyeSight) * randomDouble(0.1, 0.2), ParametersSet::minEyeSight, ParametersSet::maxEyeSight);
-    // do rzutowania static_cast
-
-    //    Generator genAge((ParametersSet::maxAge - ParametersSet::minAge) *0.5,(ParametersSet::maxAge - ParametersSet::minAge) * randomDouble(0.2, 0.4), ParametersSet::minAge, ParametersSet::maxAge);
-
-    QVector<double> stdDevs;
-    QVector<int> features;
-    stdDevs.push_back(genEye.getMean());
-
-    Being* being;
-//    Being* beingConstr; being containing features with constraints
-
-
-    if (beingType == Beings::PREDATOR)
-    {
-        Generator genPredSpeed((ParametersSet::maxPredatorSpeed - ParametersSet::minPredatorSpeed) * 0.5,(ParametersSet::maxPredatorSpeed - ParametersSet::minPredatorSpeed) * randomDouble(0.4, 0.5), ParametersSet::minPredatorSpeed, ParametersSet::maxPredatorSpeed);
-        Generator genPredFoodCap((ParametersSet::maxPredatorFoodCapacity - ParametersSet::minPredatorFoodCapacity) * 0.5,(ParametersSet::maxPredatorFoodCapacity - ParametersSet::minPredatorFoodCapacity) * randomDouble(0.1, 0.2), ParametersSet::minPredatorFoodCapacity, ParametersSet::maxPredatorFoodCapacity);
-        Generator genPredMetabolism((ParametersSet::maxPredatorMetabolism - ParametersSet::minPredatorMetabolism) * 0.5,(ParametersSet::maxPredatorMetabolism - ParametersSet::minPredatorMetabolism) * randomDouble(0.1, 0.3), ParametersSet::minPredatorMetabolism, ParametersSet::maxPredatorMetabolism);
-
-        stdDevs.push_back(genPredSpeed.getStddev());
-        stdDevs.push_back(genHitPts.getStddev());
-        stdDevs.push_back(genPredMetabolism.getStddev());
-        stdDevs.push_back(genPredFoodCap.getStddev());
-        stdDevs.push_back(genExh.getStddev());
-
-        features.push_back(static_cast<int>(round(genEye())));
-        features.push_back(static_cast<int>(round(genPredSpeed())));
-        features.push_back(static_cast<int>(round(genHitPts())));
-        features.push_back(static_cast<int>(round(genPredMetabolism())));
-        features.push_back(static_cast<int>(round(genPredFoodCap())));
-        features.push_back(static_cast<int>(round(genExh())));
-
-//        ConstrainedEyeSight eye = (int)round(genEye());
-////        featuresConstrained.push_back(eye);
-
-        being = static_cast<Being*>(new Predator(X, Y, features, stdDevs));
-
-    }
-    else if (beingType == Beings::HERBIVOROUS)
-    {
-        Generator genHerbSpeed((ParametersSet::maxHerbivorousSpeed - ParametersSet::minHerbivorousSpeed) * 0.5,(ParametersSet::maxHerbivorousSpeed - ParametersSet::minHerbivorousSpeed) * randomDouble(0.4, 0.5), ParametersSet::minHerbivorousSpeed, ParametersSet::maxHerbivorousSpeed);
-        Generator genHerbFoodCap((ParametersSet::maxHerbivorousFoodCapacity - ParametersSet::minHerbivorousFoodCapacity) * 0.5,(ParametersSet::maxHerbivorousFoodCapacity - ParametersSet::minHerbivorousFoodCapacity) * randomDouble(0.1, 0.2), ParametersSet::minHerbivorousFoodCapacity, ParametersSet::maxHerbivorousFoodCapacity);
-        Generator genHerbMetabolism((ParametersSet::maxHerbivorousMetabolism - ParametersSet::minHerbivorousMetabolism) * 0.5,(ParametersSet::maxHerbivorousMetabolism - ParametersSet::minHerbivorousMetabolism) * randomDouble(0.1, 0.3), ParametersSet::minHerbivorousMetabolism, ParametersSet::maxHerbivorousMetabolism);
-//        Generator genHerbSaturation((ParametersSet::maxHerbivorousSaturationRate - ParametersSet::minHerbivorousSaturationRate) * 0.5,(ParametersSet::maxHerbivorousSaturationRate - ParametersSet::minHerbivorousSaturationRate) * randomDouble(0.2, 0.4), ParametersSet::minHerbivorousSaturationRate, ParametersSet::maxHerbivorousSaturationRate);
-
-        stdDevs.push_back(genHerbSpeed.getStddev());
-        stdDevs.push_back(genHitPts.getStddev());
-        stdDevs.push_back(genHerbMetabolism.getStddev());
-        stdDevs.push_back(genHerbFoodCap.getStddev());
-        stdDevs.push_back(genExh.getStddev());
-
-        features.push_back(static_cast<int>(round(genEye())));
-        features.push_back(static_cast<int>(round(genHerbSpeed())));
-        features.push_back(static_cast<int>(round(genHitPts())));
-        features.push_back(static_cast<int>(round(genHerbMetabolism())));
-        features.push_back(static_cast<int>(round(genHerbFoodCap())));
-        features.push_back(static_cast<int>(round(genExh())));
-
-        // nie ma static_cast
-        // smart_ptr dodać
-
-        //dodac struct Eye {Eye(int, val); int value; double stddev;}
-
-        // const auto eye = Eye().;
-
-        // cechy we wspolnym namespace, np Feature::Eye
-        // new Herbivorous(X, Y, Eye(genEye(), eyeGen.stdDev()), Speed())
-        being = static_cast<Being*>(new Herbivorous(X, Y, features, stdDevs));
-    }
-    else
-    {
-        qDebug() << "WRONG BEING TYPE PASSED AS VALUE! ";
-    }
-
-    IniPop.push_back(qobject_cast<Animal*>(being));
-}
-
-
-// new individual will be added to Initial population
-void EvolutionaryAlg::initializeIndividual(int X, int Y, Beings beingType, QVector<Animal *> &IniPop)
-{
-    // possible solution: to tighten the boundaries for stddev
-    Generator genExh(ParametersSet::maxExhaustionLevel *0.5, (ParametersSet::maxExhaustionLevel-ParametersSet::minExhaustionLevel) * randomDouble(0.2, 0.8), ParametersSet::minExhaustionLevel, ParametersSet::maxExhaustionLevel);
-    Generator genHitPts(ParametersSet::maxHitPoints *0.7, (ParametersSet::maxHitPoints - ParametersSet::minHitPoints) * randomDouble(0.2, 0.8), ParametersSet::minHitPoints, ParametersSet::maxHitPoints);
-    Generator genEye((ParametersSet::maxEyeSight - ParametersSet::minEyeSight) *0.5,(ParametersSet::maxEyeSight - ParametersSet::minEyeSight) * randomDouble(0.3, 0.4), ParametersSet::minEyeSight, ParametersSet::maxEyeSight);
-
-    //    Generator genAge((ParametersSet::maxAge - ParametersSet::minAge) *0.5,(ParametersSet::maxAge - ParametersSet::minAge) * randomDouble(0.2, 0.4), ParametersSet::minAge, ParametersSet::maxAge);
-
-    QVector<double> stdDevs;
-    stdDevs.push_back(genEye.getMean()); //
-
-
-    // WIZYTATOR
-    Being* being;
-    if (beingType == Beings::PREDATOR)
-    {
-        Generator genPredSpeed((ParametersSet::maxPredatorSpeed - ParametersSet::minPredatorSpeed) * 0.5,(ParametersSet::maxPredatorSpeed - ParametersSet::minPredatorSpeed) * randomDouble(0.3, 0.4), ParametersSet::minPredatorSpeed, ParametersSet::maxPredatorSpeed);
-        Generator genPredFoodCap((ParametersSet::maxPredatorFoodCapacity - ParametersSet::minPredatorFoodCapacity) * 0.5,(ParametersSet::maxPredatorFoodCapacity - ParametersSet::minPredatorFoodCapacity) * randomDouble(0.2, 0.4), ParametersSet::minPredatorFoodCapacity, ParametersSet::maxPredatorFoodCapacity);
-        Generator genPredMetabolism((ParametersSet::maxPredatorMetabolism - ParametersSet::minPredatorMetabolism) * 0.5,(ParametersSet::maxPredatorMetabolism - ParametersSet::minPredatorMetabolism) * randomDouble(0.2, 0.4), ParametersSet::minPredatorMetabolism, ParametersSet::maxPredatorMetabolism);
-
-        stdDevs.push_back(genPredSpeed.getStddev());
-        stdDevs.push_back(genHitPts.getStddev());
-        stdDevs.push_back(genPredMetabolism.getStddev());
-        stdDevs.push_back(genPredFoodCap.getStddev());
-        stdDevs.push_back(genExh.getStddev());
-
-          being = static_cast<Being*>(new Predator(X, Y, static_cast<int>(round(genEye())), static_cast<int>(round(genPredSpeed())), (int)round(genHitPts()),static_cast<int>(round(genPredMetabolism())),  static_cast<int>(round(genPredFoodCap())), static_cast<int>(round(genExh())), stdDevs));
-
-    }
-    else if (beingType == Beings::HERBIVOROUS)
-    {
-        Generator genHerbSpeed((ParametersSet::maxHerbivorousSpeed - ParametersSet::minHerbivorousSpeed) * 0.5,(ParametersSet::maxHerbivorousSpeed - ParametersSet::minHerbivorousSpeed) * randomDouble(0.2, 0.4), ParametersSet::minHerbivorousSpeed, ParametersSet::maxHerbivorousSpeed);
-        Generator genHerbFoodCap((ParametersSet::maxHerbivorousFoodCapacity - ParametersSet::minHerbivorousFoodCapacity) * 0.5,(ParametersSet::maxHerbivorousFoodCapacity - ParametersSet::minHerbivorousFoodCapacity) * randomDouble(0.2, 0.4), ParametersSet::minHerbivorousFoodCapacity, ParametersSet::maxHerbivorousFoodCapacity);
-        Generator genHerbMetabolism((ParametersSet::maxHerbivorousMetabolism - ParametersSet::minHerbivorousMetabolism) * 0.5,(ParametersSet::maxHerbivorousMetabolism - ParametersSet::minHerbivorousMetabolism) * randomDouble(0.2, 0.4), ParametersSet::minHerbivorousMetabolism, ParametersSet::maxHerbivorousMetabolism);
-
-        stdDevs.push_back(genHerbSpeed.getStddev());
-        stdDevs.push_back(genHitPts.getStddev());
-        stdDevs.push_back(genHerbMetabolism.getStddev());
-        stdDevs.push_back(genHerbFoodCap.getStddev());
-        stdDevs.push_back(genExh.getStddev());
-
-        being = static_cast<Being*>(new Herbivorous(X, Y, static_cast<int>(round(genEye())), static_cast<int>(round(genHerbSpeed())), static_cast<int>(round(genHitPts())), static_cast<int>(round(genHerbMetabolism())),  static_cast<int>(round(genHerbFoodCap())), static_cast<int>(round(genExh())), stdDevs));
-
-    }
-    else
-    {
-        qDebug() << "WRONG BEING TYPE PASSED AS VALUE! ";
-    }
-
-    IniPop.push_back(qobject_cast<Animal*>(being));
-}
-
-
 void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIniPop, QVector<Animal*>& herbivorousIniPop)
 {
-
+    EaInitializer eaInitializer;
     // TODO: set mu as input parameter passed from UI
     // mu - size of the population
     int mu = 50;
@@ -303,10 +121,13 @@ void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIni
     random_shuffle(begin(indicesX), end(indicesX));
     random_shuffle(begin(indicesY), end(indicesY));
 
+    // initialization of individual vectors for Predator and Herbivorous POpulations
     for (int i=0; i< mu; ++i)
     {
-        initializeIndividualVectors(indicesX[i], indicesY[i], Beings::PREDATOR, predatorIniPop);
-        initializeIndividualVectors(indicesX[i+2], indicesY[i+2], Beings::HERBIVOROUS, herbivorousIniPop);
+        predatorIniPop.push_back(new Predator(indicesX[i], indicesY[i]));
+        herbivorousIniPop.push_back(new Herbivorous(indicesX[i+2], indicesY[i]));
+        predatorIniPop.at(i)->acceptInitializer(eaInitializer,indicesX[i], indicesY[i]);
+        herbivorousIniPop.at(i)->acceptInitializer(eaInitializer, indicesX[i+2], indicesY[i+2]);
     }
 
 }
@@ -327,115 +148,12 @@ QVector<Animal*> EvolutionaryAlg::generateTemporaryPopulation(int lambda, QVecto
 // auto x=fun()
 
 // wzorzec strategii dla TYPE
-void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) // type: mean, interpolation
+void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) // type: mean - 0 , interpolation -1
 {
-    QVector<Animal*> germs; // for each pair of tempPop <x_dash, sigma_dash>
-    QVector<double> stdDevsChild1, stdDevsChild2;
-    QVector<int> featuresChild1, featuresChild2;
 
-    qDebug() << "TEMP POP SIZE = " << tempPop.size();
-    Being* beingChild1;
-    Being* beingChild2;
-
-    for (int i=0; i< tempPop.size(); i+=2)
-    {
-        featuresChild1.clear();
-        featuresChild2.clear();
-        stdDevsChild1.clear();
-        stdDevsChild2.clear();
-
-        if(type ==1)
-        {
-            int j=0;
-            for (auto &indiv : (tempPop.at(i)->getFeaturesEA())) // access by reference to avoid copying
-            {
-                double FeatureChild1 = 0.0;
-                double FeatureChild2 = 0.0;
-                FeatureChild1 += (indiv*0.25); // CHILD FEATURE
-                FeatureChild2 += (indiv*0.75);
-                FeatureChild1 += (0.75*tempPop.at(i+1)->getFeaturesEA().at(j));
-                FeatureChild2 += (0.25*tempPop.at(i+1)->getFeaturesEA().at(j));
-                j++;
-                featuresChild1.push_back((int)(FeatureChild1));
-                featuresChild2.push_back((int)(FeatureChild2));
-
-            }
-
-            j = 0;
-            for (auto &stdDev : tempPop.at(i)->getStdDevs())
-            {
-                double StdChild1 = 0.0, StdChild2 = 0.0;
-                StdChild1 += (0.25 * stdDev);
-                StdChild1 += (0.75 * tempPop.at(i+1)->getStdDevs().at(j));
-                StdChild2 += (0.75 * stdDev);
-                StdChild2 += (0.25 * tempPop.at(i+1)->getStdDevs().at(j));
-                j++;
-                stdDevsChild1.push_back(StdChild1);
-                stdDevsChild2.push_back(StdChild2);
-            }
-        }
-        else if(type==2)
-        {
-            std::default_random_engine generator;
-            std::normal_distribution<double> distribution(0.0, 1.0);
-            double a = distribution(generator);
-
-            int j=0;
-            // for each of the features
-            for (auto &indiv : tempPop.at(i)->getFeaturesEA()) // access by reference to avoid copying
-            {
-                double FeatureChild1 = 0.0;
-                double FeatureChild2 = 0.0;
-                FeatureChild1 = indiv*a;
-                FeatureChild2 = indiv * (1-a);
-                FeatureChild1 += ((1-a)*((tempPop.at(i+1)->getFeaturesEA()).at(j)));
-                FeatureChild2 += (a*((tempPop.at(i+1)->getFeaturesEA()).at(j)));
-                j++;
-                featuresChild1.push_back(FeatureChild1);
-                featuresChild2.push_back(FeatureChild2);
-            }
-
-            j = 0;
-            for (auto &stdDev : tempPop.at(i)->getStdDevs())
-            {
-                double StdChild1 = 0.0, StdChild2 = 0.0;
-                StdChild1 = a*stdDev;
-                StdChild2 = (1-a)*stdDev;
-                StdChild1 += ((1-a)*((tempPop.at(i+1)->getStdDevs()).at(j)));
-                StdChild2 += (a*((tempPop.at(i+1)->getStdDevs()).at(j)));
-                j++;
-                stdDevsChild1.push_back(StdChild1);
-                stdDevsChild2.push_back(StdChild2);
-
-            }
-        }
-        else
-        {
-            qDebug() << "Wrong type provided!";
-        }
-       // TODO: Discuss what to do with X and Y
-        if (tempPop.at(0)->type() == Beings::PREDATOR)
-        {
-            // TODO: change the position of being
-        beingChild1 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
-        beingChild2 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
-
-        }
-        else if (tempPop.at(0)->type() == Beings::HERBIVOROUS)
-        {
-            beingChild1 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
-            beingChild2 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
-        }
-        else
-        {
-            qDebug() << "Wrong type provided! ";
-        }
-        germs.push_back(qobject_cast<Animal*>(beingChild1));
-        germs.push_back(qobject_cast<Animal*>(beingChild2));
-    }
-
-    tempPop = germs;
-
+      Reproduction reproduction;
+      reproduction.setStrategy(type);
+      reproduction.reproduce(tempPop);
 }
 
 void EvolutionaryAlg::printPopulation(QVector<Animal *> &Pop)
@@ -482,7 +200,7 @@ void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceTyp
 {
     QVector<Animal*> predatorIniPop = predPopulation;
     QVector<Animal*> herbivorousIniPop = herbPopulation;
-    ParametersSet* set = ParametersSet::getInstance();
+//    ParametersSet* set = ParametersSet::getInstance();
 
     QVector<Animal*> predatorTempPop;
     QVector<Animal*> herbivorousTempPop;
@@ -511,16 +229,11 @@ void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceTyp
     predParentsChildrenPop = predParentsChildrenPop + predatorTempPop;
     herbParentsChildrenPop = herbParentsChildrenPop +  herbivorousTempPop;
 
-//    qDebug() << "par+child  = " << predParentsChildrenPop.size();
-
     predatorTempPop.clear();
     herbivorousTempPop.clear();
 
     this->selectMiBest(mi, predParentsChildrenPop);
     this->selectMiBest(mi, herbParentsChildrenPop);
-
-//    qDebug() << "mi selection  = " << predParentsChildrenPop.size();
-
     }
     predPopulation = predParentsChildrenPop;
     herbPopulation = herbParentsChildrenPop;

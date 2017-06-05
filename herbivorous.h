@@ -2,8 +2,8 @@
 #define HERBIVOROUS_H
 #include <limits>
 #include <iterator>
-#include "animal.h"
-#include "plant.h"
+#include <animal.h>
+#include <plant.h>
 
 class Herbivorous : public Animal
 {
@@ -11,6 +11,9 @@ class Herbivorous : public Animal
 public:
     void setFeaturesForEA(QVector<int>& vals);
     QVector<int> featuresToChromosome();
+    virtual void acceptInitializer(EaPopulationInitializer& eaInit, int X, int Y) {eaInit.initialize(*this, X, Y);}
+
+
     Herbivorous(int logX, int logY);
     Herbivorous(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity,
              int metabolism, int exhaustionLevel, int saturationRate, QVector<double> stdDevs);

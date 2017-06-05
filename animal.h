@@ -5,8 +5,7 @@
 #include <functional>
 #include "being.h"
 #include <constrainedvalue.h>
-
-
+#include <eapopulationinitializer.h>
 
 class Animal : public Being
 {
@@ -20,6 +19,16 @@ public:
     virtual int type() const = 0;
     virtual void setFeaturesForEA(QVector<int>& vals) = 0;
     virtual QVector<int> featuresToChromosome() = 0;
+    virtual void acceptInitializer(EaPopulationInitializer& eaInit, int X, int Y) = 0;
+
+    double randomDouble(double min, double max);
+
+    // for feature and stdDevs used in EA
+    struct FeatureStd{
+       FeatureStd(int value, double stdDev); // do inicjalizacji w taki sposob
+       int value;
+       double stdDev;
+    };
 
     enum Activity {
         MATING,

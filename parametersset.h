@@ -81,8 +81,8 @@ public:
     static constexpr double speedCoeff = 14.0 ;
     static constexpr double hitPointsCoeff = 22.5;
     static constexpr double metabolismCoeff = 8.0 ;
-    static constexpr double foodCapacityCoeff = 50.0 ;
-    static constexpr double exhLevelCoeff = -10.0; // the less value of exhLevel, the better
+    static constexpr double foodCapacityCoeff = 25.0 ; // before:50
+    static constexpr double exhLevelCoeff = -12.5; // the less value of exhLevel, the better; before: -10
 
     //TODO : use a template?
     vector<Plant *> getAdjacentPlants(Animal*) const;

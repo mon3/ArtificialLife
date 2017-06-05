@@ -64,16 +64,6 @@ void EvolutionaryAlg::selectMiBest(int mi, QVector<std::shared_ptr<Animal>> &Pop
 
 }
 
-//void EvolutionaryAlg::selectRoulette(int mi, QVector<std::shared_ptr<Animal>> &PopParentChild)
-//{
-
-
-//}
-
-//void EvolutionaryAlg::selectRank(int mi, QVector<std::shared_ptr<Animal>> &PopParentChild)
-//{
-
-//}
 
 struct rangegenerator {
     rangegenerator(int init) : start(init) { }
@@ -84,12 +74,6 @@ struct rangegenerator {
 
     int start;
 };
-
-double EvolutionaryAlg::randomDouble(double min, double max)
-{
-    return min + static_cast <double> (rand()) /( static_cast <double> (RAND_MAX/(max - min)));
-}
-
 
 void EvolutionaryAlg::initializePopulations(int N, QVector<std::shared_ptr<Animal>>& predatorIniPop, QVector<std::shared_ptr<Animal>>& herbivorousIniPop, int mu)
 {

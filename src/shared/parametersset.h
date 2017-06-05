@@ -41,8 +41,7 @@ public:
 
     static ParametersSet* getInstance(int gridSize = 0);
     int getGridSize() const;
-    Season getSeason();
-    void setSeason(Season);
+
     static const int SCENE_WIDTH = 1000;
     static int BEING_WIDTH;
     ~ParametersSet() {  }
@@ -118,8 +117,6 @@ private:
     QSharedPointer<BeingWindow> window;
 
     const int _gridSize;
-    Season season;
-    DayTime dayTime;
 
 
 

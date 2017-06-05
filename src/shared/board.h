@@ -1,11 +1,14 @@
 #ifndef BOARD_H
 #define BOARD_H
+#include <QVector>
+#include <tuple>
+#include <memory>
 #include "src/sugarscape/animal.h"
 #include "src/sugarscape/plant.h"
 
 
 typedef std::pair<int, int> Point;
-
+typedef std::tuple<QVector<std::shared_ptr<Herbivorous>>, QVector<std::shared_ptr<Predator>>> Populations;
 /*!
  * \brief The Board class handles location of Beings
  *
@@ -28,7 +31,8 @@ private:
     static Board* instance;
 public:
     static Board* getInstance(const int gridSize_ = -1);
-
+    Populations getCurrentPopulation();
+    void setCurrentPopulationOnBoard(const Populations& pop);
     template<typename T>
     /*!
      * \brief getAdjacentBeings returns adjacent beings from specified place

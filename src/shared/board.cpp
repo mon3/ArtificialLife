@@ -48,6 +48,44 @@ Board* Board::getInstance(const int gridSize_)
     return instance;
 }
 
+Populations Board::getCurrentPopulation()
+{
+    QVector<std::shared_ptr<Herbivorous>> herbPop;
+    QVector<std::shared_ptr<Predator>> predPop;
+
+    std::for_each(animalsOnBoard.begin(), animalsOnBoard.end(), [&](const std::vector<Animal*>& vec) -> void {
+        std::for_each(std::begin(vec), std::end(vec), [&](Animal* a) -> void {
+            Herbivorous* h = qobject_cast<Herbivorous*>(a);
+            if(h != 0)
+                herbPop.push_back(std::shared_ptr<Herbivorous>(h));
+            else
+                predPop.push_back(std::shared_ptr<Predator>(qobject_cast<Predator*>(a)));
+        });
+    });
+
+    return std::make_tuple(herbPop, predPop);
+}
+
+void Board::setCurrentPopulationOnBoard(const Populations &pop)
+{
+    const QVector<std::shared_ptr<Herbivorous>>& herbPop = std::get<0>(pop);
+    const QVector<std::shared_ptr<Predator>>& predPop = std::get<1>(pop);
+    // make a template
+    std::for_each(std::begin(herbPop), std::end(herbPop), [&](const std::shared_ptr<Herbivorous>& h) -> void{
+        Herbivorous* h_ = h.get();
+        const int x = h_->getLogX(), y = h_->getLogY();
+        if(animalsOnBoard[x][y] == nullptr)
+            animalsOnBoard[x][y] = h_;
+    });
+
+    std::for_each(std::begin(predPop), std::end(predPop), [&](const std::shared_ptr<Predator>& p) -> void{
+        Predator* h_ = p.get();
+        const int x = h_->getLogX(), y = h_->getLogY();
+        if(animalsOnBoard[x][y] == nullptr)
+            animalsOnBoard[x][y] = h_;
+    });
+}
+
 std::vector<Plant *> Board::getAdjacentBeings(int logX, int logY, const int reach) const
 {
     std::vector<Plant*> result;

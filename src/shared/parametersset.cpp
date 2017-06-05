@@ -59,10 +59,7 @@ int ParametersSet::getGridSize() const
     return _gridSize;
 }
 
-void ParametersSet::setSeason(Season newSeason)
-{
-    season = newSeason;
-}
+
 
 
 
@@ -80,9 +77,6 @@ void ParametersSet::callWindow(Being * b)
 
 }
 
-Season ParametersSet::getSeason()
-{
-    return season;
-}
+
 
 

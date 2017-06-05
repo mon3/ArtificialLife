@@ -1,10 +1,10 @@
 #ifndef REPRODUCTION_H
 #define REPRODUCTION_H
 
-#include<eareproductiontype.h>
-#include<animal.h>
-#include<meanreproduction.h>
-#include<interpolationreproduction.h>
+#include "src/evolalg/eareproductiontype.h"
+#include "src/sugarscape/animal.h"
+#include "src/evolalg/meanreproduction.h"
+#include "src/evolalg/interpolationreproduction.h"
 
 
 class Reproduction

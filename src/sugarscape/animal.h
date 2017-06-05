@@ -4,7 +4,8 @@
 #include <QDebug>
 #include <functional>
 #include "being.h"
-#include <eapopulationinitializer.h>
+#include "src/shared/board.h"
+#include "src/evolalg/eapopulationinitializer.h"
 
 class Animal : public Being
 {

@@ -23,16 +23,9 @@ public:
     int type() const { return Beings::PREDATOR; }
 
 
-    // Being interface
-private:
-    inline virtual Qt::GlobalColor getPenColor() const { return Qt::red; }
-
     // Animal interface
 private:
     Being* hunt();
-
-
-private:
     // Animal interface
     void eat(Being *) override;
 
@@ -40,6 +33,10 @@ private:
 protected:
     std::vector<Animal*> findEnemies() override;
 
+
+    // Being interface
+public:
+    void accept(Visitor *) override;
 };
 
 #endif // PREDATOR_H

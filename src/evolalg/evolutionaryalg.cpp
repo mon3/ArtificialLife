@@ -11,7 +11,7 @@
 #include <src/sugarscape/herbivorous.h>
 #include <algorithm>
 #include <boost/lambda/lambda.hpp>
-#include <reproduction.h>
+#include "src/evolalg/reproduction.h"
 
 EvolutionaryAlg::EvolutionaryAlg()
 {}

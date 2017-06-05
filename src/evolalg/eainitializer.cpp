@@ -1,5 +1,5 @@
-#include <eainitializer.h>
-#include <animal.h>
+#include "src/evolalg/eainitializer.h"
+#include "src/sugarscape/animal.h"
 
 
 void EaInitializer::initialize(Herbivorous& herb, int X, int Y)
@@ -39,9 +39,8 @@ void EaInitializer::initialize(Herbivorous& herb, int X, int Y)
 //    herb.setFeaturesForEA(features);
 //    herb.setStdDevs(stdDevs);
     herb.setFeatureStdevs(Eye, Speed, HitPoints, Metabolism, FoodCapacity, Exhaustion);
-
-    herb.setX(X);
-    herb.setY(Y);
+    herb.setLogX(X);
+    herb.setLogY(Y);
 
 }
 
@@ -84,7 +83,7 @@ void EaInitializer::initialize(Predator& pred, int X, int Y)
     pred.setFeatureStdevs(Eye, Speed, HitPoints, Metabolism, FoodCapacity, Exhaustion);
 //    pred.setFeaturesForEA(features);
 //    pred.setStdDevs(stdDevs);
-    pred.setX(X);
-    pred.setY(Y);
+    pred.setLogX(X);
+    pred.setLogY(Y);
 
 }

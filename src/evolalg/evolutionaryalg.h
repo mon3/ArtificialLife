@@ -4,7 +4,7 @@
 #include <QVector>
 #include <src/sugarscape/animal.h>
 
-#include <eainitializer.h>
+#include "src/evolalg/eainitializer.h"
 
  class EvolutionaryAlg
  {

@@ -1,4 +1,4 @@
-#include <generator.h>
+#include "src/evolalg/generator.h"
 
 double Generator::operator ()() {
     while (true) {

@@ -1,6 +1,6 @@
 #ifndef INTERPOLATIONREPRODUCTION_H
 #define INTERPOLATIONREPRODUCTION_H
-#include<eareproductiontype.h>
+#include "src/evolalg/eareproductiontype.h"
 
 
 

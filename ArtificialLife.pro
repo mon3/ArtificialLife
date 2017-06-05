@@ -45,7 +45,14 @@ SOURCES += src/main.cpp\
     src/evolalg/evolutionaryalg.cpp \
     src/shared/board.cpp \
     src/grid/beingitem.cpp \
-    src/shared/board.tpp
+    src/shared/board.tpp \
+    src/evolalg/reproduction.cpp \
+    src/evolalg/meanreproduction.cpp \
+    src/evolalg/interpolationreproduction.cpp \
+    src/evolalg/generator.cpp \
+    src/evolalg/eapopulationinitializer.cpp \
+    src/evolalg/eareproductiontype.cpp \
+    src/evolalg/eainitializer.cpp
 
 HEADERS  += src/grid/mainwindow.h \
     src/sugarscape/being.h \
@@ -60,7 +67,14 @@ HEADERS  += src/grid/mainwindow.h \
     src/evolalg/constrainedvalue.h \
     src/shared/board.h \
     src/grid/beingitem.h \
-    src/view/visitor.h
+    src/view/visitor.h \
+    src/evolalg/reproduction.h \
+    src/evolalg/meanreproduction.h \
+    src/evolalg/interpolationreproduction.h \
+    src/evolalg/generator.h \
+    src/evolalg/eapopulationinitializer.h \
+    src/evolalg/eareproductiontype.h \
+    src/evolalg/eainitializer.h
 
 FORMS    += src/grid/mainwindow.ui \
     src/grid/beingwindow.ui

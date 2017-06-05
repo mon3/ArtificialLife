@@ -2,8 +2,8 @@
 #define HERBIVOROUS_H
 #include <limits>
 #include <iterator>
-#include <animal.h>
-#include <plant.h>
+#include  "src/sugarscape/animal.h"
+#include "src/sugarscape/plant.h"
 
 class Herbivorous : public Animal
 {

@@ -1,4 +1,4 @@
-#include<interpolationreproduction.h>
+#include "src/evolalg/interpolationreproduction.h"
 
 void InterpolationReproduction::reproducePopulation(QVector<Animal*>& tempPop)
 {

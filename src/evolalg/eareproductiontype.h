@@ -1,9 +1,9 @@
 #ifndef EAREPRODUCTIONTYPE_H
 #define EAREPRODUCTIONTYPE_H
 #include<QVector>
-#include<animal.h>
-#include <predator.h>
-#include <herbivorous.h>
+#include "src/sugarscape/animal.h"
+#include "src/sugarscape/predator.h"
+#include "src/sugarscape/herbivorous.h"
 
 class EaReproductionType {
 protected:

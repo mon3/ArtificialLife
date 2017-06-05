@@ -1,9 +1,9 @@
 #ifndef EAINITIALIZER_H
 #define EAINITIALIZER_H
-#include <eapopulationinitializer.h>
-#include <herbivorous.h>
-#include <predator.h>
-#include <generator.h>
+#include "src/evolalg/eapopulationinitializer.h"
+#include "src/sugarscape/herbivorous.h"
+#include "src/sugarscape/predator.h"
+#include "src/evolalg/generator.h"
 
 class EaInitializer: public EaPopulationInitializer
 {

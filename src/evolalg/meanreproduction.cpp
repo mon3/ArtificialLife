@@ -1,4 +1,4 @@
-#include <meanreproduction.h>
+#include "src/evolalg/meanreproduction.h"
 typedef std::pair<int, int> Point;
 
 

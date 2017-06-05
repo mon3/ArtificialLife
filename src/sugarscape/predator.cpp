@@ -182,3 +182,9 @@ std::vector<Animal*> Predator::findEnemies()
     return std::vector<Animal*>();
 }
 
+
+
+void Predator::accept(Visitor *v)
+{
+    v->visit(this);
+}

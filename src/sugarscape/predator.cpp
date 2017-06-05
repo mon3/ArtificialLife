@@ -98,6 +98,7 @@ void Predator::eat(Being * b)
     // after eating, herb. is removed from board
     // error
     Board::getInstance()->removeBeing(herb);
+    qDebug() << "eaten!";
 }
 
 

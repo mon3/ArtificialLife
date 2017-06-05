@@ -84,6 +84,7 @@ void MainWindow::initGame()
     qDebug() << EA->getMi() << "\t" << EA->getLambda() << "\t" << EA->getReproductionType() << "\t" << EA->getSelectionType();
 
     ParametersSet* set = ParametersSet::getInstance(gridSize);
+    Board* board = Board::getInstance(gridSize);
     QVector<Animal*> predatorIniPop;
     QVector<Animal*> herbivorousIniPop;
 
@@ -96,17 +97,25 @@ void MainWindow::initGame()
     connect(ui->stopButton, SIGNAL(pressed()), timer.data(), SLOT(stop()));
     connect(timer.data(), SIGNAL(timeout()), scene, SLOT(updateGrid()));
 
-//    auto lambdaAdd = [&] (Being* b) -> void {
-//        connectBeing(b);
-//        scene->addItem(b);
-//        set->addBeing(b);
-//    };
 
-//    //test subjects
-//    Herbivorous* ex = new Herbivorous(3, 3);
-//    lambdaAdd(ex);
-//    herbivorousIniPop.push_back(ex);
+   auto lambdaAdd = [&] (BeingItem* b) -> void {
+        board->addBeing(b->getBeing());
+        connectBeing(b);
+        scene->addItem(b);
 
+    };
+
+        //test subjects
+    BeingItem* b = new BeingItem(std::unique_ptr<Being>(new Herbivorous(1, 1)));
+    lambdaAdd(b);
+    b = new BeingItem(std::unique_ptr<Being>(new Herbivorous(3, 3)));
+    lambdaAdd(b);
+    b = new BeingItem(std::unique_ptr<Being>(new Herbivorous(4, 3)));
+    lambdaAdd(b);
+    b = new BeingItem(std::unique_ptr<Being>(new Predator(2, 1)));
+    lambdaAdd(b);
+    b = new BeingItem(std::unique_ptr<Being>(new Plant(5, 5)));
+    lambdaAdd(b);
 //    ex = new Herbivorous(9, 8);
 //    lambdaAdd(ex);
 //    herbivorousIniPop.push_back(ex);
@@ -161,7 +170,7 @@ void MainWindow::showEvent(QShowEvent *)
     ui->graphicsView->fitInView(ui->graphicsView->sceneRect(), Qt::KeepAspectRatio);
 }
 
-void MainWindow::connectBeing(Being *b)
+void MainWindow::connectBeing(BeingItem *b)
 {
     connect(b, SIGNAL(callWindow(Being*)), ParametersSet::getInstance(), SLOT(callWindow(Being*)));
     connect(ui->testPushBUtton, SIGNAL(pressed()), b, SLOT(updateBeing()));

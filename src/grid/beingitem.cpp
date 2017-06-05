@@ -1,5 +1,10 @@
 #include "beingitem.h"
 
+Being* BeingItem::getBeing() const
+{
+    return being.get();
+}
+
 BeingItem::BeingItem(std::unique_ptr<Being>& b) :
     QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH), Visitor()
 {
@@ -9,7 +14,6 @@ BeingItem::BeingItem(std::unique_ptr<Being>& b) :
 void BeingItem::updateBeing()
 {
     being->action();
-
     const int WIDTH = ParametersSet::SCENE_WIDTH;
     const int OFFSET = ParametersSet::BEING_WIDTH >> 1;
     const int gridSize = ParametersSet::getInstance()->getGridSize();

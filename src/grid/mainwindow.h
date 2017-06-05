@@ -6,7 +6,10 @@
 #include <QTimer>
 #include <QSharedPointer>
 #include "grid.h"
-
+#include "src/grid/beingitem.h"
+#include "src/sugarscape/herbivorous.h"
+#include "src/sugarscape/predator.h"
+#include "src/shared/board.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,7 +33,7 @@ private:
     const float TIMER_TICKS = 1000.0f / 15.0f;
     float timerDelimiter;
 
-    void connectBeing(Being*);
+    void connectBeing(BeingItem*);
 
 public slots:
     void initGame();

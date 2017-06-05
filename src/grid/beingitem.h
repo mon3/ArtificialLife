@@ -32,6 +32,7 @@ public:
     void visit(Plant *p) override;
     void visit(Predator *p) override;
     void visit(Herbivorous *p) override;
+    Being* getBeing() const;
 };
 
 #endif // BEINGITEM_H

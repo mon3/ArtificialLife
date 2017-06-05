@@ -1,13 +1,10 @@
 #include "src/evolalg/interpolationreproduction.h"
 
-void InterpolationReproduction::reproducePopulation(QVector<Animal*>& tempPop)
+void InterpolationReproduction::reproducePopulation(QVector<std::shared_ptr<Animal>>& tempPop)
 {
-    QVector<Animal*> germs; // for each pair of tempPop <x_dash, sigma_dash>
+    QVector<std::shared_ptr<Animal>> germs; // for each pair of tempPop <x_dash, sigma_dash>
     QVector<double> stdDevsChild1, stdDevsChild2;
     QVector<int> featuresChild1, featuresChild2;
-
-    Being* beingChild1;
-    Being* beingChild2;
 
     for (int i=0; i< tempPop.size(); i+=2)
     {
@@ -47,24 +44,9 @@ void InterpolationReproduction::reproducePopulation(QVector<Animal*>& tempPop)
             }
 
       // TODO: logical X and Y mapping !!!
-        if (tempPop.at(0)->type() == Beings::PREDATOR)
-        {
-            // TODO: change the position of being
-        beingChild1 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
-        beingChild2 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
 
-        }
-        else if (tempPop.at(0)->type() == Beings::HERBIVOROUS)
-        {
-            beingChild1 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
-            beingChild2 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
-        }
-        else
-        {
-            qDebug() << "Wrong type provided! ";
-        }
-        germs.push_back(qobject_cast<Animal*>(beingChild1));
-        germs.push_back(qobject_cast<Animal*>(beingChild2));
+        germs.push_back(tempPop.at(i)->createBeing(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
+        germs.push_back(tempPop.at(i)->createBeing(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
     }
 
     tempPop = germs;

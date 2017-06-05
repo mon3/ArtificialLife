@@ -6,6 +6,7 @@
 #include "being.h"
 #include "src/shared/board.h"
 #include "src/evolalg/eapopulationinitializer.h"
+#include <memory>
 
 class Animal : public Being
 {
@@ -17,6 +18,7 @@ public:
     ~Animal(){}
     void action();
     virtual int type() const = 0;
+    virtual std::unique_ptr<Animal> createBeing(int X, int Y, QVector<int> features, QVector<double> stdDevs) = 0;
     virtual void setFeaturesForEA(QVector<int>& vals) = 0;
     virtual QVector<int> featuresToChromosome() = 0;
     virtual void acceptInitializer(EaPopulationInitializer& eaInit, int X, int Y) = 0;

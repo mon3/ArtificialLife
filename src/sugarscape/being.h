@@ -4,6 +4,7 @@
 #include <QObject>
 #include "src/shared/parametersset.h"
 #include "src/view/visitor.h"
+#include <memory>
 
 class Being : public QObject
 {

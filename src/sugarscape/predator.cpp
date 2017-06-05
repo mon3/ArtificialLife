@@ -14,6 +14,10 @@ Predator::Predator(int logX, int logY): Animal(logX, logY)
 
 }
 
+//virtual std::shared_ptr<Animal> Predator::createBeing(int X, int Y, QVector<int> features, QVector<double> stdDevs)
+//{
+//    return std::shared_ptr<Animal>((new Predator(X, Y, features, stdDevs)));
+//}
 
 Predator::Predator(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity, int metabolism, int exhaustionLevel, int saturationRate, QVector<double> stdDevs):Animal(x,y)
 {

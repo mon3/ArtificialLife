@@ -36,157 +36,20 @@ struct rangegenerator {
 Grid::Grid()
 {
     this->setEA(new EvolutionaryAlg());
-    QVector<Animal*> predatorIniPop;
-    QVector<Animal*> herbivorousIniPop;
+    QVector<std::shared_ptr<Animal>> predatorIniPop;
+    QVector<std::shared_ptr<Animal>> herbivorousIniPop;
     ParametersSet* set = ParametersSet::getInstance();
-    EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
-    EA->runEA(50, 80, 100, 0, predatorIniPop, herbivorousIniPop);
+    int mu = 50;
+    int lambda = 80;
+    int iters = 100;
+    EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop, mu);
+    EA->runEA(mu, lambda, iters, 0, predatorIniPop, herbivorousIniPop);
 
-//    qDebug()<<"GRID ... ";
-////    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
-//    qDebug() << "PREDATOR FROM EA...";
     EA->printPopulation(predatorIniPop);
-//    EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
-//    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
-
-//    qDebug()<<"GRID ... ";
-////    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
-//    qDebug() << "PREDATOR FROM EA...";
-//    EA->printPopulation(predatorIniPop);
-
-//    QVector<std::pair<Animal*, double>> indivFitness;
-
-
-//    for (auto &indiv: predatorIniPop)
-//    {
-//        indivFitness.push_back(std::make_pair(indiv, EA->fitnessFunction(EA->featuresToChromosome(indiv))));
-//    }
-
-//    std::sort(indivFitness.begin(), indivFitness.end(), EA->sort_pair_second<Animal*, double>());
-
-//    qDebug() << "FINAL POPULATION SIZE = " << predatorIniPop.size();
-
-//    for (unsigned i = 0; i< indivFitness.size(); ++i)
-//    {
-//        qDebug() << "FITNESS = " << indivFitness[i].second ;
-//    }  EA->initializePopulations(set->getGridSize(), predatorIniPop, herbivorousIniPop);
-//    EA->runEA(50, 80, 500, 1, predatorIniPop, herbivorousIniPop);
-
-//    qDebug()<<"GRID ... ";
-////    qDebug() << "SIZE ..." << predParentsChildrenPop.size();
-//    qDebug() << "PREDATOR FROM EA...";
-//    EA->printPopulation(predatorIniPop);
-
-//    QVector<std::pair<Animal*, double>> indivFitness;
-
-
-//    for (auto &indiv: predatorIniPop)
-//    {
-//        indivFitness.push_back(std::make_pair(indiv, EA->fitnessFunction(EA->featuresToChromosome(indiv))));
-//    }
-
-////    std::sort(indivFitness.begin(), indivFitness.end(), EA->sort_pair_second<Animal*, double>());
-
-//    qDebug() << "FINAL POPULATION SIZE = " << predatorIniPop.size();
-
-//    for (unsigned i = 0; i< indivFitness.size(); ++i)
-//    {
-//        qDebug() << "FITNESS = " << indivFitness[i].second ;
-//    }
-////    qDebug() << "HERBIVOROUS AFTER 50 ITERS...";
-////    EA->printPopulation(herbParentsChildrenPop);
-
-//    for (int i=0; i< predatorIniPop.size(); ++i)
-//    {
-//        addItem(predatorIniPop[i]);
-//        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-//        // TODO:: add paint functions to visualize initial populations
-//        addItem(herbivorousIniPop[i]);
-//        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-
-//    }
-////    qDebug() << "HERBIVOROUS AFTER 50 ITERS...";
-////    EA->printPopulation(herbParentsChildrenPop);
-
-//    for (int i=0; i< predatorIniPop.size(); ++i)
-//    {
-//        addItem(predatorIniPop[i]);
-//        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-//        // TODO:: add paint functions to visualize initial populations
-//        addItem(herbivorousIniPop[i]);
-//        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-
-//    }
-//    QVector<std::pair<Animal*, double>> indivFitness;
-
-
-//    for (auto &indiv: predatorIniPop)
-//    {
-//        indivFitness.push_back(std::make_pair(indiv, EA->fitnessFunction(EA->featuresToChromosome(indiv))));
-//    }
-
-////    std::sort(indivFitness.begin(), indivFitness.end(), EA->sort_pair_second<Animal*, double>());
-
-//    qDebug() << "FINAL POPULATION SIZE = " << predatorIniPop.size();
-
-//    for (unsigned i = 0; i< indivFitness.size(); ++i)
-//    {
-//        qDebug() << "FITNESS = " << indivFitness[i].second ;
-//    }
-////    qDebug() << "HERBIVOROUS AFTER 50 ITERS...";
-////    EA->printPopulation(herbParentsChildrenPop);
-
-//    for (int i=0; i< predatorIniPop.size(); ++i)
-//    {
-//        addItem(predatorIniPop[i]);
-//        connect(predatorIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-//        // TODO:: add paint functions to visualize initial populations
-//        addItem(herbivorousIniPop[i]);
-//        connect(herbivorousIniPop[i], SIGNAL(callWindow(Being*)), set, SLOT(callWindow(Being*)));
-
-//    }
-
     this->updateGrid();
-
 }
 
 
-//void Grid::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[], QWidget *widget)
-//{
-//    QList<QGraphicsItem*> list = this->items();
-//    QVector<QGraphicsItem*> vector; //I also tried QVector<int>vectorA(100);
-
-//    vector = QVector<QGraphicsItem*>::fromList(list);
-//    items =  &vector[0];
-
-//    // TODO: better mapping￼
-//    for (int i=0; i< list.size(); ++i)
-//    {
-//         Being* var = static_cast<Being*>(items[i]);
-//         var->paint(painter);
-//    }
-////    int i =0 ;
-////    foreach (QGraphicsItem* item, list) {
-////        Being* var = static_cast<Being*>(item);
-////        var -> paint(painter,options[i], widget );
-////        qDebug() << ++i;
-
-////}
-//}
-
-//void Grid::drawForeground(QPainter *painter, const QRectF &rect)
-//{
-//    QList<QGraphicsItem*> list = this->items();
-//    qDebug() <<"List size: " << list.size();
-
-////    int i =0 ;
-//    foreach (QGraphicsItem* item, list) {
-//        Being* var = static_cast<Being*>(item);
-//        var -> paint(painter);
-////        qDebug() << ++i;
-
-//}
-//}
 
 void Grid::drawBackground(QPainter *painter, const QRectF &rect)
 {

@@ -8,7 +8,7 @@ class MeanReproduction: public EaReproductionType {
 public:
 //    MeanReproduction() {}
 
-    void reproducePopulation(QVector<Animal*>& tempPop);
+    void reproducePopulation(QVector<std::shared_ptr<Animal> > &tempPop);
     ~MeanReproduction() {}
 };
 

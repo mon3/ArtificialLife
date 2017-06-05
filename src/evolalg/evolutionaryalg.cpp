@@ -40,23 +40,23 @@ struct sort_pair_second {
     }
 };
 
-void EvolutionaryAlg::selectMiBest(int mi, QVector<Animal *> &PopParentChild)
+void EvolutionaryAlg::selectMiBest(int mi, QVector<std::shared_ptr<Animal>> &PopParentChild)
 {
-    QVector<std::pair<Animal*, double>> indivFitness;
-    QVector<Animal *> newPop;
+    QVector<std::pair<std::shared_ptr<Animal>, double>> indivFitness;
+    QVector<std::shared_ptr<Animal>> newPop;
 
     for (auto &indiv: PopParentChild )
     {
         indivFitness.push_back(std::make_pair(indiv, this->fitnessFunction(indiv->featuresToChromosome())));
     }
 
-    std::sort(indivFitness.begin(), indivFitness.end(), sort_pair_second<Animal*, double>());
+    std::sort(indivFitness.begin(), indivFitness.end(), sort_pair_second<std::shared_ptr<Animal>, double>());
 
     // w 17 mozna na kolekcji
     std::transform(indivFitness.begin(),
                    indivFitness.end(),
                    std::back_inserter(newPop),
-                   [](const std::pair<Animal*, double>& indivFitness) { return indivFitness.first; }); //  mozna const auto w c++17
+                   [](const std::pair<std::shared_ptr<Animal>, double>& indivFitness) { return indivFitness.first; }); //  mozna const auto w c++17
 
     // select best mi individuals from the population of size mi+lambda
     newPop.resize(mi);
@@ -64,13 +64,13 @@ void EvolutionaryAlg::selectMiBest(int mi, QVector<Animal *> &PopParentChild)
 
 }
 
-//void EvolutionaryAlg::selectRoulette(int mi, QVector<Animal *> &PopParentChild)
+//void EvolutionaryAlg::selectRoulette(int mi, QVector<std::shared_ptr<Animal>> &PopParentChild)
 //{
 
 
 //}
 
-//void EvolutionaryAlg::selectRank(int mi, QVector<Animal *> &PopParentChild)
+//void EvolutionaryAlg::selectRank(int mi, QVector<std::shared_ptr<Animal>> &PopParentChild)
 //{
 
 //}
@@ -91,12 +91,12 @@ double EvolutionaryAlg::randomDouble(double min, double max)
 }
 
 
-void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIniPop, QVector<Animal*>& herbivorousIniPop)
+void EvolutionaryAlg::initializePopulations(int N, QVector<std::shared_ptr<Animal>>& predatorIniPop, QVector<std::shared_ptr<Animal>>& herbivorousIniPop, int mu)
 {
     EaInitializer eaInitializer;
     // TODO: set mu as input parameter passed from UI
     // mu - size of the population
-    int mu = 50;
+//    int mu = 50;
 
     // TODO: resolve correct logical positions: X, Y; check the correct way of initializing positions
     QVector<int> indicesX(N*N);
@@ -111,17 +111,17 @@ void EvolutionaryAlg::initializePopulations(int N, QVector<Animal*>& predatorIni
     // initialization of individual vectors for Predator and Herbivorous POpulations
     for (int i=0; i< mu; ++i)
     {
-        predatorIniPop.push_back(new Predator(indicesX[i], indicesY[i]));
-        herbivorousIniPop.push_back(new Herbivorous(indicesX[i+2], indicesY[i]));
+        predatorIniPop.push_back(std::shared_ptr<Animal>(new Predator(indicesX[i], indicesY[i])));
+        herbivorousIniPop.push_back(std::shared_ptr<Animal>(new Herbivorous(indicesX[i+2], indicesY[i])));
         predatorIniPop.at(i)->acceptInitializer(eaInitializer,indicesX[i], indicesY[i]);
         herbivorousIniPop.at(i)->acceptInitializer(eaInitializer, indicesX[i+2], indicesY[i+2]);
     }
 
 }
 
-QVector<Animal*> EvolutionaryAlg::generateTemporaryPopulation(int lambda, QVector<Animal*>& currentPop)
+QVector<std::shared_ptr<Animal>> EvolutionaryAlg::generateTemporaryPopulation(int lambda, QVector<std::shared_ptr<Animal>>& currentPop)
 {
-    QVector<Animal*> tmp;
+    QVector<std::shared_ptr<Animal>> tmp;
     for (int i=0; i< lambda; ++i)
     {
         int index = (rand() % (int)(currentPop.size()));
@@ -135,24 +135,24 @@ QVector<Animal*> EvolutionaryAlg::generateTemporaryPopulation(int lambda, QVecto
 // auto x=fun()
 
 // wzorzec strategii dla TYPE
-void EvolutionaryAlg::reproducePopulation(QVector<Animal*>& tempPop, int type) // type: mean - 0 , interpolation -1
+void EvolutionaryAlg::reproducePopulation(QVector<std::shared_ptr<Animal>>& tempPop, int type) // type: mean - 0 , interpolation -1
 {
       Reproduction reproduction;
       reproduction.setStrategy(type);
       reproduction.reproduce(tempPop);
 }
 
-void EvolutionaryAlg::printPopulation(QVector<Animal *> &Pop)
+void EvolutionaryAlg::printPopulation(QVector<std::shared_ptr<Animal>> &Pop)
 {
     // displaying population features and stdDevs
-    for (const Animal* anim : Pop)
+    for (const std::shared_ptr<Animal> anim : Pop)
     {
         anim->displayFeatures();
         anim->displayStd();
     }
 }
 
-void EvolutionaryAlg::mutation(QVector<Animal *> &RepPop)
+void EvolutionaryAlg::mutation(QVector<std::shared_ptr<Animal>> &RepPop)
 {
    //  stdDevs are generated using normal distribution
     std::default_random_engine generator;
@@ -182,13 +182,13 @@ void EvolutionaryAlg::mutation(QVector<Animal *> &RepPop)
 }
 
 // whole Evolutionary Algorithm
-void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceType, QVector<Animal*> &predPopulation, QVector<Animal*> &herbPopulation)
+void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceType, QVector<std::shared_ptr<Animal>> &predPopulation, QVector<std::shared_ptr<Animal>> &herbPopulation)
 {
-    QVector<Animal*> predatorIniPop = predPopulation;
-    QVector<Animal*> herbivorousIniPop = herbPopulation;
+    QVector<std::shared_ptr<Animal>> predatorIniPop = predPopulation;
+    QVector<std::shared_ptr<Animal>> herbivorousIniPop = herbPopulation;
 
-    QVector<Animal*> predParentsChildrenPop = predatorIniPop;
-    QVector<Animal*> herbParentsChildrenPop = herbivorousIniPop;
+    QVector<std::shared_ptr<Animal>> predParentsChildrenPop = predatorIniPop;
+    QVector<std::shared_ptr<Animal>> herbParentsChildrenPop = herbivorousIniPop;
     for (int i=0; i<iterations; ++i)
     {
 

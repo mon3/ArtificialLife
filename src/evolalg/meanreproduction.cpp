@@ -2,15 +2,15 @@
 typedef std::pair<int, int> Point;
 
 
-void MeanReproduction::reproducePopulation(QVector<Animal *> &tempPop)
+void MeanReproduction::reproducePopulation(QVector<std::shared_ptr<Animal>> &tempPop)
 {
-    QVector<Animal*> germs; // for each pair of tempPop <x_dash, sigma_dash>
+    QVector<std::shared_ptr<Animal>> germs; // for each pair of tempPop <x_dash, sigma_dash>
     QVector<double> stdDevsChild1, stdDevsChild2;
     QVector<int> featuresChild1, featuresChild2;
 
     qDebug() << "TEMP POP SIZE = " << tempPop.size();
-    Being* beingChild1;
-    Being* beingChild2;
+    std::shared_ptr<Animal> animalChild1;
+    std::shared_ptr<Animal> animalChild2;
 
     for (int i=0; i< tempPop.size(); i+=2)
     {
@@ -47,9 +47,9 @@ void MeanReproduction::reproducePopulation(QVector<Animal *> &tempPop)
                 stdDevsChild1.push_back(StdChild1);
                 stdDevsChild2.push_back(StdChild2);
             }
-        const float param = 0.5f;
-        auto const parent1 = static_cast<Being*>(tempPop.at(i));
-        auto const parent2 = static_cast<Being*>(tempPop.at(i+1));
+//        const float param = 0.5f;
+//        auto const parent1 = static_cast<Being*>(tempPop.at(i));
+//        auto const parent2 = static_cast<Being*>(tempPop.at(i+1));
 
 //        ParametersSet* set = ParametersSet::getInstance();
 //        Point child1Point = set->beingsInterpolation(parent1, parent2, param);
@@ -69,24 +69,27 @@ void MeanReproduction::reproducePopulation(QVector<Animal *> &tempPop)
 //            beingChild1 = static_cast<Being*>(new Herbivorous(child1Point.first, child1Point.second, featuresChild1, stdDevsChild1));
 //            beingChild2 = static_cast<Being*>(new Herbivorous(child1Point.first, child1Point.second, featuresChild2, stdDevsChild2));
 //        }
-        if (tempPop.at(0)->type() == Beings::PREDATOR)
-        {
-            // TODO: change the position of being
-        beingChild1 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
-        beingChild2 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
+//        if (tempPop.at(0)->type() == Beings::PREDATOR)
+//        {
+//            // TODO: change the position of being
+//        beingChild1 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
+//        beingChild2 = static_cast<Being*>(new Predator(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
 
-        }
-        else if (tempPop.at(0)->type() == Beings::HERBIVOROUS)
-        {
-            beingChild1 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
-            beingChild2 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
-        }
-        else
-        {
-            qDebug() << "Wrong type provided! ";
-        }
-        germs.push_back(qobject_cast<Animal*>(beingChild1));
-        germs.push_back(qobject_cast<Animal*>(beingChild2));
+//        }
+//        else if (tempPop.at(0)->type() == Beings::HERBIVOROUS)
+//        {
+//            beingChild1 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
+//            beingChild2 = static_cast<Being*>(new Herbivorous(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
+//        }
+//        else
+//        {
+//            qDebug() << "Wrong type provided! ";
+//        }
+        animalChild1 = tempPop.at(i)->createBeing(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1);
+        animalChild2 = tempPop.at(i)->createBeing(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2);
+
+        germs.push_back(tempPop.at(i)->createBeing(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
+        germs.push_back(tempPop.at(i)->createBeing(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
     }
 
     tempPop = germs;

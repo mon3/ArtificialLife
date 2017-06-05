@@ -12,6 +12,9 @@ public:
     QVector<int> featuresToChromosome();
     void setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd HitPoints , FeatureStd Metabolism, FeatureStd FoodCapacity, FeatureStd ExhLevel);
     virtual void acceptInitializer(EaPopulationInitializer& eaInit, int X, int Y) {eaInit.initialize(*this, X, Y);}
+    virtual std::unique_ptr<Animal> createBeing(int X, int Y, QVector<int> features, QVector<double> stdDevs)
+    {    return std::unique_ptr<Animal>((new Predator(X, Y, features, stdDevs))); }
+
 
     Predator(int x, int y);
     Predator(int x, int y, QVector<int> features, QVector<double> stdDevs);

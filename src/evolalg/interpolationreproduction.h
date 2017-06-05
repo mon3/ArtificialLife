@@ -8,7 +8,7 @@ class InterpolationReproduction: public EaReproductionType {
 public:
 //    InterpolationReproduction() {}
 
-    void reproducePopulation(QVector<Animal*>& tempPop);
+    void reproducePopulation(QVector<std::shared_ptr<Animal>>& tempPop);
     ~InterpolationReproduction(){}
 };
 

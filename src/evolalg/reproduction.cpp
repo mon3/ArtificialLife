@@ -15,7 +15,7 @@ void Reproduction::setStrategy(int type)
     strategy_ = new InterpolationReproduction();
 }
 
-void Reproduction::reproduce(QVector<Animal*>& tempPop)
+void Reproduction::reproduce(QVector<std::shared_ptr<Animal>>& tempPop)
 {
   strategy_->reproducePopulation(tempPop);
 }

@@ -1,4 +1,5 @@
 #include "herbivorous.h"
+#include <memory>
 
 
 Herbivorous::Herbivorous(int logX, int logY): Animal(logX, logY)
@@ -14,6 +15,11 @@ Herbivorous::Herbivorous(int logX, int logY): Animal(logX, logY)
     setFeaturesForEA(randFeatures);
 
 }
+
+//virtual std::unique_ptr<Animal> Herbivorous::createBeing(int X, int Y, QVector<int> features, QVector<double> stdDevs)
+//{
+//    return std::unique_ptr<Animal>((new Herbivorous(X, Y, features, stdDevs)));
+//}
 
 void Herbivorous::setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd HitPoints, FeatureStd Metabolism, FeatureStd FoodCapacity, FeatureStd ExhLevel)
 {

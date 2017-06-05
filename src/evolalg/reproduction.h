@@ -17,7 +17,7 @@ public:
    Reproduction();
 
    void setStrategy(int type);
-   void reproduce(QVector<Animal *> &tempPop);
+   void reproduce(QVector<std::shared_ptr<Animal>> &tempPop);
 
 
  private:

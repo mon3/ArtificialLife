@@ -106,15 +106,15 @@ void MainWindow::initGame()
     };
 
         //test subjects
-    BeingItem* b = new BeingItem(std::unique_ptr<Being>(new Herbivorous(1, 1)));
+    BeingItem* b = new BeingItem(new Herbivorous(1, 1));
     lambdaAdd(b);
-    b = new BeingItem(std::unique_ptr<Being>(new Herbivorous(3, 3)));
+    b = new BeingItem(new Herbivorous(3, 3));
     lambdaAdd(b);
-    b = new BeingItem(std::unique_ptr<Being>(new Herbivorous(4, 3)));
+    b = new BeingItem(new Herbivorous(4, 3));
     lambdaAdd(b);
-    b = new BeingItem(std::unique_ptr<Being>(new Predator(2, 1)));
+    b = new BeingItem(new Predator(2, 1));
     lambdaAdd(b);
-    b = new BeingItem(std::unique_ptr<Being>(new Plant(5, 5)));
+    b = new BeingItem(new Plant(5, 5));
     lambdaAdd(b);
 //    ex = new Herbivorous(9, 8);
 //    lambdaAdd(ex);

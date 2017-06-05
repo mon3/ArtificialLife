@@ -16,7 +16,8 @@ void Animal::action()
 {
 
     if(activity == Activity::DEAD) {
-        return Board::getInstance()->removeBeing(this);
+        setIsDead();
+        return;
     }
 
     int oldX = this->getLogX(),

@@ -5,15 +5,21 @@ Being* BeingItem::getBeing() const
     return being.get();
 }
 
-BeingItem::BeingItem(std::unique_ptr<Being>& b) :
+BeingItem::BeingItem(Being*&& b) :
     QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH), Visitor()
 {
-    being = std::move(b);
+    being = std::unique_ptr<Being>(b);
 }
 
 void BeingItem::updateBeing()
 {
     being->action();
+    if(being->getIsDead()) {
+        being.get()->accept(Board::getInstance());
+        this->scene()->removeItem(this);
+        delete this;
+        return;
+    }
     const int WIDTH = ParametersSet::SCENE_WIDTH;
     const int OFFSET = ParametersSet::BEING_WIDTH >> 1;
     const int gridSize = ParametersSet::getInstance()->getGridSize();
@@ -49,6 +55,6 @@ void BeingItem::visit(Predator *)
 
 void BeingItem::visit(Herbivorous *)
 {
-    painter->setPen(Qt::blue);
+    painter->setPen(Qt::green);
     painter->drawRect(this->rect());
 }

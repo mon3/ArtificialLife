@@ -2,7 +2,7 @@
 
 
 Being::Being(int _logX, int _logY)
-  : logX(_logX), logY(_logY)
+  : logX(_logX), logY(_logY), isDead(false)
 {
 
 }
@@ -16,7 +16,6 @@ void Being::setHitPoints(int value)
 {
     hitPoints = value;
 }
-
 
 
 int Being::getLogX() const
@@ -41,6 +40,16 @@ void Being::setLogY(int value)
     const int grSize = ParametersSet::getInstance()->getGridSize();
     if(value < grSize && value >= 0)
         logY = value;
+}
+
+bool Being::getIsDead() const
+{
+    return isDead;
+}
+
+void Being::setIsDead()
+{
+    isDead = true;
 }
 
 

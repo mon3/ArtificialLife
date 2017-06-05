@@ -5,7 +5,7 @@
 
 
 typedef std::pair<int, int> Point;
-class Board
+class Board : public Visitor
 {
 private:
     std::vector<std::vector<Plant*>> plantsOnBoard;
@@ -33,6 +33,12 @@ public:
     std::function<bool(int, int)> checkCoordinate;
     void updateBeing(Being* b, const int oldX, const int oldY);
     Point beingsInterpolation(const Being*, const Being*, const float& coeff = 0.5f);
+
+    // Visitor interface
+public:
+    void visit(Plant *) override;
+    void visit(Predator *) override;
+    void visit(Herbivorous *) override;
 };
 
 #include "src/shared/board.tpp"

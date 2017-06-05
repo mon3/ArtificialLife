@@ -1,5 +1,6 @@
 #include "board.h"
-
+#include "src/sugarscape/herbivorous.h"
+#include "src/sugarscape/predator.h"
 Board* Board::instance = nullptr;
 
 Board::Board(const int gridSize_) : gridSize(gridSize_)
@@ -84,11 +85,6 @@ void Board::addBeing(Being *b)
         plantsOnBoard[x][y] = qobject_cast<Plant*>(b);
 }
 
-void Board::removeBeing(Plant *)
-{
-    // nothing happens?
-}
-
 void Board::removeBeing(Animal *a)
 {
     // remove from game board
@@ -147,4 +143,20 @@ Point Board::beingsInterpolation(const Being *a, const Being *b, const float &co
         }
 
     return Point(x, y);
+}
+
+
+void Board::visit(Plant *)
+{
+
+}
+
+void Board::visit(Predator *p)
+{
+    removeBeing(p);
+}
+
+void Board::visit(Herbivorous *h)
+{
+    removeBeing(h);
 }

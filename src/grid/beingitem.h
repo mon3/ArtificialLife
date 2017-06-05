@@ -5,8 +5,9 @@
 
 #include <QObject>
 #include <QGraphicsRectItem>
+#include <QGraphicsScene>
 #include <QPainter>
-
+#include "src/shared/board.h"
 #include "src/sugarscape/being.h"
 #include "src/shared/parametersset.h"
 
@@ -18,7 +19,7 @@ private:
     QPainter* painter = nullptr;
     static int magic_offset;
 public:
-    BeingItem(std::unique_ptr<Being>& b);
+    BeingItem(Being*&& b);
 
 public slots:
     void updateBeing();

@@ -100,16 +100,16 @@ private:
 
 
 
-    int eyeSight; // feature used in EA
+    int eyeSight = 5; // feature used in EA
     int age;
 //  const int generation;
     int generation;
-    int speed; // feature used in EA
+    int speed = 3; // feature used in EA
 //    int huntingPotential;
     int foodCapacity; // feature used in EA
-    int metabolism; // feature used in EA
+    int metabolism = 5; // feature used in EA
     int exhaustionLevel; // feature used in EA
-    int saturationRate; // feature used in EA
+    int saturationRate = 100; // feature used in EA
 
     Activity activity;
 

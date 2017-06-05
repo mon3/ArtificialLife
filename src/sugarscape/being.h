@@ -22,8 +22,12 @@ public:
     virtual void action() = 0;
     virtual  int type() const = 0 ;
     virtual void accept(Visitor*) = 0;
-private:
+    bool getIsDead() const;
 
+protected:
+    void setIsDead();
+private:
+    bool isDead;
     int logX;
     int logY;
     int hitPoints;

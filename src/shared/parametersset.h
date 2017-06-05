@@ -114,7 +114,7 @@ private:
     //single creature params
     float biologicalChildAge;
     float biologicalAdultAge;
-    int startHungerLevel;
+    int startHungerLevel = 80;
     float maxFoodCapacity;
     float foodConsumptionUnits;
 

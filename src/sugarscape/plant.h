@@ -4,7 +4,13 @@
 
 #include "src/sugarscape/being.h"
 
-
+/*!
+ * \brief The Plant class - plant on board
+ *
+ * Passive; cannot be removed from the board
+ *
+ * \ingroup sugarscape
+ */
 class Plant : public Being
 {
     Q_OBJECT

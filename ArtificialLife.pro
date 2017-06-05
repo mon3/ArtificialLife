@@ -41,7 +41,6 @@ SOURCES += src/main.cpp\
     src/sugarscape/predator.cpp \
     src/sugarscape/being.cpp \
     src/grid/beingwindow.cpp \
-    src/evolalg/constrainedvalue.cpp \
     src/evolalg/evolutionaryalg.cpp \
     src/shared/board.cpp \
     src/grid/beingitem.cpp \
@@ -64,7 +63,6 @@ HEADERS  += src/grid/mainwindow.h \
     src/sugarscape/predator.h \
     src/grid/beingwindow.h \
     src/evolalg/evolutionaryalg.h \
-    src/evolalg/constrainedvalue.h \
     src/shared/board.h \
     src/grid/beingitem.h \
     src/view/visitor.h \

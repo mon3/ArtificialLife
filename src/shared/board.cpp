@@ -115,7 +115,6 @@ void Board::updateBeing(Being *b, const int oldX, const int oldY)
 
 Point Board::beingsInterpolation(const Being *a, const Being *b, const float &coeff)
 {
-
     const int xA = a->getLogX(),
               xB = b->getLogX();
     const int yA = a->getLogY(),

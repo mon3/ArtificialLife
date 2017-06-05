@@ -2,7 +2,10 @@
 #define PREDATOR_H
 #include "animal.h"
 #include "herbivorous.h"
-
+/*!
+ * \brief The Predator class
+ * Hunts herbivorous; has no natural enemies
+ */
 class Predator : public Animal
 {
     Q_OBJECT

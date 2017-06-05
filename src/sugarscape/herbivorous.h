@@ -5,6 +5,10 @@
 #include  "src/sugarscape/animal.h"
 #include "src/sugarscape/plant.h"
 
+/*!
+ * \ingroup sugarscape
+ * \brief The Herbivorous class - herbivorous beings
+ */
 class Herbivorous : public Animal
 {
     Q_OBJECT
@@ -28,16 +32,10 @@ public:
 
     int type() const { return Beings::HERBIVOROUS; }
     void accept(Visitor *) override;
-    // Being interface
-private:
-    inline virtual Qt::GlobalColor getPenColor() const { return Qt::green; }
-
-
-
     // Animal interface
 private:
 
- 
+
     Being* hunt() override;
     void eat(Being*) override;
 

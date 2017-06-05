@@ -8,6 +8,13 @@
 #include "src/evolalg/eapopulationinitializer.h"
 #include <memory>
 
+
+/*!
+ * \ingroup sugarscape
+ * \brief The Animal class - base class for animals - active participants of game
+ *
+ * Abstract; stores common features & logic & behaviour elements of animals
+ */
 class Animal : public Being
 {
     Q_OBJECT
@@ -34,12 +41,12 @@ public:
 
     virtual void setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd HitPoints, FeatureStd Metabolism, FeatureStd FoodCapacity, FeatureStd ExhLevel) = 0;
 
+    /// Set of possible animal states
     enum Activity {
-        MATING,
-        HUNTING, //for herbivorous ?
-        IDLE,
-        RUNNNING_AWAY,
-        DEAD
+        HUNTING, ///<  State, in which animal is hungry and looking for food
+        IDLE, ///<  State, in which animal is saturated and doing nothing
+        RUNNNING_AWAY, ///< State, in which animal is scared and looking for safe place
+        DEAD ///< Animal is dead and must be removed from the board
     };
     Q_ENUM(Activity)
 
@@ -80,8 +87,12 @@ public:
     Activity getActivity() const;
     QVector<int> featuresToVectorEA(int eye, int speed, int hitPoints, int metabolism, int foodCapacity, int exhLevel);
     void setFeaturesEA(QVector<int> vals);
-    virtual void accept(Visitor *) override = 0;
+    virtual void accept(Visitor *) override = 0; ///< implementation of a visitor pattern
 protected:
+    /*!
+     * \brief foodConsumptionRule how food must be consumed
+     * \param foodValue value of food in food units
+     */
     void foodConsumptionRule(int& foodValue);
 
 protected:
@@ -91,51 +102,88 @@ protected:
 
 
     // TODO: consider to make a template function
+    /*!
+     * \brief Hunt hunting activity
+     * \details Different for predators & herbivorous
+     *
+     * \return selected prey
+     */
     virtual Being* hunt() = 0;
-    virtual void eat(Being*) = 0;
+    /*!
+     * \brief eat - eating, different due to different type of prey
+     *  \param b - prey
+     */
+    virtual void eat(Being* b) = 0;
+    /*!
+     * \brief findEnemies Finds potentional treacherous enemie
+     * \return vector of possible enemies
+     */
     virtual std::vector<Animal*> findEnemies() = 0;
 
 private:
+    /*!
+     * \brief move - moving to location, specified by x / y
+     * \param x, y - logical coordinates , if not given, assume random location
+     */
     void move(int x = UNKNOWN_LOCATION, int y = UNKNOWN_LOCATION);
+    /*!
+     * \brief moveClose - get as close as you can to desired location
+     * \param goalX, goalY - logical coordinates
+     */
     void moveClose(int goalX,int goalY);
-    void mate(Animal*);
-
-
-    void rest();
-    void sleep();
+    /*!
+     * \brief runFrom - run to safe place from enemies
+     * \param enemies - the most dangerous enemies
+     */
     void runFrom(const std::vector<Animal*>& enemies);
 
     //routine functions, to simplify action()
+    /*!
+     * \brief huntRoutine - hunting routine similar to all animals
+     */
     void huntRoutine();
+    /*!
+     * \brief enemiesHandlingRoutine - how to deal with enemies
+     *
+     * \details similar for all animals
+     */
     void enemiesHandlingRoutine();
-    void foodConsumptionRoutine(ParametersSet*);
-    void exaustionLevelHandlingRoutine(ParametersSet* set);
+    /*!
+     * \brief foodConsumptionRoutine - consume food
+     *
+     * \details Consumes food, stores rest as inner reserve
+     */
+    void foodConsumptionRoutine();
+    /*!
+     * \brief exaustionLevelHandlingRoutine - increment \ decrement exaustion
+     *
+     * Depending on animal activity, different exaustion level assumed
+     */
+    void exaustionLevelHandlingRoutine();
 
 
+    /*!
+     * \brief eyeSight -  how far animal can see
+     *
+     * \details feature used in EA
+     */
+    int eyeSight = 5;
+    int age; ///< how old is the animal
+    int generation; ///< animal generation
+    int speed = 3; ///< how far animal can get in one turn; feature used in EA
+    int foodCapacity; ///< how much animal can store; feature used in EA
+    int metabolism = 5; ///< how much food units animal consumes in one turn; feature used in EA
+    int exhaustionLevel; ///< how exausted is an animal feature used in EA
+    int saturationRate = 100; ///< level of saturation of an animal; feature used in EA
 
-    int eyeSight = 5; // feature used in EA
-    int age;
-//  const int generation;
-    int generation;
-    int speed = 3; // feature used in EA
-//    int huntingPotential;
-    int foodCapacity; // feature used in EA
-    int metabolism = 5; // feature used in EA
-    int exhaustionLevel; // feature used in EA
-    int saturationRate = 100; // feature used in EA
+    Activity activity; ///< current animal activity
 
-    Activity activity;
+    QVector<int> featuresEA; ///< standard deviations for evolutionary algorithm
+    QVector<double> stdDevs; ///< standard deviations for evolutionary algorithm
 
-    QVector<int> featuresEA; //standard deviations for evolutionary algorithm
-    QVector<double> stdDevs; //standard deviations for evolutionary algorithm
+    static const int UNKNOWN_LOCATION = -1; ///<  undefined grid location
 
-
-//  undefined grid location
-    static const int UNKNOWN_LOCATION = -1;
-
-    const static std::function<int(int)> direction;
-
-    // Being interface
+    const static std::function<int(int)> direction; ///< in which direction animal should move
 
 };
 

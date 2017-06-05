@@ -53,7 +53,7 @@ void Animal::action()
             //after hunting, unless animal is satisfied, consume inner reserve
             if(saturationRate < hungerLevel && foodCapacity > 0)
             {
-                foodConsumptionRoutine(set);
+                foodConsumptionRoutine();
             }
         }
         else
@@ -70,7 +70,7 @@ void Animal::action()
     saturationRate -= metabolism;
 
     // TODO: add exaustion level based on current state
-    exaustionLevelHandlingRoutine(set);
+    exaustionLevelHandlingRoutine();
 
     //animal is dead
     // TODO: complete with min/max values
@@ -249,7 +249,7 @@ void Animal::enemiesHandlingRoutine()
 
 }
 
-void Animal::foodConsumptionRoutine(ParametersSet *set)
+void Animal::foodConsumptionRoutine()
 {
     // consume food from inner reserves, as much
     // as you can in one turn
@@ -264,7 +264,7 @@ void Animal::foodConsumptionRoutine(ParametersSet *set)
 
 }
 
-void Animal::exaustionLevelHandlingRoutine(ParametersSet *set)
+void Animal::exaustionLevelHandlingRoutine()
 {
     // based on current activity, inc / dec exaustion level
     // TODO: complete after merging

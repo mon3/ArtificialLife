@@ -20,8 +20,11 @@ class Animal : public Being
     Q_OBJECT
 public:
 
-
-    Animal(int _logX, int _logY) : Being(_logX, _logY) { activity = IDLE; setHitPoints(100); }
+    /*!
+     * \brief Animal
+     * \param logX_, logY - location of an animal
+     */
+    Animal(int logX_, int logY_) : Being(logX_, logY_) { activity = IDLE; setHitPoints(100); }
     ~Animal(){}
     void action();
     virtual int type() const = 0;

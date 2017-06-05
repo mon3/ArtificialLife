@@ -8,6 +8,7 @@
 /*!
  * \ingroup sugarscape
  * \brief The Herbivorous class - herbivorous beings
+ *  predators are it's enemies, eats plants
  */
 class Herbivorous : public Animal
 {

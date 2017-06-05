@@ -10,10 +10,16 @@
 #include <algorithm>
 #include <iterator>
 
+/*! \defgroup shared Defines shared objects we can call from every place in application */
 
-enum Season {winter, spring, summer, autumn};
-enum DayTime {day, night};
-enum Beings { PLANT, HERBIVOROUS, PREDATOR };
+/*!
+ * \brief The Beings enum, corresponds with it's type
+ */
+enum Beings {
+    PLANT,
+    HERBIVOROUS,
+    PREDATOR
+};
 
 class Being;
 class Animal;
@@ -21,6 +27,12 @@ class Herbivorous;
 class Plant;
 class BeingWindow;
 typedef std::pair<int, int> Point;
+/*!
+ * \brief The ParametersSet class
+ * Keep's common game parameters, singletone
+ *
+ * \ingroup shared
+ */
 class ParametersSet : public QObject
 {
     Q_OBJECT

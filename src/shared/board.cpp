@@ -50,14 +50,14 @@ Board* Board::getInstance(const int gridSize_)
 
 Populations Board::getCurrentPopulation()
 {
-    QVector<std::shared_ptr<Herbivorous>> herbPop;
-    QVector<std::shared_ptr<Predator>> predPop;
+    QVector<std::shared_ptr<Animal>> herbPop;
+    QVector<std::shared_ptr<Animal>> predPop;
 
     std::for_each(animalsOnBoard.begin(), animalsOnBoard.end(), [&](const std::vector<Animal*>& vec) -> void {
         std::for_each(std::begin(vec), std::end(vec), [&](Animal* a) -> void {
             Herbivorous* h = qobject_cast<Herbivorous*>(a);
             if(h != 0)
-                herbPop.push_back(std::shared_ptr<Herbivorous>(h));
+                herbPop.push_back(std::shared_ptr<Animal>(h));
             else
                 predPop.push_back(std::shared_ptr<Predator>(qobject_cast<Predator*>(a)));
         });
@@ -68,18 +68,18 @@ Populations Board::getCurrentPopulation()
 
 void Board::setCurrentPopulationOnBoard(const Populations &pop)
 {
-    const QVector<std::shared_ptr<Herbivorous>>& herbPop = std::get<0>(pop);
-    const QVector<std::shared_ptr<Predator>>& predPop = std::get<1>(pop);
+    const QVector<std::shared_ptr<Animal>>& herbPop = std::get<0>(pop);
+    const QVector<std::shared_ptr<Animal>>& predPop = std::get<1>(pop);
     // make a template
-    std::for_each(std::begin(herbPop), std::end(herbPop), [&](const std::shared_ptr<Herbivorous>& h) -> void{
-        Herbivorous* h_ = h.get();
+    std::for_each(std::begin(herbPop), std::end(herbPop), [&](const std::shared_ptr<Animal>& h) -> void{
+        Herbivorous* h_ = static_cast<Herbivorous*>(h.get());
         const int x = h_->getLogX(), y = h_->getLogY();
         if(animalsOnBoard[x][y] == nullptr)
             animalsOnBoard[x][y] = h_;
     });
 
-    std::for_each(std::begin(predPop), std::end(predPop), [&](const std::shared_ptr<Predator>& p) -> void{
-        Predator* h_ = p.get();
+    std::for_each(std::begin(predPop), std::end(predPop), [&](const std::shared_ptr<Animal>& p) -> void{
+        Predator* h_ = static_cast<Predator*>(p.get());
         const int x = h_->getLogX(), y = h_->getLogY();
         if(animalsOnBoard[x][y] == nullptr)
             animalsOnBoard[x][y] = h_;

@@ -10,7 +10,6 @@
 #include "src/sugarscape/herbivorous.h"
 #include "src/sugarscape/predator.h"
 #include "src/shared/board.h"
-
 namespace Ui {
 class MainWindow;
 }

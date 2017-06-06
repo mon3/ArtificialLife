@@ -22,7 +22,7 @@ private:
     QPainter* painter_ = nullptr;
     static int magic_offset;
 public:
-    BeingItem(Being*&& b);
+    BeingItem(Being* b);
 
 public slots:
     /*!

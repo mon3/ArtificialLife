@@ -166,23 +166,23 @@ void EvolutionaryAlg::mutation(QVector<std::shared_ptr<Animal>> &RepPop)
 }
 
 // whole Evolutionary Algorithm
-void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceType, QVector<std::shared_ptr<Animal>> &predPopulation, QVector<std::shared_ptr<Animal>> &herbPopulation)
+void EvolutionaryAlg::runEA( QVector<std::shared_ptr<Animal>> &predPopulation, QVector<std::shared_ptr<Animal>> &herbPopulation)
 {
     QVector<std::shared_ptr<Animal>> predatorIniPop = predPopulation;
     QVector<std::shared_ptr<Animal>> herbivorousIniPop = herbPopulation;
 
     QVector<std::shared_ptr<Animal>> predParentsChildrenPop = predatorIniPop;
     QVector<std::shared_ptr<Animal>> herbParentsChildrenPop = herbivorousIniPop;
-    for (int i=0; i<iterations; ++i)
+    for (int i=0; i<maxIters_; ++i)
     {
 
-    auto predatorTempPop = this->generateTemporaryPopulation(lambda, predParentsChildrenPop);
-    auto herbivorousTempPop = this->generateTemporaryPopulation(lambda, herbParentsChildrenPop);
-    this->reproducePopulation(predatorTempPop, reproduceType);
+    auto predatorTempPop = this->generateTemporaryPopulation(lambda_, predParentsChildrenPop);
+    auto herbivorousTempPop = this->generateTemporaryPopulation(lambda_, herbParentsChildrenPop);
+    this->reproducePopulation(predatorTempPop, reproductionType_);
     this->mutation(predatorTempPop);
 
 
-    this->reproducePopulation(herbivorousTempPop, reproduceType);
+    this->reproducePopulation(herbivorousTempPop, reproductionType_);
     this->mutation(herbivorousTempPop);
 
     predParentsChildrenPop = predParentsChildrenPop + predatorTempPop;
@@ -191,8 +191,8 @@ void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceTyp
     predatorTempPop.clear();
     herbivorousTempPop.clear();
 
-    this->selectMiBest(mi, predParentsChildrenPop);
-    this->selectMiBest(mi, herbParentsChildrenPop);
+    this->selectMiBest(mi_, predParentsChildrenPop);
+    this->selectMiBest(mi_, herbParentsChildrenPop);
     }
     predPopulation = predParentsChildrenPop;
     herbPopulation = herbParentsChildrenPop;

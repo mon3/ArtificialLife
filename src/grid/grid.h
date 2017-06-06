@@ -7,7 +7,8 @@
 #include <QObject>
 #include "src/shared/parametersset.h"
 #include "src/grid/beingitem.h"
-
+#include "src/grid/beingwindow.h"
+#include <memory>
 #include <QDebug>
 #include <QPainter>
 
@@ -17,24 +18,23 @@ class Grid : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    Grid();
     ~Grid() {}
 
-    void setEA(EvolutionaryAlg* ea);
-    EvolutionaryAlg* getEA() const;
-
-//    void setGridPainter(QPainter *painter) {gridPainter = painter;}
-//    QPainter* getGridPainter(){return gridPainter;}
+    Grid(EvolutionaryAlg *ea, const int &ticks, const int &gridSize);
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
-//    void drawForeground(QPainter *painter, const QRectF &rect);
 
-//    void drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[], QWidget *widget);
 private:
-    // maybe pointer to the object?
-    EvolutionaryAlg* EA;
+    std::unique_ptr<EvolutionaryAlg> algorithm;
+    int ticks;
+    const int maxTicks;
+    std::function<void(BeingItem*)> lambdaAdd;
+    std::unique_ptr<BeingWindow> window;
 public slots:
+    void callWindow(Being* b);
     void updateGrid();
+signals:
+    void updateBeings();
 };
 
 #endif // GRID_H

@@ -69,26 +69,10 @@ void MainWindow::initGame()
     {
         selectionType = 1;
     }
-//    else if (ui->RouletteSelection->isChecked())
-//    {
-//        selectionType = 2;
-//    }
-//    else
-//    {
-//        selectionType = 3;
-//    }
 
+    EvolutionaryAlg* ea = new EvolutionaryAlg(mi, lambda, maxIters, reproductionType, selectionType);
 
-
-    EvolutionaryAlg* EA = new EvolutionaryAlg(mi, lambda, maxIters, reproductionType, selectionType);
-    qDebug() << EA->getMi() << "\t" << EA->getLambda() << "\t" << EA->getReproductionType() << "\t" << EA->getSelectionType();
-
-    ParametersSet* set = ParametersSet::getInstance(gridSize);
-    Board* board = Board::getInstance(gridSize);
-    QVector<Animal*> predatorIniPop;
-    QVector<Animal*> herbivorousIniPop;
-
-    Grid* scene = new Grid();
+    Grid* scene = new Grid(ea, 50, gridSize);
     const QRect rec = QRect(0, 0, ParametersSet::SCENE_WIDTH, ParametersSet::SCENE_WIDTH);
     scene->setSceneRect(rec);
     timer = QSharedPointer<QTimer>(new QTimer);
@@ -98,57 +82,26 @@ void MainWindow::initGame()
     connect(timer.data(), SIGNAL(timeout()), scene, SLOT(updateGrid()));
 
 
-   auto lambdaAdd = [&] (BeingItem* b) -> void {
-        board->addBeing(b->getBeing());
-        connectBeing(b);
-        scene->addItem(b);
 
-    };
 
-        //test subjects
-    BeingItem* b = new BeingItem(new Herbivorous(1, 1));
-    lambdaAdd(b);
-    b = new BeingItem(new Herbivorous(3, 3));
-    lambdaAdd(b);
-    b = new BeingItem(new Herbivorous(4, 3));
-    lambdaAdd(b);
-    b = new BeingItem(new Predator(2, 1));
-    lambdaAdd(b);
-    b = new BeingItem(new Plant(5, 5));
-    lambdaAdd(b);
-//    ex = new Herbivorous(9, 8);
-//    lambdaAdd(ex);
-//    herbivorousIniPop.push_back(ex);
+//    Populations p;
+//    ea.initializePopulations(gridSize, std::get<0>(p), std::get<1>(p), 20);
+//    auto& h = std::get<0>(p);
+//    std::for_each(h.begin(), h.end(), [&](std::shared_ptr<Animal> h) -> void {
+//       BeingItem* b = new BeingItem(h.get());
+//       lambdaAdd(b);
+//    });
+//    std::for_each(std::begin(std::get<1>(p)), std::end(std::get<1>(p)), [&](std::shared_ptr<Animal> h) -> void {
+//       BeingItem* b = new BeingItem(h.get());
+//       lambdaAdd(b);
+//    });
+//
 
-//    ex = new Herbivorous(4, 4);
-//    lambdaAdd(ex);
-//    herbivorousIniPop.push_back(ex);
-
-//    Plant* pl = new Plant(4, 5);
-//    lambdaAdd(pl);
-//    pl = new Plant(2, 2);
-//    lambdaAdd(pl);
-
-//    pl = new Plant(4, 5);
-//    lambdaAdd(pl);
-
-//    pl = new Plant(7, 6);
-//    lambdaAdd(pl);
-
-//    pl = new Plant(8, 1);
-
-//    lambdaAdd(pl);
 
     //test button
     connect(ui->testPushBUtton, SIGNAL(pressed()), scene, SLOT(updateGrid()));
-
     connect(ui->velocitySlider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
     ui->graphicsView->setScene(scene);
-
-
-
-
-
     }
 
 }

@@ -103,10 +103,8 @@ public:
     float getMaxFoodCapacity() const;
     static int getRandomInt(const int&, const int&);
     int getStartHungerLevel() const;
-
     float getFoodConsumptionUnits() const;
-public slots:
-    void callWindow(Being* b);
+
 private:
     //to make singleton
     ParametersSet(const ParametersSet&) = delete;
@@ -114,29 +112,17 @@ private:
     ParametersSet(int gridSize);
     static ParametersSet* instance;
 
-    QSharedPointer<BeingWindow> window;
+
 
     const int _gridSize;
 
-
-
-    //single creature params
-    float biologicalChildAge;
-    float biologicalAdultAge;
     int startHungerLevel = 80;
     float maxFoodCapacity;
     float foodConsumptionUnits;
 
-    //genetic algorithm params
-    float crossoverProbability;
-    float mutationProbability;
-    float mutationFactor;
 
 
     //plants appearance params
-    float plantAppearance;
-    int minPlantSum;
-    int maxPlantSum;
     float plantToSizeFactor;
     int plantGrowbackLevel = 30;
     const int MAX_PLANT_HP_LEVEL = 100;

@@ -59,19 +59,7 @@ void ArtifiacialLifeTests::cleanupTestCase()
 
 void ArtifiacialLifeTests::testParametersSetCase2_data()
 {
-    QTest::addColumn<Season>("first");
-    QTest::addColumn<Season>("expected");
-
-    ParametersSet paramsSet(200);
-    paramsSet.setSeason(Season::winter);
-    QTest::newRow("compare01") << paramsSet.getSeason() << Season::winter;
-    paramsSet.setSeason(Season::spring);
-    QTest::newRow("compare02") << paramsSet.getSeason() << Season::spring;
-    paramsSet.setSeason(Season::summer);
-    // exemplary test with failure
-    QTest::newRow("compare03") << paramsSet.getSeason() << Season::spring;
-    paramsSet.setSeason(Season::autumn);
-    QTest::newRow("compare04") << paramsSet.getSeason() << Season::autumn;
+   
 
 }
 
@@ -80,10 +68,7 @@ void ArtifiacialLifeTests::testParametersSetCase1_data()
     QTest::addColumn<int>("first");
     QTest::addColumn<int>("expected");
 
-    ParametersSet paramsSet(200);
-    ParametersSet paramsSet1(300);
-    ParametersSet paramsSet2(400);
-    ParametersSet paramsSet3(500);
+  
 
     QTest::newRow("compare01") << paramsSet.getGridSize()<< 200;
     // test with failure: values are not equal

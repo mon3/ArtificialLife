@@ -5,7 +5,8 @@ Being* BeingItem::getBeing() const
     return being.get();
 }
 
-BeingItem::BeingItem(Being*&& b) :
+
+BeingItem::BeingItem(Being *b) :
     QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH), Visitor()
 {
     being = std::unique_ptr<Being>(b);

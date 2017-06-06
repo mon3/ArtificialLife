@@ -8,7 +8,7 @@
 
 
 typedef std::pair<int, int> Point;
-typedef std::tuple<QVector<std::shared_ptr<Herbivorous>>, QVector<std::shared_ptr<Predator>>> Populations;
+typedef std::tuple<QVector<std::shared_ptr<Animal>>, QVector<std::shared_ptr<Animal>>> Populations; // h and p
 /*!
  * \brief The Board class handles location of Beings
  *

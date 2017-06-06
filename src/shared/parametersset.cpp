@@ -9,13 +9,8 @@ ParametersSet::ParametersSet(int gridSize)
 {
     BEING_WIDTH = (SCENE_WIDTH / _gridSize) >> 1;
 
-    window = QSharedPointer<BeingWindow>(new BeingWindow);
-
-
 
     maxFoodCapacity = 20.0f;
-
-
 }
 
 float ParametersSet::getFoodConsumptionUnits() const
@@ -28,15 +23,16 @@ float ParametersSet::getMaxFoodCapacity() const
     return maxFoodCapacity;
 }
 
-int ParametersSet::getPlantGrowbackLevel() const
-{
-    return plantGrowbackLevel;
-}
 
 
 int ParametersSet::getMaxPlantHp() const
 {
     return MAX_PLANT_HP_LEVEL;
+}
+
+int ParametersSet::getPlantGrowbackLevel() const
+{
+    return plantGrowbackLevel;
 }
 
 int ParametersSet::getStartHungerLevel() const
@@ -68,14 +64,7 @@ int ParametersSet::getRandomInt(const int& min, const int& max)
     return (rand() % (max - min)) + min;
 }
 
-void ParametersSet::callWindow(Being * b)
-{
-    if(!window->isVisible()) {
-        window->initWindow(b);
-        window->show();
-    }
 
-}
 
 
 

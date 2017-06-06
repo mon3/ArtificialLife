@@ -18,8 +18,8 @@ public:
     QVector<int> featuresToChromosome();
     void setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd HitPoints , FeatureStd Metabolism, FeatureStd FoodCapacity, FeatureStd ExhLevel);
     virtual void acceptInitializer(EaPopulationInitializer& eaInit, int X, int Y) {eaInit.initialize(*this, X, Y);}
-    virtual std::unique_ptr<Animal> createBeing(int X, int Y, QVector<int> features, QVector<double> stdDevs)
-    {    return std::unique_ptr<Animal>((new Herbivorous(X, Y, features, stdDevs)));}
+    virtual std::unique_ptr<Animal> createBeing(int X, int Y, QVector<int> features, QVector<double> stdDevs_)
+    {    return std::unique_ptr<Animal>((new Herbivorous(X, Y, features, stdDevs_)));}
 
 
     Herbivorous(int logX, int logY);

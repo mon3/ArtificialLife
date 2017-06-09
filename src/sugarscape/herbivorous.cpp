@@ -11,10 +11,10 @@ Herbivorous::Herbivorous(int logX, int logY): Animal(logX, logY)
     randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxHerbivorousMetabolism));
     randFeatures.push_back(static_cast<int>(rand()*ParametersSet::maxHerbivorousFoodCapacity));
     randFeatures.push_back(static_cast<int>(1.0*ParametersSet::minExhaustionLevel));
-
+    this->setSaturationRate(ParametersSet::maxHerbivorousSaturationRate);
     setFeaturesForEA(randFeatures);
-
 }
+
 
 //virtual std::unique_ptr<Animal> Herbivorous::createBeing(int X, int Y, QVector<int> features, QVector<double> stdDevs)
 //{
@@ -42,6 +42,24 @@ void Herbivorous::setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd 
     stdDevs.push_back(ExhLevel.stdDev);
     this->setStdDevs(stdDevs);
 }
+
+Herbivorous::Herbivorous(const Herbivorous &other) :
+    Animal(other.getLogX(), other.getLogY())
+{
+    this->setEyeSight(other.getEyeSight());
+    this->setFoodCapacity(other.getEyeSight());
+
+    this->setHitPoints(other.getHitPoints());
+    this->setSpeed(other.getSpeed());
+    this->setAge(other.getAge());
+    this->setSaturationRate(other.getSaturationRate());
+    this->setGeneration(other.getGeneration());
+
+
+    this->setFeaturesEA(other.getFeaturesEA());
+    this->setStdDevs(other.getStdDevs());
+}
+
 
 
 
@@ -132,6 +150,7 @@ Being* Herbivorous::hunt()
     std::vector<Plant*> vec = Board::getInstance()->getAdjacentBeings(this->getLogX(), this->getLogY(), getSpeed());
     //no available plant at neighbourhood
     if(vec.empty()) {
+        this->setSaturationRate(10000);
         return nullptr;
     }
 

@@ -10,15 +10,15 @@ const std::function<int(int)> Animal::direction = [](const int& delta) -> int
     return delta > 0 ? 1 : -1;
 };
 
-QVector<int> Animal::featuresToVectorEA(int eye, int speed, int hitPoints, int metabolism, int foodCapacity, int exhLevel)
+QVector<int> Animal::featuresToVectorEA(int eye_, int speed_, int hitPoints_, int metabolism_, int foodCapacity_, int exhLevel_)
 {
     QVector<int> vectorOfFeatures;
-    vectorOfFeatures.push_back(eye);
-    vectorOfFeatures.push_back(speed);
-    vectorOfFeatures.push_back(hitPoints);
-    vectorOfFeatures.push_back(metabolism);
-    vectorOfFeatures.push_back(foodCapacity);
-    vectorOfFeatures.push_back(exhLevel);
+    vectorOfFeatures.push_back(eye_);
+    vectorOfFeatures.push_back(speed_);
+    vectorOfFeatures.push_back(hitPoints_);
+    vectorOfFeatures.push_back(metabolism_);
+    vectorOfFeatures.push_back(foodCapacity_);
+    vectorOfFeatures.push_back(exhLevel_);
 
     return vectorOfFeatures;
 }
@@ -29,7 +29,7 @@ QVector<int> Animal::featuresToVectorEA(int eye, int speed, int hitPoints, int m
 void Animal::action()
 {
 
-    if(activity == Activity::DEAD) {
+    if(activity == Activity::DEAD || getIsDead()) {
         setIsDead();
         return;
     }
@@ -39,7 +39,7 @@ void Animal::action()
 
     ParametersSet* set = ParametersSet::getInstance();
     Board* board = Board::getInstance();
-    enemiesHandlingRoutine();
+    //enemiesHandlingRoutine();
 
     if(activity != RUNNNING_AWAY)
     {
@@ -63,7 +63,6 @@ void Animal::action()
         }
 
     }
-
     // parameters correction section
 
     //for each turn, saturation rate decreased
@@ -73,13 +72,12 @@ void Animal::action()
     exaustionLevelHandlingRoutine();
 
     //animal is dead
-    // TODO: complete with min/max values
+    board->updateBeing(this, oldX, oldY);
     if(saturationRate < 0) {
         activity = Activity::DEAD;
-        return;
+        setIsDead();
     }
-    else
-        board->updateBeing(this, oldX, oldY);
+
 }
 
 
@@ -126,19 +124,20 @@ void Animal::move(int x, int y )
     if(x == UNKNOWN_LOCATION || y == UNKNOWN_LOCATION)
     {
         // if being is idle
-        int goalX, goalY;
+        int goalX = this->getLogX(),
+            goalY = this->getLogY(),
+                addVal = 0;
+        const bool xAxisMove = ParametersSet::getRandomInt(0, 2) == 1;
         if(activity == IDLE)
-        {
-            moveClose(this->getLogX() + ParametersSet::getRandomInt(-1, 2),
-                      this->getLogY() + ParametersSet::getRandomInt(-1, 2));
-        }
+            addVal = ParametersSet::getRandomInt(-1, 2);
         else if (activity == HUNTING)
-        {
-            const int addVal = speed;
-            goalX = addVal * direction(ParametersSet::getRandomInt(-1, 2));
-            goalY = addVal * direction(ParametersSet::getRandomInt(-1, 2));
-            moveClose(goalX, goalY);
-        }
+            addVal = speed * direction(ParametersSet::getRandomInt(-1, 2));
+
+        if(xAxisMove)
+            goalX += addVal;
+        else
+            goalY += addVal;
+        moveClose(goalX , goalY);
     } else
     {
         this->setLogX(x);
@@ -433,6 +432,3 @@ void Animal::displayStd() const
 }
 
 
-void Animal::accept(Visitor *)
-{
-}

@@ -18,11 +18,11 @@ class BeingItem : public QObject, public QGraphicsRectItem, public Visitor
 {
     Q_OBJECT
 private:
-    std::unique_ptr<Being> being;
+    std::shared_ptr<Being> being;
     QPainter* painter_ = nullptr;
     static int magic_offset;
 public:
-    BeingItem(Being* b);
+    BeingItem(std::shared_ptr<Being>& b);
 
 public slots:
     /*!

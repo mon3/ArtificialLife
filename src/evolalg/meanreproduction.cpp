@@ -43,16 +43,16 @@ void MeanReproduction::reproducePopulation(QVector<std::shared_ptr<Animal>> &tem
                 stdDevsChild1.push_back(StdChild1);
                 stdDevsChild2.push_back(StdChild2);
             }
-//        const float param = 0.5f;
-//        auto const parent1 = static_cast<Being*>(tempPop.at(i));
-//        auto const parent2 = static_cast<Being*>(tempPop.at(i+1));
+        const float param = 0.5f;
+        auto const parent1 = tempPop.at(i);
+        auto const parent2 = tempPop.at(i+1);
 
-//        ParametersSet* set = ParametersSet::getInstance();
-//        Point child1Point = set->beingsInterpolation(parent1, parent2, param);
-//        Point child2Point = set->beingsInterpolation(parent1, parent2, param);
+        Board* board = Board::getInstance();
+        Point child1Point = board->beingsInterpolation(parent1.get(), parent2.get(), param);
+        Point child2Point = board->beingsInterpolation(parent1.get(), parent2.get(), param);
 
-        germs.push_back(tempPop.at(i)->createBeing(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild1, stdDevsChild1));
-        germs.push_back(tempPop.at(i)->createBeing(tempPop.at(i)->getLogX(), tempPop.at(i)->getLogY(), featuresChild2, stdDevsChild2));
+        germs.push_back(tempPop.at(i)->createBeing(child1Point.first, child1Point.second, featuresChild1, stdDevsChild1));
+        germs.push_back(tempPop.at(i)->createBeing(child2Point.first, child2Point.second, featuresChild2, stdDevsChild2));
     }
 
     tempPop = germs;

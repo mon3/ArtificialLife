@@ -93,7 +93,7 @@
      * \param predPopulation - population of class Predator that will be processed by EA.
      * \param herbPopulation - population of class Herbivorous that will be processed by EA.
      */
-    void runEA(QVector<std::shared_ptr<Animal>> &predPopulation, QVector<std::shared_ptr<Animal>> &herbPopulation);
+     void runEA(int mi, int lambda, int iterations, int reproduceType, QVector<std::shared_ptr<Animal>> &predPopulation, QVector<std::shared_ptr<Animal>> &herbPopulation);
 
     /*!
       * \brief setMi - setter of parameter mi - size of the population processed by EA.
@@ -145,7 +145,6 @@
       * \return selection method: mi best(0) implemented.
       */
      int getSelectionType() const;
-
 
  private:
      /*!

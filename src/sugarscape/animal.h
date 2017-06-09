@@ -24,7 +24,7 @@ public:
      * \brief Animal
      * \param logX_, logY - location of an animal
      */
-    Animal(int logX_, int logY_) : Being(logX_, logY_) { activity = IDLE; setHitPoints(100); }
+    Animal(int logX_, int logY_) : Being(logX_, logY_) { activity = IDLE; }
     ~Animal(){}
     void action();
     virtual int type() const = 0;
@@ -170,14 +170,14 @@ private:
      *
      * \details feature used in EA
      */
-    int eyeSight = 5;
+    int eyeSight;
     int age; ///< how old is the animal
     int generation; ///< animal generation
-    int speed = 3; ///< how far animal can get in one turn; feature used in EA
+    int speed; ///< how far animal can get in one turn; feature used in EA
     int foodCapacity; ///< how much animal can store; feature used in EA
-    int metabolism = 5; ///< how much food units animal consumes in one turn; feature used in EA
+    int metabolism; ///< how much food units animal consumes in one turn; feature used in EA
     int exhaustionLevel; ///< how exausted is an animal feature used in EA
-    int saturationRate = 100; ///< level of saturation of an animal; feature used in EA
+    int saturationRate; ///< level of saturation of an animal; feature used in EA
 
     Activity activity; ///< current animal activity
 

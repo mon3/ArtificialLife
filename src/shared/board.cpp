@@ -53,32 +53,34 @@ Populations Board::getCurrentPopulation()
     QVector<std::shared_ptr<Animal>> herbPop;
     QVector<std::shared_ptr<Animal>> predPop;
 
-    std::for_each(animalsOnBoard.begin(), animalsOnBoard.end(), [&](const std::vector<Animal*>& vec) -> void {
+    std::for_each(animalsOnBoard.begin(), animalsOnBoard.end(), [&](std::vector<Animal*>& vec) -> void {
         std::for_each(std::begin(vec), std::end(vec), [&](Animal* a) -> void {
-            Herbivorous* h = qobject_cast<Herbivorous*>(a);
-            if(h != 0)
-                herbPop.push_back(std::shared_ptr<Animal>(h));
-            else
-                predPop.push_back(std::shared_ptr<Predator>(qobject_cast<Predator*>(a)));
+            if(a != nullptr) {
+                Herbivorous* h = qobject_cast<Herbivorous*>(a);
+                if(h != 0)
+                    herbPop.push_back(std::shared_ptr<Animal>(new Herbivorous(*h)));
+                else
+                    predPop.push_back(std::shared_ptr<Animal>(new Predator(*qobject_cast<Predator*>(a))));
+            }
         });
     });
-
     return std::make_tuple(herbPop, predPop);
 }
 
-void Board::setCurrentPopulationOnBoard(const Populations &pop)
+void Board::setCurrentPopulationOnBoard(Populations &pop)
 {
-    const QVector<std::shared_ptr<Animal>>& herbPop = std::get<0>(pop);
-    const QVector<std::shared_ptr<Animal>>& predPop = std::get<1>(pop);
+    QVector<std::shared_ptr<Animal>>& herbPop = std::get<1>(pop);
+    QVector<std::shared_ptr<Animal>>& predPop = std::get<0>(pop);
     // make a template
-    std::for_each(std::begin(herbPop), std::end(herbPop), [&](const std::shared_ptr<Animal>& h) -> void{
+
+    std::for_each(herbPop.begin(), herbPop.end(), [&](std::shared_ptr<Animal>& h) -> void{
         Herbivorous* h_ = static_cast<Herbivorous*>(h.get());
         const int x = h_->getLogX(), y = h_->getLogY();
         if(animalsOnBoard[x][y] == nullptr)
             animalsOnBoard[x][y] = h_;
     });
 
-    std::for_each(std::begin(predPop), std::end(predPop), [&](const std::shared_ptr<Animal>& p) -> void{
+    std::for_each(std::begin(predPop), std::end(predPop), [&](std::shared_ptr<Animal>& p) -> void{
         Predator* h_ = static_cast<Predator*>(p.get());
         const int x = h_->getLogX(), y = h_->getLogY();
         if(animalsOnBoard[x][y] == nullptr)
@@ -148,7 +150,6 @@ void Board::updateBeing(Being *b, const int oldX, const int oldY)
         animalsOnBoard[oldX][oldY] = nullptr;
         animalsOnBoard[x][y] = a;
     }
-    //mapPosition(b);
 }
 
 Point Board::beingsInterpolation(const Being *a, const Being *b, const float &coeff)
@@ -159,13 +160,15 @@ Point Board::beingsInterpolation(const Being *a, const Being *b, const float &co
               yB = b->getLogY();
     const bool equalX = xA == xB;
     const bool equalY = yA == yB;
-    float x = xA, y = yB;
+    float x = xA, y = yA;
 
     // make correction due to float precision?
-    if (equalX)
+    if (!equalX)
         y = yA * coeff + yB * (1 - coeff);
-    if (equalY)
+    if (!equalY)
         x = xA * coeff + xB * (1 - coeff);
+
+
 
 
     //get adjacent free point
@@ -190,10 +193,12 @@ void Board::visit(Plant *)
 
 void Board::visit(Predator *p)
 {
+    qDebug() << "predator is dead";
     removeBeing(p);
 }
 
 void Board::visit(Herbivorous *h)
 {
+    qDebug() << "herbivorous is dead";
     removeBeing(h);
 }

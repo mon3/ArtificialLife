@@ -6,10 +6,10 @@
 #include "src/sugarscape/plant.h"
 
 /*!
- * \ingroup sugarscape
- * \brief The Herbivorous class - herbivorous beings
- *  predators are it's enemies, eats plants
- */
+* \ingroup sugarscape
+* \brief The Herbivorous class - herbivorous beings
+*  predators are it's enemies, eats plants
+*/
 class Herbivorous : public Animal
 {
     Q_OBJECT
@@ -22,6 +22,7 @@ public:
     {    return std::unique_ptr<Animal>((new Herbivorous(X, Y, features, stdDevs_)));}
 
 
+    Herbivorous(const Herbivorous& other);
     Herbivorous(int logX, int logY);
     Herbivorous(int x, int y, QVector<int> features, QVector<double> stdDevs);
     Herbivorous(int x, int y, int hitPoints, int eyeSight, int age, int generation, int speed, int foodCapacity,

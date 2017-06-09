@@ -20,7 +20,7 @@ public:
     virtual std::unique_ptr<Animal> createBeing(int X, int Y, QVector<int> features, QVector<double> stdDevs_)
     {    return std::unique_ptr<Animal>((new Predator(X, Y, features, stdDevs_))); }
 
-
+    Predator(const Predator& other);
     Predator(int x, int y);
     Predator(int x, int y, QVector<int> features, QVector<double> stdDevs);
     /*!

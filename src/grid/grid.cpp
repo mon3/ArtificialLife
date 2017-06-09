@@ -51,8 +51,8 @@ struct rangegenerator {
 
 
 
-Grid::Grid(EvolutionaryAlg *ea, const int &ticks, const int& gridSize) :
-    maxTicks(ticks)
+Grid::Grid(EvolutionaryAlg *ea, const int &maxTicks, const int& gridSize) :
+    maxTicks(maxTicks), ticks(0)
 {
     algorithm = std::unique_ptr<EvolutionaryAlg>(ea);
     window =std::unique_ptr<BeingWindow>(new BeingWindow());
@@ -60,23 +60,21 @@ Grid::Grid(EvolutionaryAlg *ea, const int &ticks, const int& gridSize) :
     Board* board = Board::getInstance(gridSize);
 
     lambdaAdd = [&] (BeingItem* b) -> void {
-         Board::getInstance()->addBeing(b->getBeing());
          connect(b, SIGNAL(callWindow(Being*)), this, SLOT(callWindow(Being*)));
          connect(this, SIGNAL(updateBeings()), b, SLOT(updateBeing()));
          this->addItem(b);
-     };
-
-    BeingItem* b = new BeingItem(new Herbivorous(1, 1));
-    lambdaAdd(b);
-    b = new BeingItem(new Herbivorous(3, 3));
-    lambdaAdd(b);
-    b = new BeingItem(new Herbivorous(4, 3));
-    lambdaAdd(b);
-    b = new BeingItem(new Predator(2, 1));
-    lambdaAdd(b);
-    b = new BeingItem(new Plant(5, 5));
-    lambdaAdd(b);
-
+    };
+    Populations population;
+    (*algorithm).initializePopulations(gridSize,std::get<0>(population), std::get<1>(population), 10);
+    board->setCurrentPopulationOnBoard(population);
+    std::for_each(std::begin(std::get<0>(population)), std::end(std::get<0>(population))
+                  , [&](std::shared_ptr<Animal>& a) -> void {
+        lambdaAdd(new BeingItem(std::dynamic_pointer_cast<Being>(a)));
+    });
+    std::for_each(std::begin(std::get<1>(population)), std::end(std::get<1>(population))
+                  , [&](std::shared_ptr<Animal>& a) -> void {
+        lambdaAdd(new BeingItem(std::dynamic_pointer_cast<Being>(a)));
+    });
 }
 
 void Grid::drawBackground(QPainter *painter, const QRectF &rect)
@@ -106,14 +104,33 @@ void Grid::callWindow(Being * b)
 
 void Grid::updateGrid()
 {    
-//    Board* b = Board::getInstance();
-//    Populations currentPopulation = b->getCurrentPopulation();
-//    (*algorithm).runEA(50, 80, 1, 0, std::get<1>(currentPopulation), std::get<0>(currentPopulation));
-//    b->setCurrentPopulationOnBoard(currentPopulation);
     emit updateBeings();
-
     if(ticks++ > maxTicks) {
         ticks = 0;
+        Board* b = Board::getInstance();
+        Populations& currentPopulation = b->getCurrentPopulation();
+        qDebug() << "pop: p - " << std::get<0>(currentPopulation).size() << " h - " << std::get<1>(currentPopulation).size();
+        algorithm->runEA(20, 40, 1, 0, std::get<1>(currentPopulation), std::get<0>(currentPopulation));
+        qDebug() << "after: p - " << std::get<0>(currentPopulation).size() << " h - " << std::get<1>(currentPopulation).size();
+        std::for_each(std::begin(std::get<0>(currentPopulation)),std::end(std::get<0>(currentPopulation))
+                      ,[&](std::shared_ptr<Animal>& a) -> void {
+               if(b->isFreeCell(a->getLogX(), a->getLogY())) {
+                   b->addBeing(a.get());
+                   lambdaAdd(new BeingItem(std::dynamic_pointer_cast<Being>(a)));
+               }
+
+        });
+
+        std::for_each(std::begin(std::get<1>(currentPopulation)),std::end(std::get<1>(currentPopulation))
+                      ,[&](std::shared_ptr<Animal>& a) -> void {
+               if(b->isFreeCell(a->getLogX(), a->getLogY())) {
+                   b->addBeing(a.get());
+                   lambdaAdd(new BeingItem(std::dynamic_pointer_cast<Being>(a)));
+               }
+
+        });
+
     }
+
 }
 

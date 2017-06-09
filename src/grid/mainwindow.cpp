@@ -26,7 +26,6 @@ MainWindow::~MainWindow()
 void MainWindow::initGame()
 {
     //todo: values validation
-
     int mi=0, lambda = 0, maxIters = 1, reproductionType = 0, selectionType = 0;
     if (ui->sceneSizeEdit->text().isEmpty())
         {
@@ -63,16 +62,13 @@ void MainWindow::initGame()
     {
         reproductionType = 1;
     }
-// nie trzeba else, bo zawsze ktorys bedzie zaznaczony
 
-    if(ui->MiBestSelection->isChecked())
-    {
-        selectionType = 1;
-    }
+    selectionType = 1;
+
 
     EvolutionaryAlg* ea = new EvolutionaryAlg(mi, lambda, maxIters, reproductionType, selectionType);
 
-    Grid* scene = new Grid(ea, 50, gridSize);
+    Grid* scene = new Grid(ea, 20, gridSize);
     const QRect rec = QRect(0, 0, ParametersSet::SCENE_WIDTH, ParametersSet::SCENE_WIDTH);
     scene->setSceneRect(rec);
     timer = QSharedPointer<QTimer>(new QTimer);
@@ -97,8 +93,6 @@ void MainWindow::initGame()
 //    });
 //
 
-
-    //test button
     connect(ui->testPushBUtton, SIGNAL(pressed()), scene, SLOT(updateGrid()));
     connect(ui->velocitySlider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
     ui->graphicsView->setScene(scene);
@@ -108,7 +102,6 @@ void MainWindow::initGame()
 
 void MainWindow::sliderValueChanged(int val)
 {
-    qDebug() << "called! " << val;
     timer->start(TIMER_TICKS / val);
 }
 

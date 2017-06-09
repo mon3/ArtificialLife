@@ -1,3 +1,4 @@
+/*! @file */
 #ifndef PARAMETERSSET_H
 #define PARAMETERSSET_H
 
@@ -10,10 +11,10 @@
 #include <algorithm>
 #include <iterator>
 
-/*! \defgroup shared Defines shared objects we can call from every place in application */
+/*! @defgroup shared Defines shared objects we can call from every place in application */
 
 /*!
- * \brief The Beings enum, corresponds with it's type
+ * @brief The Beings enum, corresponds with it's type
  */
 enum Beings {
     PLANT,
@@ -81,12 +82,12 @@ public:
     static const int minPredatorMetabolism = 50;
     static const int maxPredatorMetabolism = 600;
 
-    static const int minHerbivorousSaturationRate = 500;
+    static const int minHerbivorousSaturationRate = 1000;
     static const int maxHerbivorousSaturationRate = 1500;
 
-    static const int minPredatorSaturationRate = 800;
+    static const int minPredatorSaturationRate = 2000;
     static const int maxPredatorSaturationRate = 4000;
-
+    int startHungerLevel = 1000;
     // features coefficients for fitness function calculation
     static constexpr double eyeSightCoeff = 15.0 ;
     static constexpr double speedCoeff = 14.0 ;
@@ -116,7 +117,7 @@ private:
 
     const int _gridSize;
 
-    int startHungerLevel = 80;
+
     float maxFoodCapacity;
     float foodConsumptionUnits;
 

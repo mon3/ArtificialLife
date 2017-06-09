@@ -5,7 +5,6 @@ template<typename T>
 std::vector<T> Board::getAdjacentBeings(int logX, int logY, const int reach) const
 {
     std::vector<T> result;
-//    int logX = a->getLogX(), logY = a->getLogY();
     int checkX, checkY;
     for(int i = 1; i <= reach; ++i)
         for(int j = 0; j < 4; ++j) {

@@ -1,3 +1,4 @@
+
 #include "evolutionaryalg.h"
 
 #include <QVector>
@@ -78,34 +79,28 @@ struct rangegenerator {
 void EvolutionaryAlg::initializePopulations(int N, QVector<std::shared_ptr<Animal>>& predatorIniPop, QVector<std::shared_ptr<Animal>>& herbivorousIniPop, int mu)
 {
     EaInitializer eaInitializer;
-    // TODO: set mu as input parameter passed from UI
-    // mu - size of the population
-//    int mu = 50;
 
-    // TODO: resolve correct logical positions: X, Y; check the correct way of initializing positions
-    QVector<int> indicesX(N*N);
-    QVector<int> indicesY(N*N);
-
-    std::generate(std::begin(indicesX), std::end(indicesX), rangegenerator(0));
-    std::generate(std::begin(indicesY), std::end(indicesY), rangegenerator(0));
-
-    std::random_shuffle(std::begin(indicesX), std::end(indicesX));
-    std::random_shuffle(std::begin(indicesY), std::end(indicesY));
-
-    // initialization of individual vectors for Predator and Herbivorous POpulations
+    QVector<int> indices(N*N);
+    std::generate(std::begin(indices), std::end(indices), rangegenerator(0));
+    std::random_shuffle(std::begin(indices), std::end(indices));
+    //initialization of individual vectors for Predator and Herbivorous POpulations
+    auto getPoint = [&N](int P) -> Point { return std::make_pair<int, int>(P % N, P / N); };
     for (int i=0; i< mu; ++i)
     {
-        predatorIniPop.push_back(std::shared_ptr<Animal>(new Predator(indicesX[i], indicesY[i])));
-        herbivorousIniPop.push_back(std::shared_ptr<Animal>(new Herbivorous(indicesX[i+2], indicesY[i])));
-        predatorIniPop.at(i)->acceptInitializer(eaInitializer,indicesX[i], indicesY[i]);
-        herbivorousIniPop.at(i)->acceptInitializer(eaInitializer, indicesX[i+2], indicesY[i+2]);
+        Point p = getPoint(indices[i]);
+        predatorIniPop.push_back(std::shared_ptr<Animal>(new Predator(p.first, p.second)));
+        predatorIniPop.at(i)->acceptInitializer(eaInitializer, p.first, p.second);
+        p = getPoint(indices[i + 2]);
+        herbivorousIniPop.push_back(std::shared_ptr<Animal>(new Herbivorous(p.first, p.second)));
+        herbivorousIniPop.at(i)->acceptInitializer(eaInitializer, p.first, p.second);
     }
-
 }
 
 QVector<std::shared_ptr<Animal>> EvolutionaryAlg::generateTemporaryPopulation(int lambda, QVector<std::shared_ptr<Animal>>& currentPop)
 {
     QVector<std::shared_ptr<Animal>> tmp;
+    if(currentPop.size() == 0)
+        return QVector<std::shared_ptr<Animal>>();
     for (int i=0; i< lambda; ++i)
     {
         int index = (rand() % (int)(currentPop.size()));
@@ -166,33 +161,30 @@ void EvolutionaryAlg::mutation(QVector<std::shared_ptr<Animal>> &RepPop)
 }
 
 // whole Evolutionary Algorithm
-void EvolutionaryAlg::runEA( QVector<std::shared_ptr<Animal>> &predPopulation, QVector<std::shared_ptr<Animal>> &herbPopulation)
+void EvolutionaryAlg::runEA(int mi, int lambda, int iterations, int reproduceType, QVector<std::shared_ptr<Animal>> &predPopulation, QVector<std::shared_ptr<Animal>> &herbPopulation)
 {
     QVector<std::shared_ptr<Animal>> predatorIniPop = predPopulation;
     QVector<std::shared_ptr<Animal>> herbivorousIniPop = herbPopulation;
 
     QVector<std::shared_ptr<Animal>> predParentsChildrenPop = predatorIniPop;
     QVector<std::shared_ptr<Animal>> herbParentsChildrenPop = herbivorousIniPop;
-    for (int i=0; i<maxIters_; ++i)
+    for (int i=0; i < iterations; ++i)
     {
+        auto predatorTempPop = this->generateTemporaryPopulation(lambda, predParentsChildrenPop);
+        auto herbivorousTempPop = this->generateTemporaryPopulation(lambda, herbParentsChildrenPop);
 
-    auto predatorTempPop = this->generateTemporaryPopulation(lambda_, predParentsChildrenPop);
-    auto herbivorousTempPop = this->generateTemporaryPopulation(lambda_, herbParentsChildrenPop);
-    this->reproducePopulation(predatorTempPop, reproductionType_);
-    this->mutation(predatorTempPop);
+        this->reproducePopulation(predatorTempPop, reproduceType);
+        this->mutation(predatorTempPop);
+
+        this->reproducePopulation(herbivorousTempPop, reproduceType);
+        this->mutation(herbivorousTempPop);
+
+        predParentsChildrenPop = predParentsChildrenPop + predatorTempPop;
+        herbParentsChildrenPop = herbParentsChildrenPop +  herbivorousTempPop;
 
 
-    this->reproducePopulation(herbivorousTempPop, reproductionType_);
-    this->mutation(herbivorousTempPop);
-
-    predParentsChildrenPop = predParentsChildrenPop + predatorTempPop;
-    herbParentsChildrenPop = herbParentsChildrenPop +  herbivorousTempPop;
-
-    predatorTempPop.clear();
-    herbivorousTempPop.clear();
-
-    this->selectMiBest(mi_, predParentsChildrenPop);
-    this->selectMiBest(mi_, herbParentsChildrenPop);
+        this->selectMiBest(mi, predParentsChildrenPop);
+        this->selectMiBest(mi, herbParentsChildrenPop);
     }
     predPopulation = predParentsChildrenPop;
     herbPopulation = herbParentsChildrenPop;

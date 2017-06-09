@@ -29,6 +29,8 @@ void BeingWindow::initWindow(Being* being)
         lineInfoChange(ui->activity, QVariant::fromValue(a->getActivity()).toString());
         lineInfoChange(ui->speed, QString::number(a->getSpeed()));
         lineInfoChange(ui->eveSight, QString::number(a->getEyeSight()));
+        lineInfoChange(ui->metabolism, QString::number(a->getMetabolism()));
+        lineInfoChange(ui->saturationRate, QString::number(a->getSaturationRate()));
 
         //add info specyfic for sub-animal class
         if(a= qobject_cast<Predator*>(a))

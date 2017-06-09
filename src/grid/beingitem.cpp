@@ -6,10 +6,10 @@ Being* BeingItem::getBeing() const
 }
 
 
-BeingItem::BeingItem(Being *b) :
+BeingItem::BeingItem(std::shared_ptr<Being>& b) :
     QGraphicsRectItem(0, 0, ParametersSet::BEING_WIDTH, ParametersSet::BEING_WIDTH), Visitor()
 {
-    being = std::unique_ptr<Being>(b);
+    being = std::shared_ptr<Being>(b);
 }
 
 void BeingItem::updateBeing()
@@ -38,7 +38,6 @@ void BeingItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * s, QWi
     Q_UNUSED(s); Q_UNUSED(w);
     this->painter_ = painter;
     being->accept(this);
-    this->painter_ = nullptr;
 }
 
 
@@ -56,6 +55,6 @@ void BeingItem::visit(Predator *)
 
 void BeingItem::visit(Herbivorous *)
 {
-    painter_->setPen(Qt::green);
+    painter_->setBrush(Qt::green);
     painter_->drawRect(this->rect());
 }

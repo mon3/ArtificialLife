@@ -9,6 +9,7 @@ Predator::Predator(int logX, int logY): Animal(logX, logY)
     randFeatures.push_back(static_cast<int>((this->randomDouble(0.1, 1.0))*ParametersSet::maxPredatorMetabolism));
     randFeatures.push_back(static_cast<int>((this->randomDouble(0.1, 1.0))*ParametersSet::maxPredatorFoodCapacity));
     randFeatures.push_back(static_cast<int>(1.0*ParametersSet::minExhaustionLevel));
+    this->setSaturationRate(ParametersSet::maxPredatorSaturationRate);
 
     setFeaturesForEA(randFeatures);
 
@@ -76,6 +77,24 @@ void Predator::setFeatureStdevs(FeatureStd Eye, FeatureStd Speed, FeatureStd Hit
     this->setStdDevs(stdDevs);
 }
 
+Predator::Predator(const Predator &other) :
+    Animal(other.getLogX(), other.getLogY())
+{
+    this->setEyeSight(other.getEyeSight());
+    this->setFoodCapacity(other.getEyeSight());
+
+    this->setHitPoints(other.getHitPoints());
+    this->setSpeed(other.getSpeed());
+    this->setAge(other.getAge());
+    this->setSaturationRate(other.getSaturationRate());
+    this->setGeneration(other.getGeneration());
+
+
+    this->setFeaturesEA(other.getFeaturesEA());
+    this->setStdDevs(other.getStdDevs());
+
+}
+
 
 
 void Predator::setFeaturesForEA(QVector<int>& vals)
@@ -128,11 +147,12 @@ QVector<int> Predator::featuresToChromosome()
 
 Being* Predator::hunt()
 {
-    qDebug() << "here1";
+    qDebug() << "here1, hunting for herb";
     std::vector<Herbivorous*> vec = Board::getInstance()->
             getAdjacentBeings<Herbivorous*>(this->getLogX(), this->getLogY(), this->getEyeSight());
     //no available plant at neighbourhood
     if(vec.empty()) {
+        this->setSaturationRate(10000);
         return nullptr;
     }
 
@@ -160,10 +180,9 @@ Being* Predator::hunt()
     maxValuedPlants.shrink_to_fit();
 
     //if there is several max positions, select one randomly
-    const int  size = maxValuedPlants.size();
+    const size_t  size = maxValuedPlants.size();
     if(size > 1)
         return maxValuedPlants[ParametersSet::getRandomInt(0, size)];
-    qDebug() << "here3";
     return p;
 }
 
@@ -174,7 +193,6 @@ void Predator::eat(Being * b)
     int herbValue = herb->getHitPoints();
     foodConsumptionRule(herbValue);
     // after eating, herb. is removed from board
-    // error
     herb->setIsDead();
     qDebug() << "eaten!";
 }

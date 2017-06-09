@@ -8,7 +8,7 @@
 
 
 typedef std::pair<int, int> Point;
-typedef std::tuple<QVector<std::shared_ptr<Animal>>, QVector<std::shared_ptr<Animal>>> Populations; // h and p
+typedef std::tuple<QVector<std::shared_ptr<Animal>>, QVector<std::shared_ptr<Animal>>> Populations; // p and h
 /*!
  * \brief The Board class handles location of Beings
  *
@@ -32,7 +32,7 @@ private:
 public:
     static Board* getInstance(const int gridSize_ = -1);
     Populations getCurrentPopulation();
-    void setCurrentPopulationOnBoard(const Populations& pop);
+    void setCurrentPopulationOnBoard(Populations& pop);
     template<typename T>
     /*!
      * \brief getAdjacentBeings returns adjacent beings from specified place

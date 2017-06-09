@@ -224,7 +224,7 @@
        <item>
         <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>Biological age:</string>
+          <string>Metabolism</string>
          </property>
          <property name="buddy">
           <cstring>eveSight</cstring>
@@ -232,7 +232,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_9">
+        <widget class="QLineEdit" name="metabolism">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -298,11 +298,11 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>101</x>
-      <y>161</y>
+      <x>100</x>
+      <y>200</y>
       <width>162</width>
       <height>22</height>
      </rect>
@@ -336,6 +336,45 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="layoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>170</y>
+      <width>162</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>SaturationRate</string>
+       </property>
+       <property name="buddy">
+        <cstring>eveSight</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="saturationRate">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777214</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>label_7</zorder>
